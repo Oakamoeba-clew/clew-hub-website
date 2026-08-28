@@ -506,7 +506,6 @@ export function FrameworkPanel() {
                       <p className="text-[12px] text-neutral-500 mb-2">{r.part}</p>
                       <div className="flex items-center justify-between">
                         <span className={`text-[12px] ${r.flagged ? "font-semibold text-red-600" : "text-neutral-500"}`}>
-                          {r.flagged ? "⚠️ " : ""}
                           {r.time}
                         </span>
                         {r.flagged && (
@@ -551,7 +550,6 @@ export function FrameworkPanel() {
                       </div>
                       <div className="px-2.5 py-2 flex flex-col justify-center">
                         <span className={`text-[12px] ${r.flagged ? "font-semibold text-red-600" : "text-neutral-500"}`}>
-                          {r.flagged ? "⚠️ " : ""}
                           {r.time}
                         </span>
                         {r.flagged && (

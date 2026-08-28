@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-const HERO_IMG = "https://media.base44.com/images/public/6a662525657c49d632625bac/0e662ce95_generated_image.png";
+const HERO_IMG = "/hero.jpg";
 
 export default function Hero() {
   return (
@@ -40,7 +40,7 @@ export default function Hero() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
           className="mt-7 max-w-[52ch] text-lg md:text-xl text-foreground/80 leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.2)]"
         >
-          CLEW helps small and midsized manufacturers keep every quote moving — and get seen by the buyers who send them.
+          CLEW Framework keeps every RFQ moving — and Foundation gets your shop seen by the buyers who send them.
         </motion.p>
 
         {/* Button */}
@@ -52,7 +52,7 @@ export default function Hero() {
         >
           <button
             onClick={() => window.dispatchEvent(new Event("clew:open-demo"))}
-            className="inline-flex items-center justify-center bg-accent text-accent-foreground px-9 py-4 text-base font-semibold tracking-wide shadow-lg shadow-black/20 hover:bg-foreground hover:scale-105 transition-all duration-300"
+            className="inline-flex items-center justify-center bg-accent text-accent-foreground px-9 py-4 text-base font-semibold tracking-wide hover:bg-foreground transition-colors duration-300"
           >
             Book a free demo
           </button>

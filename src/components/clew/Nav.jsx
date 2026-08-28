@@ -18,13 +18,17 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll while the mobile menu is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const openDemo = () => {
+    setOpen(false);
+    window.dispatchEvent(new Event("clew:open-demo"));
+  };
 
   return (
     <header
@@ -35,7 +39,6 @@ export default function Nav() {
       }`}
     >
       <nav className="px-[8vw] py-4 md:py-5">
-        {/* Desktop: wordmark left, nav right */}
         <div className="hidden lg:flex items-center justify-between">
           <a href="/#top" className="flex flex-col leading-none shrink-0">
             <span className="font-display font-bold tracking-tightest text-foreground text-[1.75rem] leading-none">
@@ -46,7 +49,7 @@ export default function Nav() {
             </span>
           </a>
 
-          <div className="flex items-center gap-7 border border-border/60 rounded-full px-7 py-2.5 bg-background/40 backdrop-blur-sm">
+          <div className="flex items-center gap-8">
             {LINKS.map((l) => (
               <a
                 key={l.href}
@@ -56,10 +59,16 @@ export default function Nav() {
                 {l.label}
               </a>
             ))}
+            <button
+              type="button"
+              onClick={openDemo}
+              className="inline-flex items-center justify-center bg-accent text-accent-foreground px-5 py-2.5 text-sm font-semibold tracking-wide hover:bg-foreground transition-colors duration-300"
+            >
+              Book a demo
+            </button>
           </div>
         </div>
 
-        {/* Mobile: wordmark left, hamburger right */}
         <div className="lg:hidden flex items-center justify-between">
           <a href="/#top" className="flex flex-col leading-none shrink-0" onClick={() => setOpen(false)}>
             <span className="font-display font-bold tracking-tightest text-foreground text-2xl leading-none">
@@ -81,7 +90,6 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Mobile menu panel */}
       <AnimatePresence>
         {open && (
           <motion.div
@@ -103,13 +111,11 @@ export default function Nav() {
                 </a>
               ))}
               <button
-                onClick={() => {
-                  setOpen(false);
-                  window.dispatchEvent(new Event("clew:open-demo"));
-                }}
+                type="button"
+                onClick={openDemo}
                 className="mt-5 w-full bg-accent text-accent-foreground py-4 text-base font-semibold tracking-wide"
               >
-                Book a free demo
+                Book a demo
               </button>
             </div>
           </motion.div>

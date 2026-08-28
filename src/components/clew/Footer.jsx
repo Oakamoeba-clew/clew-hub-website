@@ -1,25 +1,16 @@
-import { Image } from "@/components/ui/image";
-
-const LOGO =
-  "https://media.base44.com/images/public/6a662525657c49d632625bac/9ea448a55_Generatedimage12.png";
-
 export default function Footer() {
   return (
     <footer className="relative w-full bg-background border-t border-foreground">
-      {/* Heavy charcoal rule already provided by border-top */}
       <div className="px-[8vw] py-14 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-end">
-          {/* Stamp / Logo */}
           <div className="flex flex-col gap-2">
-            <Image
-              src={LOGO}
+            <img
+              src="/logo-clew.png"
               alt="CLEW Industries"
-              fittingType="fit"
               className="h-16 w-auto"
             />
           </div>
 
-          {/* Contact */}
           <div className="flex flex-col gap-1 md:items-center">
             <a
               href="mailto:info@clewindustries.com"
@@ -36,7 +27,6 @@ export default function Footer() {
             <span className="text-sm text-muted-foreground">By appointment</span>
           </div>
 
-          {/* Location stamp — like a crate stamp */}
           <div className="flex flex-col gap-1 md:items-end">
             <span className="text-[0.7rem] uppercase tracking-[0.25em] text-muted-foreground font-medium">
               Lehigh Valley
@@ -64,7 +54,7 @@ export default function Footer() {
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} CLEW Industries. Two problems. Two systems.
+            © {new Date().getFullYear()} CLEW Industries. Seen clearly outside. Run clearly inside.
           </p>
           <p className="text-xs text-muted-foreground/70">
             An accurate picture. Evidence-backed. No guarantees of contracts.

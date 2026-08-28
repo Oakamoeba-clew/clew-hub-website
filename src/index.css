@@ -82,7 +82,7 @@
     text-wrap: balance;
   }
   .lens-cursor {
-    cursor: none;
+    cursor: auto;
   }
 }
 
@@ -123,7 +123,6 @@
 }
 @media (max-width: 768px) {
   .lens-dot { display: none; }
-  .lens-cursor { cursor: auto; }
 }
 
 /* Hero clarity sharpen animation */
