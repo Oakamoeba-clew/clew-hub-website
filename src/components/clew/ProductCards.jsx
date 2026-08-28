@@ -105,13 +105,10 @@ export default function ProductCards() {
           Seen clearly outside. Run clearly inside.
         </Reveal>
 
-        <Reveal
-          as="p"
-          delay={120}
-          className="mt-5 mb-10 md:mb-12 max-w-[52ch] text-base md:text-lg text-foreground/70 leading-relaxed"
-        >
+        <p className="text-base text-foreground/70 leading-relaxed max-w-[52ch] mt-5 mb-10 md:mb-12">
           Framework keeps every quote moving. Foundation puts your capability where buyers look.
-        </Reveal>
+          Open a product, then click around inside — the demos are live.
+        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 items-stretch">
           {CARDS.map((card) => {

@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, Search, List, Building2, ChevronDown, Lock, CheckCircle2, AlertTriangle, Check, Zap } from "lucide-react";
+import {
+  Download,
+  Search,
+  List,
+  Building2,
+  ChevronDown,
+  Lock,
+  CheckCircle2,
+  AlertTriangle,
+  Check,
+  Zap,
+} from "lucide-react";
 import Reveal from "./Reveal";
 
 export const PRODUCT_TABS = {
@@ -54,21 +65,130 @@ export const PRODUCT_TABS = {
 
 const TABS = PRODUCT_TABS;
 
-const RFQ_ROWS = [
-  { rfq: "1042", company: "Torque Dynamics", contact: "R. Voss", part: "Titanium bracket", status: "Received", time: "2 hrs", flagged: false },
-  { rfq: "1041", company: "Meridian Aero", contact: "J. Cole", part: "Fixture plate", status: "Review", time: "5 hrs", flagged: false },
-  { rfq: "1039", company: "Northbay Mfg", contact: "D. Reyes", part: "Shaft, 6061", status: "Quoted", time: "1 day", flagged: false },
-  { rfq: "1038", company: "Acme Precision", contact: "T. Ahn", part: "Housing, Inconel", status: "Quoted", time: "48 hrs", flagged: true },
-  { rfq: "1035", company: "Bellwether Ind.", contact: "M. Ford", part: "Spacers, qty 12", status: "Quoted", time: "6 hrs", flagged: false },
-  { rfq: "1031", company: "Torque Dynamics", contact: "R. Voss", part: "Manifold block", status: "Won", time: "—", flagged: false },
+const FILTERS = [
+  { id: "all", label: "All" },
+  { id: "flagged", label: "Needs follow-up" },
+  { id: "open", label: "Open" },
+  { id: "won", label: "Won" },
 ];
 
-const RECORD_STAGES = [
-  { label: "Received", time: "Mon 9:14 AM", note: "via web form", tone: "muted" },
-  { label: "Quoted", time: "Mon 2:40 PM", note: "$6,750 sent", tone: "muted" },
-  { label: "Stalled", time: "Wed 2:40 PM", note: "48 hrs, no reply", tone: "danger" },
-  { label: "Followed up", time: "Wed 2:41 PM", note: "nudge sent", tone: "accent" },
-  { label: "Won", time: "Thu 11:02 AM", note: "buyer confirmed", tone: "success" },
+const RFQ_ROWS = [
+  {
+    rfq: "1042",
+    company: "Torque Dynamics",
+    contact: "R. Voss",
+    part: "Titanium bracket",
+    status: "Received",
+    time: "2 hrs",
+    flagged: false,
+    amount: "—",
+    closedNote: "Just landed",
+    badge: "Received",
+    badgeTone: "muted",
+    qty: 12,
+    takeaway: "New RFQs land on the board with a due date attached — not buried in an inbox.",
+    stages: [{ label: "Received", time: "Today 8:02 AM", note: "via web form", tone: "accent" }],
+  },
+  {
+    rfq: "1041",
+    company: "Meridian Aero",
+    contact: "J. Cole",
+    part: "Fixture plate",
+    status: "Review",
+    time: "5 hrs",
+    flagged: false,
+    amount: "—",
+    closedNote: "In engineering",
+    badge: "Review",
+    badgeTone: "muted",
+    qty: 4,
+    takeaway: "Specs and tolerances stay on the record so engineering isn't hunting through email threads.",
+    stages: [
+      { label: "Received", time: "Today 7:10 AM", note: "via email forward", tone: "muted" },
+      { label: "Review", time: "Today 9:40 AM", note: "assigned to eng", tone: "accent" },
+    ],
+  },
+  {
+    rfq: "1039",
+    company: "Northbay Mfg",
+    contact: "D. Reyes",
+    part: "Shaft, 6061",
+    status: "Quoted",
+    time: "1 day",
+    flagged: false,
+    amount: "$2,140",
+    closedNote: "Awaiting reply",
+    badge: "Quoted",
+    badgeTone: "accent",
+    qty: 25,
+    takeaway: "The quote is on the board with a clock. Nothing depends on someone remembering to check back.",
+    stages: [
+      { label: "Received", time: "Mon 11:02 AM", note: "via phone intake", tone: "muted" },
+      { label: "Quoted", time: "Mon 3:15 PM", note: "$2,140 sent", tone: "accent" },
+    ],
+  },
+  {
+    rfq: "1038",
+    company: "Acme Precision",
+    contact: "T. Ahn",
+    part: "Housing, Inconel",
+    status: "Quoted",
+    time: "48 hrs",
+    flagged: true,
+    amount: "$6,750",
+    closedNote: "Closed in 3 days",
+    badge: "Won",
+    badgeTone: "success",
+    qty: 40,
+    takeaway:
+      "The stall was caught and the nudge went out one minute apart — automatically, with nobody watching the clock.",
+    stages: [
+      { label: "Received", time: "Mon 9:14 AM", note: "via web form", tone: "muted" },
+      { label: "Quoted", time: "Mon 2:40 PM", note: "$6,750 sent", tone: "muted" },
+      { label: "Stalled", time: "Wed 2:40 PM", note: "48 hrs, no reply", tone: "danger" },
+      { label: "Followed up", time: "Wed 2:41 PM", note: "nudge sent", tone: "accent" },
+      { label: "Won", time: "Thu 11:02 AM", note: "buyer confirmed", tone: "success" },
+    ],
+  },
+  {
+    rfq: "1035",
+    company: "Bellwether Ind.",
+    contact: "M. Ford",
+    part: "Spacers, qty 12",
+    status: "Quoted",
+    time: "6 hrs",
+    flagged: false,
+    amount: "$890",
+    closedNote: "Fresh quote",
+    badge: "Quoted",
+    badgeTone: "accent",
+    qty: 12,
+    takeaway: "Small jobs get the same tracking as big ones — nothing falls off because it felt too minor.",
+    stages: [
+      { label: "Received", time: "Today 10:05 AM", note: "via portal", tone: "muted" },
+      { label: "Quoted", time: "Today 1:20 PM", note: "$890 sent", tone: "accent" },
+    ],
+  },
+  {
+    rfq: "1031",
+    company: "Torque Dynamics",
+    contact: "R. Voss",
+    part: "Manifold block",
+    status: "Won",
+    time: "—",
+    flagged: false,
+    amount: "$4,200",
+    closedNote: "Won in 5 days",
+    badge: "Won",
+    badgeTone: "success",
+    qty: 2,
+    takeaway: "Closed jobs stay on the record — so the next RFQ from the same buyer starts with context.",
+    stages: [
+      { label: "Received", time: "Last Tue 2:00 PM", note: "via email", tone: "muted" },
+      { label: "Quoted", time: "Last Wed 11:10 AM", note: "$4,200 sent", tone: "muted" },
+      { label: "Won", time: "Mon 9:30 AM", note: "PO received", tone: "success" },
+    ],
+  },
 ];
 
 const STATUS_STYLES = {
@@ -76,6 +196,12 @@ const STATUS_STYLES = {
   Review: "text-neutral-500 bg-neutral-100",
   Quoted: "text-accent bg-accent/10",
   Won: "text-emerald-700 bg-emerald-50",
+};
+
+const BADGE_STYLES = {
+  muted: "text-neutral-600 bg-neutral-100",
+  accent: "text-accent bg-accent/10",
+  success: "text-emerald-700 bg-emerald-50",
 };
 
 export function ProcessSteps({ steps }) {
@@ -135,11 +261,16 @@ function SearchResultCard() {
   );
 }
 
-function CapabilityPage() {
+function CapabilityPage({ activeCol, onSelectCol }) {
+  const cols = [
+    { id: "machining", label: "Machining", items: ["5-axis milling", "Swiss turning", "Wire EDM"] },
+    { id: "materials", label: "Materials", items: ["Titanium", "Inconel", "6061 Aluminum"] },
+    { id: "quality", label: "Quality", items: ["CMM inspection", "First article (FAI)", "Full traceability"] },
+  ];
+
   return (
     <div className="shadow-2xl shadow-black/25">
       <div className="overflow-hidden rounded-md ring-1 ring-black/10">
-        {/* Browser chrome */}
         <div className="flex items-center gap-2 px-4 py-2.5 bg-[#1c1c1c]">
           <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
@@ -150,7 +281,6 @@ function CapabilityPage() {
           </div>
         </div>
 
-        {/* Site nav */}
         <nav className="flex items-center justify-between px-6 py-3.5 bg-white border-b border-neutral-100">
           <div className="flex items-center gap-2.5">
             <div className="h-[26px] w-[26px] rounded bg-neutral-200" />
@@ -168,7 +298,6 @@ function CapabilityPage() {
           </span>
         </nav>
 
-        {/* Hero band */}
         <div className="bg-gradient-to-b from-neutral-50 to-white px-6 pt-8 pb-7 border-b border-neutral-100">
           <h3 className="font-display font-bold text-neutral-900 text-2xl md:text-3xl leading-tight tracking-tight max-w-[16ch]">
             Precision CNC machining
@@ -189,7 +318,6 @@ function CapabilityPage() {
           </div>
         </div>
 
-        {/* Government codes strip */}
         <div className="bg-white px-6 py-4 border-b border-neutral-100 grid grid-cols-2 sm:grid-cols-4 gap-4">
           {[
             { label: "NAICS", value: "332710" },
@@ -213,12 +341,11 @@ function CapabilityPage() {
           </div>
         </div>
 
-        {/* Capabilities section */}
         <div className="bg-white px-6 py-6">
           <div className="flex items-start justify-between gap-6 mb-4">
             <div>
               <h4 className="font-display font-bold text-neutral-900 text-base">Capabilities</h4>
-              <p className="text-xs text-neutral-400 mt-0.5">What we run, in-house.</p>
+              <p className="text-xs text-neutral-400 mt-0.5">Click a column to inspect it.</p>
             </div>
             <div className="text-right flex-shrink-0">
               <span className="inline-flex items-center gap-1.5 text-[0.65rem] font-bold text-white bg-accent rounded-md px-3.5 py-2.5 whitespace-nowrap">
@@ -229,26 +356,37 @@ function CapabilityPage() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[
-              { label: "Machining", items: ["5-axis milling", "Swiss turning", "Wire EDM"] },
-              { label: "Materials", items: ["Titanium", "Inconel", "6061 Aluminum"] },
-              { label: "Quality", items: ["CMM inspection", "First article (FAI)", "Full traceability"] },
-            ].map((col) => (
-              <div key={col.label} className="border border-neutral-100 rounded-lg p-3.5">
-                <p className="text-[0.6rem] uppercase tracking-wide text-neutral-400 font-semibold mb-2">
-                  {col.label}
-                </p>
-                <div className="text-[13px] text-neutral-700 leading-[1.7]">
-                  {col.items.map((it) => (
-                    <div key={it}>{it}</div>
-                  ))}
-                </div>
-              </div>
-            ))}
+            {cols.map((col) => {
+              const active = activeCol === col.id;
+              return (
+                <button
+                  key={col.id}
+                  type="button"
+                  onClick={() => onSelectCol(col.id)}
+                  className={`text-left border p-3.5 transition-colors duration-200 ${
+                    active
+                      ? "border-accent bg-accent/5 ring-1 ring-accent/30"
+                      : "border-neutral-100 hover:border-accent/40"
+                  }`}
+                >
+                  <p
+                    className={`text-[0.6rem] uppercase tracking-wide font-semibold mb-2 ${
+                      active ? "text-accent" : "text-neutral-400"
+                    }`}
+                  >
+                    {col.label}
+                  </p>
+                  <div className="text-[13px] text-neutral-700 leading-[1.7]">
+                    {col.items.map((it) => (
+                      <div key={it}>{it}</div>
+                    ))}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Footer */}
         <div className="bg-neutral-50 border-t border-neutral-100 px-6 py-3.5 flex items-center justify-between gap-4">
           <p className="text-[0.65rem] text-neutral-400">© 2026 Your Shop Name · Lehigh Valley, PA</p>
           <span className="inline-flex items-center gap-1.5 text-[0.65rem] font-semibold text-accent whitespace-nowrap">
@@ -261,9 +399,10 @@ function CapabilityPage() {
 }
 
 export function FoundationPanel() {
+  const [activeCol, setActiveCol] = useState("machining");
+
   return (
     <div className="flex flex-col gap-16 md:gap-20">
-      {/* 01 — What a buyer finds */}
       <div>
         <p className="text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground font-semibold mb-2.5">
           01 · What a buyer finds
@@ -275,11 +414,9 @@ export function FoundationPanel() {
           A buyer searching your NAICS code, or checking you out after a referral, lands on something
           current — not a site that stopped being true three years ago.
         </p>
-
         <SearchResultCard />
       </div>
 
-      {/* 02 — The capability page */}
       <div>
         <p className="text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground font-semibold mb-2.5">
           02 · One record, always current
@@ -291,42 +428,45 @@ export function FoundationPanel() {
           Registration numbers, certifications, and real capability — structured the way buyers
           actually check, and updated when your shop changes.
         </p>
-
-        <CapabilityPage />
+        <CapabilityPage activeCol={activeCol} onSelectCol={setActiveCol} />
       </div>
     </div>
   );
 }
 
-function RecordCard() {
+function RecordCard({ record }) {
+  const stages = record.stages;
+
   return (
-    <div className="rounded-xl overflow-hidden shadow-2xl shadow-black/20 border border-border">
-      {/* Record header */}
+    <div className="overflow-hidden shadow-2xl shadow-black/20 border border-border bg-card">
       <div className="bg-card px-6 py-5 border-b border-border">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="font-display font-semibold text-foreground text-lg">RFQ–1038</span>
-              <span className="text-[0.65rem] font-medium text-emerald-700 bg-emerald-50 rounded-full px-2.5 py-0.5">
-                Won
+            <div className="flex items-center gap-2.5 flex-wrap">
+              <span className="font-display font-semibold text-foreground text-lg">RFQ–{record.rfq}</span>
+              <span className={`text-[0.65rem] font-medium px-2.5 py-0.5 ${BADGE_STYLES[record.badgeTone]}`}>
+                {record.badge}
               </span>
+              {record.flagged && (
+                <span className="inline-flex items-center gap-1 text-[0.65rem] font-semibold text-red-700 bg-red-50 px-2.5 py-0.5">
+                  <AlertTriangle size={11} /> Needs follow-up
+                </span>
+              )}
             </div>
             <p className="text-sm text-foreground/60 mt-1">
-              Acme Precision · Housing, Inconel · qty 40
+              {record.company} · {record.part} · qty {record.qty}
             </p>
           </div>
           <div className="text-right flex-shrink-0">
-            <p className="font-display font-semibold text-foreground text-lg">$6,750</p>
-            <p className="text-[0.7rem] text-muted-foreground mt-0.5">Closed in 3 days</p>
+            <p className="font-display font-semibold text-foreground text-lg">{record.amount}</p>
+            <p className="text-[0.7rem] text-muted-foreground mt-0.5">{record.closedNote}</p>
           </div>
         </div>
       </div>
 
-      {/* Timeline */}
       <div className="bg-background px-5 sm:px-6 pt-6 sm:pt-8 pb-6">
-        {/* Mobile: vertical stack */}
         <div className="sm:hidden flex flex-col">
-          {RECORD_STAGES.map((s, i) => (
+          {stages.map((s, i) => (
             <div key={s.label} className="flex gap-3">
               <div className="flex flex-col items-center flex-shrink-0">
                 <div
@@ -336,14 +476,14 @@ function RecordCard() {
                       : s.tone === "success"
                       ? "h-3 w-3 bg-emerald-600 ring-4 ring-emerald-600/15"
                       : s.tone === "accent"
-                      ? "h-2 w-2 bg-accent mt-0.5"
+                      ? "h-2.5 w-2.5 bg-accent mt-0.5"
                       : "h-2 w-2 bg-muted-foreground mt-0.5"
                   }`}
                 />
-                {i < RECORD_STAGES.length - 1 && (
+                {i < stages.length - 1 && (
                   <div
                     className={`w-[2px] flex-1 min-h-[34px] ${
-                      s.tone === "danger" || s.tone === "accent" ? "bg-red-500/60" : "bg-border-strong"
+                      s.tone === "danger" || s.tone === "accent" ? "bg-red-500/60" : "bg-border"
                     }`}
                   />
                 )}
@@ -372,29 +512,44 @@ function RecordCard() {
           ))}
         </div>
 
-        {/* Desktop: horizontal timeline */}
         <div className="hidden sm:block">
-          <div className="flex items-center mb-3.5">
-          <div className="flex-1 h-[2px] bg-border-strong" />
-          <div className="h-2 w-2 rounded-full bg-muted-foreground flex-shrink-0" />
-          <div className="flex-1 h-[2px] bg-border-strong" />
-          <div className="h-2 w-2 rounded-full bg-muted-foreground flex-shrink-0" />
-          <div className="flex-1 h-[2px] bg-red-500" />
-          <div className="h-3 w-3 rounded-full bg-red-500 flex-shrink-0 ring-4 ring-red-500/15" />
-          <div className="flex-1 h-[2px] bg-red-500" />
-          <div className="h-2 w-2 rounded-full bg-accent flex-shrink-0" />
-          <div className="flex-1 h-[2px] bg-accent" />
-          <div className="h-3 w-3 rounded-full bg-emerald-600 flex-shrink-0 ring-4 ring-emerald-600/15" />
-          <div className="flex-1 h-[2px] bg-emerald-600" />
-        </div>
-
-          <div className="grid grid-cols-5 gap-1.5">
-            {RECORD_STAGES.map((s) => (
-              <div key={s.label} className={s.tone === "danger" ? "text-center" : ""}>
+          <div
+            className="grid gap-1.5"
+            style={{ gridTemplateColumns: `repeat(${stages.length}, minmax(0, 1fr))` }}
+          >
+            {stages.map((s, i) => (
+              <div key={s.label} className="min-w-0">
+                <div className="flex items-center mb-3">
+                  <div
+                    className={`h-[2px] flex-1 ${
+                      i === 0
+                        ? "bg-transparent"
+                        : s.tone === "danger"
+                        ? "bg-red-500"
+                        : s.tone === "success"
+                        ? "bg-emerald-600"
+                        : s.tone === "accent"
+                        ? "bg-accent"
+                        : "bg-border"
+                    }`}
+                  />
+                  <div
+                    className={`rounded-full flex-shrink-0 ${
+                      s.tone === "danger"
+                        ? "h-3 w-3 bg-red-500 ring-4 ring-red-500/15"
+                        : s.tone === "success"
+                        ? "h-3 w-3 bg-emerald-600 ring-4 ring-emerald-600/15"
+                        : s.tone === "accent"
+                        ? "h-2.5 w-2.5 bg-accent"
+                        : "h-2 w-2 bg-muted-foreground"
+                    }`}
+                  />
+                  <div className={`h-[2px] flex-1 ${i === stages.length - 1 ? "bg-transparent" : "bg-border"}`} />
+                </div>
                 <p
                   className={`text-[13px] font-medium m-0 flex items-center gap-1 ${
                     s.tone === "danger"
-                      ? "text-red-600 font-semibold justify-center"
+                      ? "text-red-600 font-semibold"
                       : s.tone === "success"
                       ? "text-emerald-700 font-semibold"
                       : s.tone === "accent"
@@ -418,23 +573,36 @@ function RecordCard() {
         </div>
       </div>
 
-      {/* Footer takeaway */}
       <div className="bg-card border-t border-border px-6 py-3.5 flex items-center gap-2.5">
         <Zap size={15} className="text-accent flex-shrink-0" />
-        <p className="text-[13px] text-foreground/70">
-          The stall was caught and the nudge went out{" "}
-          <strong className="text-foreground font-semibold">one minute apart</strong> — automatically,
-          with nobody watching the clock.
-        </p>
+        <p className="text-[13px] text-foreground/70">{record.takeaway}</p>
       </div>
     </div>
   );
 }
 
 export function FrameworkPanel() {
+  const [selectedId, setSelectedId] = useState("1038");
+  const [filter, setFilter] = useState("all");
+
+  const filtered = RFQ_ROWS.filter((r) => {
+    if (filter === "flagged") return r.flagged;
+    if (filter === "won") return r.status === "Won";
+    if (filter === "open") return r.status !== "Won";
+    return true;
+  });
+
+  const selected = RFQ_ROWS.find((r) => r.rfq === selectedId) || RFQ_ROWS[3];
+
+  const selectRow = (id) => {
+    setSelectedId(id);
+    window.requestAnimationFrame(() => {
+      document.getElementById("rfq-record")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+  };
+
   return (
-    <div className="flex flex-col gap-16 md:gap-20">
-      {/* 01 — The board */}
+    <div className="flex flex-col gap-14 md:gap-16">
       <div>
         <p className="text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground font-semibold mb-2.5">
           01 · The board
@@ -442,10 +610,27 @@ export function FrameworkPanel() {
         <h3 className="font-display font-semibold text-foreground text-2xl md:text-3xl leading-tight mb-3 max-w-[18ch]">
           Every quote, on one board.
         </h3>
-        <p className="text-base text-foreground/70 leading-[1.6] max-w-[58ch] mb-7">
-          Every RFQ the shop has open, what stage it's in, and how long it's been sitting there. The
-          ones going cold surface on their own.
+        <p className="text-base text-foreground/70 leading-[1.6] max-w-[58ch] mb-4">
+          Click any RFQ. The record below updates with its full history — including stalls that flag
+          themselves.
         </p>
+
+        <div className="flex flex-wrap gap-2 mb-5">
+          {FILTERS.map((f) => (
+            <button
+              key={f.id}
+              type="button"
+              onClick={() => setFilter(f.id)}
+              className={`px-3.5 py-2 text-xs font-semibold tracking-wide border transition-colors duration-200 ${
+                filter === f.id
+                  ? "border-accent bg-accent text-accent-foreground"
+                  : "border-border text-foreground/70 hover:border-accent/40"
+              }`}
+            >
+              {f.label}
+            </button>
+          ))}
+        </div>
 
         <div className="shadow-2xl shadow-black/25">
           <div className="overflow-hidden rounded-md ring-1 ring-black/10">
@@ -456,7 +641,7 @@ export function FrameworkPanel() {
               <span className="ml-3 text-sm text-white/60">app.clewindustries.com</span>
             </div>
 
-            <div className="flex bg-white min-h-[400px]">
+            <div className="flex bg-white min-h-[360px]">
               <div className="w-16 border-r border-neutral-100 py-4 flex flex-col items-center gap-5 flex-shrink-0">
                 <div className="w-7 h-7 rounded-md bg-accent" />
                 <div className="flex flex-col items-center gap-1 text-accent">
@@ -479,44 +664,48 @@ export function FrameworkPanel() {
                     <span className="text-[0.65rem] font-bold text-white bg-accent rounded-md px-3 py-2 whitespace-nowrap">
                       + New RFQ
                     </span>
-                    <div className="h-6 w-6 rounded-full bg-neutral-100 flex items-center justify-center text-[9px] font-semibold text-neutral-500">
-                      FS
-                    </div>
                   </div>
                 </div>
 
-                {/* Mobile: stacked cards */}
                 <div className="sm:hidden flex flex-col gap-2">
-                  {RFQ_ROWS.map((r) => (
-                    <div
-                      key={r.rfq}
-                      className={`border rounded-lg p-3 ${
-                        r.flagged ? "border-red-200 bg-red-50/40" : "border-neutral-100"
-                      }`}
-                    >
-                      <div className="flex items-start justify-between gap-2 mb-1.5">
-                        <div>
-                          <span className="text-[13px] font-semibold text-neutral-800">{r.company}</span>
-                          <span className="text-[11px] text-neutral-400 ml-1.5">#{r.rfq}</span>
+                  {filtered.map((r) => {
+                    const active = selectedId === r.rfq;
+                    return (
+                      <button
+                        key={r.rfq}
+                        type="button"
+                        onClick={() => selectRow(r.rfq)}
+                        className={`text-left border p-3 transition-colors ${
+                          active
+                            ? "border-accent bg-accent/5 ring-1 ring-accent/25"
+                            : r.flagged
+                            ? "border-red-200 bg-red-50/40"
+                            : "border-neutral-100"
+                        }`}
+                      >
+                        <div className="flex items-start justify-between gap-2 mb-1.5">
+                          <div>
+                            <span className="text-[13px] font-semibold text-neutral-800">{r.company}</span>
+                            <span className="text-[11px] text-neutral-400 ml-1.5">#{r.rfq}</span>
+                          </div>
+                          <span
+                            className={`text-[10px] font-semibold rounded px-2 py-1 flex-shrink-0 ${STATUS_STYLES[r.status]}`}
+                          >
+                            {r.status}
+                          </span>
                         </div>
-                        <span className={`text-[10px] font-semibold rounded px-2 py-1 flex-shrink-0 ${STATUS_STYLES[r.status]}`}>
-                          {r.status}
-                        </span>
-                      </div>
-                      <p className="text-[12px] text-neutral-500 mb-2">{r.part}</p>
-                      <div className="flex items-center justify-between">
-                        <span className={`text-[12px] ${r.flagged ? "font-semibold text-red-600" : "text-neutral-500"}`}>
-                          {r.time}
-                        </span>
-                        {r.flagged && (
-                          <span className="text-[10px] text-red-600">Flagged for follow-up</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                        <p className="text-[12px] text-neutral-500 mb-2">{r.part}</p>
+                        <div className="flex items-center justify-between">
+                          <span className={`text-[12px] ${r.flagged ? "font-semibold text-red-600" : "text-neutral-500"}`}>
+                            {r.time}
+                          </span>
+                          {r.flagged && <span className="text-[10px] text-red-600">Flagged for follow-up</span>}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
 
-                {/* Desktop: full table */}
                 <div className="hidden sm:block border border-neutral-100 rounded-lg overflow-hidden">
                   <div className="grid grid-cols-[60px_1fr_1fr_1fr_80px_140px] bg-neutral-50">
                     {["RFQ", "Company", "Contact", "Part", "Status", "Time in status"].map((h, i) => (
@@ -532,37 +721,54 @@ export function FrameworkPanel() {
                     ))}
                   </div>
 
-                  {RFQ_ROWS.map((r, i) => (
-                    <div
-                      key={r.rfq}
-                      className={`grid grid-cols-[60px_1fr_1fr_1fr_80px_140px] text-[13px] text-neutral-800 ${
-                        i < RFQ_ROWS.length - 1 ? "border-b border-neutral-100" : ""
-                      } ${r.flagged ? "bg-red-50/40" : ""}`}
-                    >
-                      <div className="px-2.5 py-2.5 border-r border-neutral-50 text-neutral-400">{r.rfq}</div>
-                      <div className="px-2.5 py-2.5 border-r border-neutral-50 font-medium">{r.company}</div>
-                      <div className="px-2.5 py-2.5 border-r border-neutral-50 text-neutral-500">{r.contact}</div>
-                      <div className="px-2.5 py-2.5 border-r border-neutral-50 text-neutral-500">{r.part}</div>
-                      <div className="px-2.5 py-2.5 border-r border-neutral-50 flex items-center">
-                        <span className={`text-[10px] font-semibold rounded px-2 py-1 ${STATUS_STYLES[r.status]}`}>
-                          {r.status}
-                        </span>
-                      </div>
-                      <div className="px-2.5 py-2 flex flex-col justify-center">
-                        <span className={`text-[12px] ${r.flagged ? "font-semibold text-red-600" : "text-neutral-500"}`}>
-                          {r.time}
-                        </span>
-                        {r.flagged && (
-                          <span className="text-[10px] text-red-600 mt-0.5">Flagged for follow-up</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                  {filtered.map((r, i) => {
+                    const active = selectedId === r.rfq;
+                    return (
+                      <button
+                        key={r.rfq}
+                        type="button"
+                        onClick={() => selectRow(r.rfq)}
+                        className={`w-full text-left grid grid-cols-[60px_1fr_1fr_1fr_80px_140px] text-[13px] text-neutral-800 transition-colors ${
+                          i < filtered.length - 1 ? "border-b border-neutral-100" : ""
+                        } ${
+                          active
+                            ? "bg-accent/10"
+                            : r.flagged
+                            ? "bg-red-50/40 hover:bg-red-50/70"
+                            : "hover:bg-neutral-50"
+                        }`}
+                      >
+                        <div className="px-2.5 py-2.5 border-r border-neutral-50 text-neutral-400">{r.rfq}</div>
+                        <div className="px-2.5 py-2.5 border-r border-neutral-50 font-medium">{r.company}</div>
+                        <div className="px-2.5 py-2.5 border-r border-neutral-50 text-neutral-500">{r.contact}</div>
+                        <div className="px-2.5 py-2.5 border-r border-neutral-50 text-neutral-500">{r.part}</div>
+                        <div className="px-2.5 py-2.5 border-r border-neutral-50 flex items-center">
+                          <span className={`text-[10px] font-semibold rounded px-2 py-1 ${STATUS_STYLES[r.status]}`}>
+                            {r.status}
+                          </span>
+                        </div>
+                        <div className="px-2.5 py-2 flex flex-col justify-center">
+                          <span className={`text-[12px] ${r.flagged ? "font-semibold text-red-600" : "text-neutral-500"}`}>
+                            {r.time}
+                          </span>
+                          {r.flagged && (
+                            <span className="text-[10px] text-red-600 mt-0.5">Flagged for follow-up</span>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
 
+                {filtered.length === 0 && (
+                  <p className="text-sm text-neutral-400 py-8 text-center">No RFQs in this filter.</p>
+                )}
+
                 <div className="flex items-center justify-between mt-2.5">
-                  <p className="text-[10px] text-neutral-300">Showing 6 of 24 RFQs</p>
-                  <p className="text-[10px] text-neutral-300">Synced 2 min ago</p>
+                  <p className="text-[10px] text-neutral-300">
+                    Showing {filtered.length} of {RFQ_ROWS.length} RFQs
+                  </p>
+                  <p className="text-[10px] text-accent/80 font-medium">Click a row to open its record</p>
                 </div>
               </div>
             </div>
@@ -570,8 +776,7 @@ export function FrameworkPanel() {
         </div>
       </div>
 
-      {/* 02 — One record */}
-      <div>
+      <div id="rfq-record">
         <p className="text-[0.65rem] uppercase tracking-[0.15em] text-muted-foreground font-semibold mb-2.5">
           02 · One record, start to finish
         </p>
@@ -580,10 +785,20 @@ export function FrameworkPanel() {
         </h3>
         <p className="text-base text-foreground/70 leading-[1.6] max-w-[58ch] mb-7">
           One RFQ arrives. It becomes a quote, then a follow-up, then a closed job — carrying its own
-          history the whole way. Nobody retypes it into a spreadsheet at any point.
+          history the whole way.
         </p>
 
-        <RecordCard />
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selected.rfq}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <RecordCard record={selected} />
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
@@ -607,7 +822,6 @@ export default function Product() {
           See it work, not just hear about it.
         </Reveal>
 
-        {/* Tabs */}
         <div className="flex gap-2.5 mb-8">
           {Object.entries(TABS).map(([key, t]) => (
             <motion.button
@@ -639,7 +853,6 @@ export default function Product() {
           ))}
         </div>
 
-        {/* Description */}
         <AnimatePresence mode="wait">
           <motion.p
             key={active}
@@ -653,7 +866,6 @@ export default function Product() {
           </motion.p>
         </AnimatePresence>
 
-        {/* Panel */}
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
