@@ -57,9 +57,6 @@ export default function Footer() {
           <a href="/#product" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Products
           </a>
-          <a href="/#service" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
-            Pricing
-          </a>
           <a href="/#contact" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Contact
           </a>

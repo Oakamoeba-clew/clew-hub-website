@@ -3,7 +3,6 @@ import Thread from "@/components/clew/Thread";
 import Nav from "@/components/clew/Nav";
 import Hero from "@/components/clew/Hero";
 import ProductCards from "@/components/clew/ProductCards";
-import Service from "@/components/clew/Service";
 import DemoModal from "@/components/clew/DemoModal";
 import Contact from "@/components/clew/Contact";
 import Footer from "@/components/clew/Footer";
@@ -26,7 +25,6 @@ export default function Home() {
       <main>
         <Hero />
         <ProductCards />
-        <Service />
         <Contact />
       </main>
       <Footer />

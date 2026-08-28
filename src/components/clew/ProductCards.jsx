@@ -99,9 +99,9 @@ export default function ProductCards() {
         <Reveal
           as="h2"
           delay={60}
-          className="font-display font-semibold tracking-tightest text-foreground text-[8vw] leading-[0.98] md:text-[3.2vw] md:leading-[1.05] max-w-[18ch] mb-10 md:mb-12 text-balance"
+          className="font-display font-semibold tracking-tightest text-foreground text-[8vw] leading-[0.98] md:text-[3.2vw] md:leading-[1.05] max-w-[24ch] mb-10 md:mb-12 text-balance"
         >
-          Two systems. One job: clarity.
+          Seen clearly outside. Run clearly inside.
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
