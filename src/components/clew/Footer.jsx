@@ -2,14 +2,15 @@ export default function Footer() {
   return (
     <footer className="relative w-full bg-background border-t border-foreground">
       <div className="px-[8vw] py-14 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-end">
-          <div className="flex flex-col gap-2">
-            <img
-              src="/logo-clew.png"
-              alt="CLEW Industries"
-              className="h-16 w-auto"
-            />
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start">
+          <a href="/#top" className="flex flex-col leading-none shrink-0 w-fit">
+            <span className="font-display font-bold tracking-tightest text-foreground text-[1.75rem] leading-none">
+              CLEW
+            </span>
+            <span className="font-display text-[0.6rem] uppercase tracking-[0.35em] text-accent font-semibold mt-1.5">
+              Industries
+            </span>
+          </a>
 
           <div className="flex flex-col gap-1 md:items-center">
             <a
