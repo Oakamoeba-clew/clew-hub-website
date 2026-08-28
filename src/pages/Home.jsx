@@ -2,8 +2,7 @@ import LensCursor from "@/components/clew/LensCursor";
 import Thread from "@/components/clew/Thread";
 import Nav from "@/components/clew/Nav";
 import Hero from "@/components/clew/Hero";
-import Problem from "@/components/clew/Problem";
-import Product from "@/components/clew/Product";
+import ProductCards from "@/components/clew/ProductCards";
 import Service from "@/components/clew/Service";
 import DemoModal from "@/components/clew/DemoModal";
 import Contact from "@/components/clew/Contact";
@@ -26,8 +25,7 @@ export default function Home() {
       <Nav />
       <main>
         <Hero />
-        <Problem />
-        <Product />
+        <ProductCards />
         <Service />
         <Contact />
       </main>

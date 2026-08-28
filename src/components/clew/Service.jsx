@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Image } from "@/components/ui/image";
 import Reveal from "./Reveal";
-import { Check, Folder, ShieldCheck, Server, Inbox, LayoutGrid, Bell } from "lucide-react";
+import { Folder, ShieldCheck, Server, Inbox, LayoutGrid, Bell } from "lucide-react";
 import ServiceInquiry from "./ServiceInquiry";
 import FoundationChoice from "./FoundationChoice";
 

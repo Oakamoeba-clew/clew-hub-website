@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Download, Search, List, Building2, ChevronDown, Lock, CheckCircle2, AlertTriangle, Check, Zap } from "lucide-react";
 import Reveal from "./Reveal";
 
-const TABS = {
+export const PRODUCT_TABS = {
   foundation: {
     pillar: "Clarity to the Market",
     name: "Foundation",
@@ -52,6 +52,8 @@ const TABS = {
   },
 };
 
+const TABS = PRODUCT_TABS;
+
 const RFQ_ROWS = [
   { rfq: "1042", company: "Torque Dynamics", contact: "R. Voss", part: "Titanium bracket", status: "Received", time: "2 hrs", flagged: false },
   { rfq: "1041", company: "Meridian Aero", contact: "J. Cole", part: "Fixture plate", status: "Review", time: "5 hrs", flagged: false },
@@ -76,7 +78,7 @@ const STATUS_STYLES = {
   Won: "text-emerald-700 bg-emerald-50",
 };
 
-function ProcessSteps({ steps }) {
+export function ProcessSteps({ steps }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6 mt-10 md:mt-12">
       {steps.map((s) => (
@@ -258,7 +260,7 @@ function CapabilityPage() {
   );
 }
 
-function FoundationPanel() {
+export function FoundationPanel() {
   return (
     <div className="flex flex-col gap-16 md:gap-20">
       {/* 01 — What a buyer finds */}
@@ -429,7 +431,7 @@ function RecordCard() {
   );
 }
 
-function FrameworkPanel() {
+export function FrameworkPanel() {
   return (
     <div className="flex flex-col gap-16 md:gap-20">
       {/* 01 — The board */}

@@ -3,9 +3,7 @@ import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const LINKS = [
-  { label: "Home", href: "/#top" },
-  { label: "The Problem", href: "/#problem" },
-  { label: "Product", href: "/#product" },
+  { label: "Products", href: "/#product" },
   { label: "Pricing", href: "/#service" },
   { label: "Contact", href: "/#contact" },
 ];
