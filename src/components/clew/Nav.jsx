@@ -15,6 +15,8 @@ const PRODUCTS = [
   },
 ];
 
+const CLIENT_LOGIN_HREF = "https://clew-framework-board.pages.dev";
+
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -131,6 +133,13 @@ export default function Nav() {
               Contact
             </a>
 
+            <a
+              href={CLIENT_LOGIN_HREF}
+              className="text-[0.95rem] text-foreground/80 hover:text-accent transition-colors duration-300 font-medium"
+            >
+              Client login
+            </a>
+
             <button
               type="button"
               onClick={openDemo}
@@ -215,6 +224,14 @@ export default function Nav() {
                 className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50"
               >
                 Contact
+              </a>
+
+              <a
+                href={CLIENT_LOGIN_HREF}
+                onClick={closeMobile}
+                className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50"
+              >
+                Client login
               </a>
 
               <button
