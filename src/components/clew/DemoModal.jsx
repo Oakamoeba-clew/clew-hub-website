@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X, MessageCircle, PlayCircle, HelpCircle, Check } from "lucide-react";
 
@@ -72,6 +72,22 @@ export default function DemoModal({ open, onClose }) {
     setTimeout(reset, 300);
   };
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        handleClose();
+      }
+    };
+    window.addEventListener("keydown", onKey, true);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey, true);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   const inputCls =
     "w-full bg-transparent border-0 border-b border-border px-0 py-3 text-base text-foreground placeholder:text-muted-foreground/50 focus:border-accent focus:outline-none transition-colors duration-300";
   const labelCls =
@@ -87,6 +103,7 @@ export default function DemoModal({ open, onClose }) {
           transition={{ duration: 0.25 }}
           className="fixed inset-0 z-[100] flex items-center justify-center px-[5vw] py-[6vh] bg-foreground/40 backdrop-blur-sm"
           onClick={handleClose}
+          role="presentation"
         >
           <motion.div
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -94,6 +111,9 @@ export default function DemoModal({ open, onClose }) {
             exit={{ opacity: 0, y: 12, scale: 0.98 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="demo-modal-title"
             className="relative w-full max-w-[880px] max-h-[88vh] overflow-y-auto bg-background border border-border shadow-2xl p-7 sm:p-8 md:p-12"
           >
             <button
@@ -104,7 +124,7 @@ export default function DemoModal({ open, onClose }) {
               <X size={22} />
             </button>
 
-            <p className="text-[0.75rem] uppercase tracking-[0.3em] text-muted-foreground font-semibold mb-8">
+            <p id="demo-modal-title" className="text-[0.75rem] uppercase tracking-[0.3em] text-muted-foreground font-semibold mb-8">
               Demo
             </p>
 

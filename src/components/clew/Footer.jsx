@@ -45,12 +45,6 @@ export default function Footer() {
           <a href="/#top" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Home
           </a>
-          <a href="/#framework" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
-            Framework
-          </a>
-          <a href="/#foundation" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
-            Foundation
-          </a>
           <a href="/#contact" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Contact
           </a>
@@ -58,7 +52,7 @@ export default function Footer() {
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} CLEW Industries. Seen clearly outside. Run clearly inside.
+            © {new Date().getFullYear()} Clew Industries, Lehigh Valley PA.
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <p className="text-xs text-muted-foreground/70">

@@ -18,7 +18,7 @@ const ROUTES = {
 };
 const DEFAULT_ROUTE = ROUTES.Sales;
 
-const PRODUCT_OPTIONS = ["Foundation", "Framework", "Foundation + Framework", "Other"];
+const PRODUCT_OPTIONS = ["Framework", "Other"];
 const REASON_OPTIONS = [
   { value: "Sales", label: "Sales — product questions" },
   { value: "Accounting", label: "Accounting — billing or payment" },
@@ -115,8 +115,8 @@ export default function Contact() {
               Put us in touch.
             </h2>
             <p className="mt-6 text-base md:text-lg text-foreground/70 leading-[1.6] max-w-[42ch]">
-              No queue or ticket number — every request is read and handled
-              by a team member.
+              No queue or ticket number. Write us — we read it in the
+              Lehigh Valley.
             </p>
 
             <p className="mt-4">

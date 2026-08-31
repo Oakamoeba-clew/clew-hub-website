@@ -1,9 +1,8 @@
-import LensCursor from "@/components/clew/LensCursor";
-import Thread from "@/components/clew/Thread";
 import Nav from "@/components/clew/Nav";
 import Hero from "@/components/clew/Hero";
 import FrameworkSection from "@/components/clew/FrameworkSection";
-import FoundationSection from "@/components/clew/FoundationSection";
+import WhoFor from "@/components/clew/WhoFor";
+import HowItStarts from "@/components/clew/HowItStarts";
 import DemoModal from "@/components/clew/DemoModal";
 import Contact from "@/components/clew/Contact";
 import Footer from "@/components/clew/Footer";
@@ -19,14 +18,13 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="relative bg-background lens-cursor">
-      <LensCursor />
-      <Thread />
+    <div className="relative bg-background">
       <Nav />
       <main>
         <Hero />
         <FrameworkSection />
-        <FoundationSection />
+        <WhoFor />
+        <HowItStarts />
         <Contact />
       </main>
       <Footer />
