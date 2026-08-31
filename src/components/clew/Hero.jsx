@@ -40,7 +40,7 @@ export default function Hero() {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
           className="mt-7 max-w-[52ch] text-lg md:text-xl text-foreground/80 leading-relaxed drop-shadow-[0_1px_6px_rgba(0,0,0,0.2)]"
         >
-          CLEW Framework keeps every RFQ moving — and Foundation gets your shop seen by the buyers who send them.
+          You run the shop. We keep the RFQs moving.
         </motion.p>
 
         {/* Button */}
