@@ -141,7 +141,10 @@
 ::-webkit-scrollbar-thumb { background: hsl(38 18% 70%); border-radius: 0; }
 ::-webkit-scrollbar-thumb:hover { background: hsl(var(--accent)); }
 
-::selection {
-  background: hsl(var(--accent) / 0.85);
-  color: hsl(var(--accent-foreground));
+@keyframes sitting-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--accent) / 0.0); }
+  50% { box-shadow: 0 0 0 4px hsl(var(--accent) / 0.22); }
+}
+.sitting-highlight {
+  animation: sitting-pulse 1.1s ease-in-out 2;
 }

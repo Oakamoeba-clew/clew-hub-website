@@ -6,12 +6,7 @@ const PRODUCTS = [
   {
     label: "Framework",
     href: "/#framework",
-    blurb: "Clarity in the Shop — RFQs to won or lost",
-  },
-  {
-    label: "Foundation",
-    href: "/#foundation",
-    blurb: "Clarity to the Market — one verifiable page",
+    blurb: "Quotes that already landed — until won or lost",
   },
 ];
 
