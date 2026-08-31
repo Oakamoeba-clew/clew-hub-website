@@ -60,9 +60,17 @@ export default function Footer() {
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} CLEW Industries. Seen clearly outside. Run clearly inside.
           </p>
-          <p className="text-xs text-muted-foreground/70">
-            An accurate picture. Evidence-backed. No guarantees of contracts.
-          </p>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            <p className="text-xs text-muted-foreground/70">
+              An accurate picture. Evidence-backed. No guarantees of contracts.
+            </p>
+            <a
+              href="https://clew-framework-board.pages.dev/master"
+              className="text-xs text-muted-foreground/70 hover:text-muted-foreground transition-colors duration-300"
+            >
+              Staff
+            </a>
+          </div>
         </div>
       </div>
     </footer>
