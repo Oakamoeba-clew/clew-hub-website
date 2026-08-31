@@ -25,7 +25,7 @@ export default function SittingEmail({ sittingCards, onOpenBoard, opened }) {
             <span className="text-muted-foreground">From</span>
             <span className="text-foreground font-medium">Clew · sitting picture</span>
             <span className="text-muted-foreground">To</span>
-            <span className="text-foreground/80">sales@ — the inbox you already use</span>
+            <span className="text-foreground/80">sales@</span>
             <span className="text-muted-foreground">Subject</span>
             <span className="text-foreground font-semibold">{subject}</span>
           </div>

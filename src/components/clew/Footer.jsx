@@ -45,13 +45,9 @@ export default function Footer() {
           <a href="/#top" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Home
           </a>
-          <a href="/#framework" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
-            Framework
-          </a>
           <a href="/#contact" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Contact
           </a>
-          <span id="foundation" className="text-sm text-muted-foreground/50">Foundation</span>
         </div>
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

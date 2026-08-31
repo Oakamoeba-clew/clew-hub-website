@@ -3,18 +3,18 @@ import Reveal from "./Reveal";
 const BEATS = [
   {
     n: "01",
-    title: "Keep your inbox",
-    body: "sales@ and info@ stay yours. We do not replace them, and we do not give you a URL to type.",
+    title: "A copy of the RFQ shows up as a card",
+    body: "sales@ and info@ stay yours. A copy becomes a Received card. No URL to type.",
   },
   {
     n: "02",
-    title: "One Outlook rule, once",
-    body: "A copy of an inbound RFQ becomes a Received card. You keep quoting the way you already quote.",
+    title: "You keep quoting how you quote",
+    body: "Write the quote the way you already do. Move the card when you send it.",
   },
   {
     n: "03",
-    title: "Weekday picture is the door",
-    body: "If cards sit in Received or Review, a weekday morning email shows the sitting picture. The rust button opens the board.",
+    title: "The weekday sitting picture is the door",
+    body: "If cards sit in Received or Review, a weekday morning email shows the picture. The rust button opens the board.",
   },
 ];
 
@@ -35,14 +35,6 @@ export default function HowItStarts() {
         >
           No new inbox. No URL to remember.
         </Reveal>
-        <Reveal
-          as="p"
-          delay={120}
-          className="mt-5 max-w-[46ch] text-base md:text-lg text-foreground/70 leading-relaxed"
-        >
-          Closed jobs archive after 30 days. We do not write the quote, chase the buyer, bring in
-          new RFQs, or rebuild the website.
-        </Reveal>
 
         <div className="mt-12 md:mt-14 grid grid-cols-1 md:grid-cols-3 border-2 border-foreground/15 bg-background shadow-[0_18px_50px_-28px_rgba(0,0,0,0.35)]">
           {BEATS.map((beat, i) => (
@@ -61,16 +53,10 @@ export default function HowItStarts() {
           ))}
         </div>
 
-        <div className="mt-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-5">
-          <p className="font-display font-semibold text-foreground text-lg">$299/mo</p>
-          <button
-            type="button"
-            onClick={() => window.dispatchEvent(new Event("clew:open-demo"))}
-            className="inline-flex items-center justify-center bg-accent text-accent-foreground px-7 py-3 text-sm font-semibold tracking-wide hover:bg-foreground transition-colors duration-300"
-          >
-            Book a demo
-          </button>
-        </div>
+        <p className="mt-8 max-w-[52ch] text-sm text-foreground/55 leading-relaxed">
+          We do not write the quote, chase the buyer, bring in new RFQs, or rebuild the website.
+          Closed work archives after 30 days.
+        </p>
       </div>
     </section>
   );
