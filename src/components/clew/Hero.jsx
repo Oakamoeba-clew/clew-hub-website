@@ -15,14 +15,13 @@ export default function Hero({
 }) {
   return (
     <section id="top" className="relative w-full min-h-[100dvh] overflow-hidden bg-background">
-      <div className="absolute inset-0 xl:right-[46%] pointer-events-none">
+      <div className="hero-photo-frame pointer-events-none absolute inset-0 xl:right-auto xl:w-[58%]">
         <img
           src={HERO_IMG}
           alt="An American machine shop floor with a flag hanging against a brick wall"
-          className="h-full w-full object-cover object-right"
+          className="h-full w-full object-cover object-[center_40%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/88 to-background xl:to-background" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/45 to-background/35" />
+        <div className="hero-photo-wash absolute inset-0" />
       </div>
 
       <div className="relative z-10 min-h-[100dvh] flex items-center">

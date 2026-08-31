@@ -117,6 +117,51 @@
     0 22px 48px -28px rgba(0, 0, 0, 0.32);
 }
 
+.hero-photo-frame {
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to right, #000 0%, #000 62%, transparent 100%);
+}
+
+.hero-photo-wash {
+  background:
+    linear-gradient(
+      to right,
+      hsl(var(--background) / 0.38) 0%,
+      hsl(var(--background) / 0.22) 40%,
+      hsl(var(--background) / 0.7) 78%,
+      hsl(var(--background) / 1) 100%
+    ),
+    linear-gradient(
+      to top,
+      hsl(var(--background) / 0.42) 0%,
+      hsl(var(--background) / 0.08) 48%,
+      hsl(var(--background) / 0.22) 100%
+    );
+}
+
+@media (max-width: 1279px) {
+  .hero-photo-frame {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0%, #000 52%, transparent 100%);
+  }
+
+  .hero-photo-wash {
+    background:
+      linear-gradient(
+        to bottom,
+        hsl(var(--background) / 0.32) 0%,
+        hsl(var(--background) / 0.2) 40%,
+        hsl(var(--background) / 1) 100%
+      ),
+      linear-gradient(
+        to right,
+        hsl(var(--background) / 0.34) 0%,
+        hsl(var(--background) / 0.18) 55%,
+        hsl(var(--background) / 0.45) 100%
+      );
+  }
+}
+
 /* Hero clarity sharpen animation */
 @keyframes clarity-sharpen {
   0% { filter: blur(6px); opacity: 0.4; }
