@@ -1,6 +1,5 @@
 import Nav from "@/components/clew/Nav";
-import Hero from "@/components/clew/Hero";
-import FrameworkSection from "@/components/clew/FrameworkSection";
+import ShopPlay from "@/components/clew/ShopPlay";
 import WhoFor from "@/components/clew/WhoFor";
 import HowItStarts from "@/components/clew/HowItStarts";
 import DemoModal from "@/components/clew/DemoModal";
@@ -21,8 +20,7 @@ export default function Home() {
     <div className="relative bg-background">
       <Nav />
       <main>
-        <Hero />
-        <FrameworkSection />
+        <ShopPlay />
         <WhoFor />
         <HowItStarts />
         <Contact />
