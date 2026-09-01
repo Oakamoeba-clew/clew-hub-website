@@ -351,20 +351,30 @@
   }
 }
 
+.product-artifact--board {
+  padding: 1.1rem 1rem 1.15rem;
+}
+
+@media (min-width: 768px) {
+  .product-artifact--board {
+    padding: 1.25rem 1.25rem 1.3rem;
+  }
+}
+
 .product-sticky--email {
-  transform: rotate(-3.2deg);
+  transform: rotate(-2.8deg);
 }
 
 .product-sticky--board {
-  transform: rotate(2.8deg);
+  transform: rotate(2.4deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .product-sticky--email {
-    transform: rotate(-3.2deg) !important;
+    transform: rotate(-2.8deg) !important;
   }
   .product-sticky--board {
-    transform: rotate(2.8deg) !important;
+    transform: rotate(2.4deg) !important;
   }
 }
 

@@ -93,6 +93,7 @@ export default function QuoteBoard({
   idPrefix = "",
   interactive = true,
   polished = false,
+  dense = false,
 }) {
   const [announcement, setAnnouncement] = useState(
     "Last Tuesday’s RFQ is sitting. Move it, or tap it and send it to Quoted."
@@ -351,7 +352,9 @@ export default function QuoteBoard({
                           ? polished
                             ? "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.75rem] p-2.5 sm:p-3"
                             : "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.5rem] p-2 sm:p-2.5"
-                          : "min-h-[220px] md:min-h-[260px] p-2.5 sm:p-3"
+                          : dense
+                            ? "min-h-[11.5rem] md:min-h-[12.75rem] p-2 sm:p-2.5"
+                            : "min-h-[220px] md:min-h-[260px] p-2.5 sm:p-3"
                       } ${
                         i < columns.length - 1
                           ? polished
@@ -366,7 +369,9 @@ export default function QuoteBoard({
                         className={`uppercase text-muted-foreground font-semibold mb-3 flex items-baseline justify-between gap-2 ${
                           polished
                             ? "text-[0.62rem] tracking-[0.2em] pb-2 border-b border-foreground/[0.07]"
-                            : "text-[0.7rem] tracking-[0.16em]"
+                            : dense
+                              ? "text-[0.62rem] tracking-[0.14em] mb-2"
+                              : "text-[0.7rem] tracking-[0.16em]"
                         }`}
                       >
                         <span>{col.label}</span>

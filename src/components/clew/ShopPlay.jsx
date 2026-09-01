@@ -220,54 +220,72 @@ export default function ShopPlay() {
 
           <div className="mt-9 md:mt-11 grid grid-cols-1 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.18fr)] gap-12 lg:gap-14 xl:gap-16 items-start">
             <div className="min-w-0">
+              <aside
+                className="hero-sticky product-sticky product-sticky--email relative z-20 mb-5 w-[min(17.5rem,90%)]"
+                aria-label="Note"
+              >
+                <p className="hero-sticky-text">
+                  One daily email — open RFQs and where each one stands.
+                </p>
+              </aside>
+
               <div className="product-artifact">
                 <SittingEmail
                   sittingCards={sittingCards}
                   onOpenBoard={openBoardFromEmail}
                   opened={emailOpened}
                 />
-                <div className="mt-5 px-0.5">
-                  <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-2">
-                    The only ping
-                  </p>
-                  <p className="text-sm md:text-base text-foreground/70 leading-relaxed max-w-[40ch]">
-                    A weekday picture of what&apos;s still sitting. The live board is next — move
-                    cards and ping people until every quote is closed.
-                  </p>
-                </div>
               </div>
-
-              <aside
-                className="hero-sticky product-sticky product-sticky--email relative z-20 mx-auto mt-6 w-[min(17rem,88%)]"
-                aria-label="Note"
-              >
-                <p className="hero-sticky-text">
-                  1 email per day showing open RFQ&apos;s and where they stand.
-                </p>
-              </aside>
             </div>
 
             <div className="min-w-0">
-              <div className="product-artifact">
-                <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-2">
-                  The board
+              <aside
+                className="hero-sticky product-sticky product-sticky--board relative z-20 mb-5 ml-auto lg:ml-0 w-[min(16.5rem,90%)]"
+                aria-label="Note"
+              >
+                <p className="hero-sticky-text">
+                  A custom board for alerts and follow-up.
                 </p>
-                <p className="mb-5 max-w-[42ch] text-sm md:text-base text-foreground/70 leading-relaxed">
-                  Received through Lost. Drag cards, tap to act, ping the owner for follow-up.
-                  {sittingOnBoard > 0 ? (
-                    <>
-                      {" "}
-                      <span className="text-foreground font-medium tabular-nums">
-                        {sittingOnBoard} still sitting on this board.
-                      </span>
-                    </>
-                  ) : (
-                    <>
-                      {" "}
-                      <span className="text-accent font-medium">Nothing sitting.</span>
-                    </>
-                  )}
-                </p>
+              </aside>
+
+              <div className="product-artifact product-artifact--board">
+                <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2 mb-4">
+                  <div>
+                    <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-1.5">
+                      The board
+                    </p>
+                    <p className="max-w-[40ch] text-sm text-foreground/70 leading-relaxed">
+                      Drag to move. Tap to act or ping the owner.
+                      {sittingOnBoard > 0 ? (
+                        <>
+                          {" "}
+                          <span className="text-foreground font-medium tabular-nums">
+                            {sittingOnBoard} still sitting.
+                          </span>
+                        </>
+                      ) : (
+                        <>
+                          {" "}
+                          <span className="text-accent font-medium">Nothing sitting.</span>
+                        </>
+                      )}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const sitting = cards.find((c) => isSitting(c.column));
+                      if (!sitting) return;
+                      tryBoard(sitting.id);
+                      document
+                        .getElementById(`card-product-${sitting.id}`)
+                        ?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+                    }}
+                    className="self-start sm:self-auto text-[0.7rem] uppercase tracking-[0.18em] text-accent font-semibold border-b-2 border-accent pb-0.5 hover:text-foreground hover:border-foreground transition-colors"
+                  >
+                    Try the board
+                  </button>
+                </div>
                 <QuoteBoard
                   cards={cards}
                   onCardsChange={setCards}
@@ -280,16 +298,11 @@ export default function ShopPlay() {
                   onTryBoard={tryBoard}
                   onPing={onPing}
                   pingNote={pingNote}
+                  showIntro={false}
+                  dense
                   idPrefix="product-"
                 />
               </div>
-
-              <aside
-                className="hero-sticky product-sticky product-sticky--board relative z-20 mx-auto mt-6 w-[min(16rem,88%)]"
-                aria-label="Note"
-              >
-                <p className="hero-sticky-text">custom board to alert / follow up</p>
-              </aside>
             </div>
           </div>
         </div>
