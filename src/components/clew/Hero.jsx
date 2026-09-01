@@ -84,6 +84,16 @@ export default function Hero({
               You run the shop. We keep the RFQs moving.
             </motion.p>
 
+            <motion.aside
+              initial={{ opacity: 0, y: -48, rotate: -10, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, rotate: -3.5, scale: 1 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.85 }}
+              className="hero-sticky mt-7 sm:mt-8 max-w-[15.5rem]"
+              aria-label="Note"
+            >
+              <p className="hero-sticky-text">Manage all your RFQ&apos;s from one board</p>
+            </motion.aside>
+
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -98,16 +108,6 @@ export default function Hero({
                 Request a demo
               </button>
             </motion.div>
-
-            <motion.aside
-              initial={{ opacity: 0, y: -56, rotate: -10, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, rotate: -3.5, scale: 1 }}
-              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 1.05 }}
-              className="hero-sticky mt-10 sm:mt-12 max-w-[15.5rem]"
-              aria-label="Note"
-            >
-              <p className="hero-sticky-text">Manage all your RFQ&apos;s from one board</p>
-            </motion.aside>
           </div>
 
           <motion.div
