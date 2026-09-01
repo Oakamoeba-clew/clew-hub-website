@@ -34,7 +34,9 @@ export default function ShopPlay() {
   const [highlightSitting, setHighlightSitting] = useState(false);
   const [emailOpened, setEmailOpened] = useState(false);
   const [lesson, setLesson] = useState("");
+  const [pingNote, setPingNote] = useState("");
   const stageRef = useRef(null);
+  const pingTimerRef = useRef(null);
 
   const sittingCards = useMemo(
     () => cards.filter((card) => isSitting(card.column)),
@@ -42,6 +44,12 @@ export default function ShopPlay() {
   );
 
   const sittingOnBoard = sittingCards.length;
+
+  useEffect(() => {
+    return () => {
+      if (pingTimerRef.current) window.clearTimeout(pingTimerRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const el = stageRef.current;
@@ -104,7 +112,6 @@ export default function ShopPlay() {
     const isInView = () => {
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight || 0;
-      // Catch the fold edge — hash jumps often pin section top to viewport bottom
       return rect.top < vh + 80 && rect.bottom > 40;
     };
 
@@ -123,7 +130,6 @@ export default function ShopPlay() {
 
     if (hashTarget) {
       el.scrollIntoView({ block: "start" });
-      // Product deep-link: play even if scroll lands on the fold edge
       timers.push(
         window.setTimeout(() => {
           if (cancelled || started) return;
@@ -176,6 +182,13 @@ export default function ShopPlay() {
     setLesson("Quoted. On a real weekday, the morning email would go quiet.");
   };
 
+  const onPing = (card) => {
+    const name = card.ownerName || "the shop";
+    setPingNote(`Pinged ${name} · follow-up on ${card.buyer}`);
+    if (pingTimerRef.current) window.clearTimeout(pingTimerRef.current);
+    pingTimerRef.current = window.setTimeout(() => setPingNote(""), 3200);
+  };
+
   return (
     <>
       <Hero />
@@ -205,56 +218,78 @@ export default function ShopPlay() {
             </p>
           ) : null}
 
-          <div className="product-stage-panel mt-9 md:mt-11 grid grid-cols-1 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.18fr)] gap-8 lg:gap-10 xl:gap-12 items-start">
-            <div>
-              <SittingEmail
-                sittingCards={sittingCards}
-                onOpenBoard={openBoardFromEmail}
-                opened={emailOpened}
-              />
-              <div className="mt-5 lg:mt-6 px-0.5">
-                <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-2">
-                  The only ping
-                </p>
-                <p className="text-sm md:text-base text-foreground/70 leading-relaxed max-w-[40ch]">
-                  A weekday picture of what&apos;s still sitting. Move cards on the live board until
-                  every quote is closed.
-                </p>
+          <div className="mt-9 md:mt-11 grid grid-cols-1 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.18fr)] gap-12 lg:gap-14 xl:gap-16 items-start">
+            <div className="min-w-0">
+              <div className="product-artifact">
+                <SittingEmail
+                  sittingCards={sittingCards}
+                  onOpenBoard={openBoardFromEmail}
+                  opened={emailOpened}
+                />
+                <div className="mt-5 px-0.5">
+                  <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-2">
+                    The only ping
+                  </p>
+                  <p className="text-sm md:text-base text-foreground/70 leading-relaxed max-w-[40ch]">
+                    A weekday picture of what&apos;s still sitting. The live board is next — move
+                    cards and ping people until every quote is closed.
+                  </p>
+                </div>
               </div>
+
+              <aside
+                className="hero-sticky product-sticky product-sticky--email relative z-20 mx-auto mt-6 w-[min(17rem,88%)]"
+                aria-label="Note"
+              >
+                <p className="hero-sticky-text">
+                  1 email per day showing open RFQ&apos;s and where they stand.
+                </p>
+              </aside>
             </div>
 
-            <div>
-              <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-2">
-                The board
-              </p>
-              <p className="mb-5 max-w-[42ch] text-sm md:text-base text-foreground/70 leading-relaxed">
-                Received through Lost. Keep moving them until every quote is closed.
-                {sittingOnBoard > 0 ? (
-                  <>
-                    {" "}
-                    <span className="text-foreground font-medium tabular-nums">
-                      {sittingOnBoard} still sitting on this board.
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    {" "}
-                    <span className="text-accent font-medium">Nothing sitting.</span>
-                  </>
-                )}
-              </p>
-              <QuoteBoard
-                cards={cards}
-                onCardsChange={setCards}
-                highlightSitting={highlightSitting}
-                selectedId={selectedId}
-                onSelect={setSelectedId}
-                nudgeId={nudgeId}
-                warnId={warnId}
-                onQuotedFromSitting={onQuotedFromSitting}
-                onTryBoard={tryBoard}
-                idPrefix="product-"
-              />
+            <div className="min-w-0">
+              <div className="product-artifact">
+                <p className="text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-2">
+                  The board
+                </p>
+                <p className="mb-5 max-w-[42ch] text-sm md:text-base text-foreground/70 leading-relaxed">
+                  Received through Lost. Drag cards, tap to act, ping the owner for follow-up.
+                  {sittingOnBoard > 0 ? (
+                    <>
+                      {" "}
+                      <span className="text-foreground font-medium tabular-nums">
+                        {sittingOnBoard} still sitting on this board.
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {" "}
+                      <span className="text-accent font-medium">Nothing sitting.</span>
+                    </>
+                  )}
+                </p>
+                <QuoteBoard
+                  cards={cards}
+                  onCardsChange={setCards}
+                  highlightSitting={highlightSitting}
+                  selectedId={selectedId}
+                  onSelect={setSelectedId}
+                  nudgeId={nudgeId}
+                  warnId={warnId}
+                  onQuotedFromSitting={onQuotedFromSitting}
+                  onTryBoard={tryBoard}
+                  onPing={onPing}
+                  pingNote={pingNote}
+                  idPrefix="product-"
+                />
+              </div>
+
+              <aside
+                className="hero-sticky product-sticky product-sticky--board relative z-20 mx-auto mt-6 w-[min(16rem,88%)]"
+                aria-label="Note"
+              >
+                <p className="hero-sticky-text">custom board to alert / follow up</p>
+              </aside>
             </div>
           </div>
         </div>
