@@ -1,5 +1,37 @@
 import { motion } from "framer-motion";
-import QuoteBoard, { HERO_COLUMNS } from "./QuoteBoard";
+import QuoteBoard, { HERO_COLUMNS, TUESDAY_RFQ_ID } from "./QuoteBoard";
+
+function StalledPointer() {
+  return (
+    <svg
+      className="hero-callout-pointer"
+      width="52"
+      height="68"
+      viewBox="0 0 52 68"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M9 2 L38 58" stroke="currentColor" strokeWidth="1.75" />
+      <path d="M30 54.5 L39 59 L32 63 Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function DragPointer() {
+  return (
+    <svg
+      className="hero-callout-pointer"
+      width="22"
+      height="38"
+      viewBox="0 0 22 38"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path d="M11 2 L11 30" stroke="currentColor" strokeWidth="1.75" />
+      <path d="M5 26 L11 34 L17 26 Z" fill="currentColor" />
+    </svg>
+  );
+}
 
 export default function Hero({
   cards,
@@ -11,6 +43,10 @@ export default function Hero({
   onQuotedFromSitting,
   onTryBoard,
 }) {
+  const eastonSitting = cards.some(
+    (card) => card.id === TUESDAY_RFQ_ID && card.column === "received"
+  );
+
   return (
     <section id="top" className="relative w-full min-h-[100dvh] overflow-hidden bg-background">
       <div className="relative z-10 min-h-[100dvh] flex items-center">
@@ -50,8 +86,18 @@ export default function Hero({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
-              className="min-w-0"
+              className="relative min-w-0 xl:pt-16"
             >
+              {eastonSitting && (
+                <div className="hero-callout hero-callout--stalled" aria-hidden="true">
+                  <p className="hero-callout-line">48 hrs. Untouched.</p>
+                  <StalledPointer />
+                </div>
+              )}
+              <div className="hero-callout hero-callout--drag" aria-hidden="true">
+                <p className="hero-callout-line">Drag it here.</p>
+                <DragPointer />
+              </div>
               <div className="hero-board-panel border-2 border-foreground/12 p-3 sm:p-4 xl:p-5 2xl:p-6">
                 <QuoteBoard
                   cards={cards}

@@ -337,11 +337,6 @@ export default function QuoteBoard({
                                     lifted && !dragSnapshot.isDragging ? "card-lifted" : ""
                                   }`}
                                 >
-                                  {card.lifted && sitting && (
-                                    <p className="text-[0.6rem] uppercase tracking-[0.14em] text-accent font-semibold mb-1.5">
-                                      Drag me
-                                    </p>
-                                  )}
                                   <p
                                     className={`font-display font-semibold text-foreground leading-snug ${
                                       compact ? "text-[0.78rem] sm:text-[0.82rem]" : "text-[0.8rem]"
@@ -355,6 +350,13 @@ export default function QuoteBoard({
                                   <p className="text-[0.65rem] text-muted-foreground mt-1.5 tabular-nums">
                                     Qty {card.qty} · Due {card.due}
                                   </p>
+                                  {compact &&
+                                    card.id === TUESDAY_RFQ_ID &&
+                                    sitting && (
+                                      <p className="xl:hidden mt-2 text-[0.68rem] font-semibold text-accent leading-snug">
+                                        48 hrs. Untouched.
+                                      </p>
+                                    )}
                                 </button>
                               )}
                             </Draggable>
