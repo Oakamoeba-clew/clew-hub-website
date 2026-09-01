@@ -379,13 +379,13 @@ export default function QuoteBoard({
                                             ? "border-accent/50 bg-accent/[0.05] sitting-highlight-soft pl-3 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
                                             : "border-foreground/[0.12]"
                                         }`
-                                      : `${compact ? "px-2.5 py-2.5 sm:px-3 sm:py-3" : "px-2.5 py-2.5"} border-2 ${
+                                      : `${compact ? "px-2.5 py-2.5 sm:px-3 sm:py-3" : "relative px-2.5 py-2.5"} border-2 ${
                                           interactive && selectedId === card.id
                                             ? "border-accent ring-2 ring-accent/25"
                                             : highlighted
                                             ? "border-accent sitting-highlight"
                                             : sitting
-                                            ? "border-foreground/25"
+                                            ? "border-accent/40 pl-[0.7rem] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[3px] before:bg-accent"
                                             : "border-foreground/15"
                                         }`
                                   } ${
