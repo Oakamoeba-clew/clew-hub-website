@@ -88,14 +88,14 @@ export default function Contact() {
   };
 
   const inputCls =
-    "w-full bg-transparent border-0 border-b border-border px-0 py-3 text-base text-foreground placeholder:text-muted-foreground/50 focus:border-accent focus:outline-none transition-colors duration-300";
+    "w-full bg-transparent border-0 border-b border-background/25 px-0 py-3 text-base text-background placeholder:text-background/40 focus:border-accent focus:outline-none transition-colors duration-300";
   const labelCls =
-    "block text-[0.7rem] uppercase tracking-[0.25em] text-muted-foreground font-semibold mb-1";
+    "block text-[0.7rem] uppercase tracking-[0.25em] text-background/55 font-semibold mb-1";
   const toggleBtnCls = (active) =>
     `flex-1 px-4 py-3 text-sm font-semibold tracking-wide border-b-2 transition-colors duration-300 ${
       active
         ? "bg-accent text-accent-foreground border-accent"
-        : "bg-transparent text-foreground/70 border-transparent hover:border-accent/40"
+        : "bg-transparent text-background/65 border-transparent hover:border-accent/50 hover:text-background"
     }`;
 
   return (
@@ -124,7 +124,7 @@ export default function Contact() {
                 onClick={() => window.dispatchEvent(new Event("clew:open-demo"))}
                 className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-foreground transition-colors duration-300"
               >
-                Prefer to see it live? Book a free demo
+                Prefer to see it live? Request a demo
                 <span aria-hidden="true">→</span>
               </button>
             </p>
@@ -158,149 +158,154 @@ export default function Contact() {
             </div>
           </Reveal>
 
-          {/* Right — the form */}
+          {/* Right — dark form panel */}
           <Reveal delay={120}>
-            <div className="border border-border p-7 md:p-9">
-            {status === "success" ? (
-              <div className="flex flex-col items-start py-6 border-t border-border md:border-t-0 md:pt-0 pt-8">
-                <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-5">
-                  <Check className="text-accent" size={24} />
-                </div>
-                <p className="font-display font-semibold text-foreground text-xl md:text-2xl tracking-tight">
-                  Message sent.
-                </p>
-                <p className="mt-2 text-foreground/70 text-base md:text-lg">
-                  We'll be in touch shortly.
-                </p>
-                <button
-                  onClick={() => {
-                    setStatus("idle");
-                    setCustomerType("new");
-                  }}
-                  className="mt-8 text-sm text-accent font-medium hover:text-foreground transition-colors"
-                >
-                  Send another message
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className="flex gap-2 mb-7 border-b border-border">
+            <div className="relative border-2 border-foreground/80 bg-foreground text-background p-7 md:p-10 shadow-[0_22px_55px_-24px_rgba(0,0,0,0.45)]">
+              <span className="absolute inset-x-0 top-0 h-[3px] bg-accent" aria-hidden="true" />
+              {status === "success" ? (
+                <div className="flex flex-col items-start py-6 md:pt-0 pt-8">
+                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-5">
+                    <Check className="text-accent" size={24} />
+                  </div>
+                  <p className="font-display font-semibold text-background text-xl md:text-2xl tracking-tight">
+                    Message sent.
+                  </p>
+                  <p className="mt-2 text-background/70 text-base md:text-lg">
+                    We&apos;ll be in touch shortly.
+                  </p>
                   <button
-                    type="button"
-                    className={toggleBtnCls(customerType === "new")}
-                    onClick={() => setCustomerType("new")}
+                    onClick={() => {
+                      setStatus("idle");
+                      setCustomerType("new");
+                    }}
+                    className="mt-8 text-sm text-accent font-medium hover:text-background transition-colors"
                   >
-                    New Customer
-                  </button>
-                  <button
-                    type="button"
-                    className={toggleBtnCls(customerType === "existing")}
-                    onClick={() => setCustomerType("existing")}
-                  >
-                    Existing Customer
+                    Send another message
                   </button>
                 </div>
-
-                <form onSubmit={onSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className={labelCls} htmlFor="c_name">Name</label>
-                      <input
-                        id="c_name"
-                        type="text"
-                        required
-                        value={form.contact_name}
-                        onChange={update("contact_name")}
-                        className={inputCls}
-                      />
-                    </div>
-                    <div>
-                      <label className={labelCls} htmlFor="c_company">Company</label>
-                      <input
-                        id="c_company"
-                        type="text"
-                        required
-                        value={form.company_name}
-                        onChange={update("company_name")}
-                        className={inputCls}
-                      />
-                    </div>
+              ) : (
+                <>
+                  <div className="flex gap-2 mb-7 border-b border-background/20">
+                    <button
+                      type="button"
+                      className={toggleBtnCls(customerType === "new")}
+                      onClick={() => setCustomerType("new")}
+                    >
+                      New Customer
+                    </button>
+                    <button
+                      type="button"
+                      className={toggleBtnCls(customerType === "existing")}
+                      onClick={() => setCustomerType("existing")}
+                    >
+                      Existing Customer
+                    </button>
                   </div>
 
-                  <div>
-                    <label className={labelCls} htmlFor="c_email">Email</label>
-                    <input
-                      id="c_email"
-                      type="email"
-                      required
-                      value={form.email}
-                      onChange={update("email")}
-                      className={inputCls}
-                    />
-                  </div>
-
-                  {customerType === "new" && (
-                    <div>
-                      <label className={labelCls} htmlFor="c_product">Product</label>
-                      <select
-                        id="c_product"
-                        required
-                        value={form.product}
-                        onChange={update("product")}
-                        className={inputCls}
-                      >
-                        <option value="" disabled>Select a product</option>
-                        {PRODUCT_OPTIONS.map((p) => (
-                          <option key={p} value={p}>{p}</option>
-                        ))}
-                      </select>
-                    </div>
-                  )}
-
-                  {customerType === "existing" && (
-                    <div>
-                      <p className={labelCls}>Reason</p>
-                      <div className="flex flex-wrap gap-2">
-                        {REASON_OPTIONS.map((r) => (
-                          <button
-                            key={r.value}
-                            type="button"
-                            className={toggleBtnCls(form.reason === r.value)}
-                            onClick={() => setForm((f) => ({ ...f, reason: r.value }))}
-                          >
-                            {r.value}
-                          </button>
-                        ))}
+                  <form onSubmit={onSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className={labelCls} htmlFor="c_name">Name</label>
+                        <input
+                          id="c_name"
+                          type="text"
+                          required
+                          value={form.contact_name}
+                          onChange={update("contact_name")}
+                          className={inputCls}
+                        />
+                      </div>
+                      <div>
+                        <label className={labelCls} htmlFor="c_company">Company</label>
+                        <input
+                          id="c_company"
+                          type="text"
+                          required
+                          value={form.company_name}
+                          onChange={update("company_name")}
+                          className={inputCls}
+                        />
                       </div>
                     </div>
-                  )}
 
-                  <div>
-                    <label className={labelCls} htmlFor="c_message">Message</label>
-                    <textarea
-                      id="c_message"
-                      value={form.message}
-                      onChange={update("message")}
-                      rows={4}
-                      className={`${inputCls} resize-none`}
-                    />
-                  </div>
+                    <div>
+                      <label className={labelCls} htmlFor="c_email">Email</label>
+                      <input
+                        id="c_email"
+                        type="email"
+                        required
+                        value={form.email}
+                        onChange={update("email")}
+                        className={inputCls}
+                      />
+                    </div>
 
-                  {error && <p className="text-sm text-destructive">{error}</p>}
+                    {customerType === "new" && (
+                      <div>
+                        <label className={labelCls} htmlFor="c_product">Product</label>
+                        <select
+                          id="c_product"
+                          required
+                          value={form.product}
+                          onChange={update("product")}
+                          className={`${inputCls} [color-scheme:dark]`}
+                        >
+                          <option value="" disabled className="bg-background text-foreground">
+                            Select a product
+                          </option>
+                          {PRODUCT_OPTIONS.map((p) => (
+                            <option key={p} value={p} className="bg-background text-foreground">
+                              {p}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
 
-                  <button
-                    type="submit"
-                    disabled={
-                      status === "submitting" ||
-                      (customerType === "existing" && !form.reason)
-                    }
-                    className="w-full md:w-auto inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-4 text-base font-semibold tracking-wide hover:bg-foreground transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
-                  >
-                    {status === "submitting" ? "Sending…" : "Send message"}
-                  </button>
-                </form>
-              </>
-            )}
+                    {customerType === "existing" && (
+                      <div>
+                        <p className={labelCls}>Reason</p>
+                        <div className="flex flex-wrap gap-2">
+                          {REASON_OPTIONS.map((r) => (
+                            <button
+                              key={r.value}
+                              type="button"
+                              className={toggleBtnCls(form.reason === r.value)}
+                              onClick={() => setForm((f) => ({ ...f, reason: r.value }))}
+                            >
+                              {r.value}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div>
+                      <label className={labelCls} htmlFor="c_message">Message</label>
+                      <textarea
+                        id="c_message"
+                        value={form.message}
+                        onChange={update("message")}
+                        rows={4}
+                        className={`${inputCls} resize-none`}
+                      />
+                    </div>
+
+                    {error && <p className="text-sm text-red-300">{error}</p>}
+
+                    <button
+                      type="submit"
+                      disabled={
+                        status === "submitting" ||
+                        (customerType === "existing" && !form.reason)
+                      }
+                      className="w-full md:w-auto inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-4 text-base font-semibold tracking-wide hover:bg-background hover:text-foreground transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      {status === "submitting" ? "Sending…" : "Send message"}
+                    </button>
+                  </form>
+                </>
+              )}
             </div>
           </Reveal>
         </div>
