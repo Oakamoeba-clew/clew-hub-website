@@ -22,8 +22,6 @@ export const SAMPLE_RFQS = [
     due: "Last Tue",
     column: "received",
     lifted: true,
-    owner: "MJ",
-    ownerName: "Mike",
   },
   {
     id: "rfq-1044",
@@ -32,8 +30,6 @@ export const SAMPLE_RFQS = [
     qty: 8,
     due: "Fri",
     column: "received",
-    owner: "AP",
-    ownerName: "Ana",
   },
   {
     id: "rfq-1041",
@@ -42,8 +38,6 @@ export const SAMPLE_RFQS = [
     qty: 24,
     due: "Sep 18",
     column: "review",
-    owner: "MJ",
-    ownerName: "Mike",
   },
   {
     id: "rfq-1039",
@@ -52,8 +46,6 @@ export const SAMPLE_RFQS = [
     qty: 4,
     due: "Sep 22",
     column: "quoted",
-    owner: "TR",
-    ownerName: "Tom",
   },
 ];
 
@@ -85,8 +77,6 @@ export default function QuoteBoard({
   focusId = null,
   onQuotedFromSitting,
   onTryBoard,
-  onPing,
-  pingNote = "",
   columns = BOARD_COLUMNS,
   compact = false,
   showIntro = true,
@@ -197,7 +187,7 @@ export default function QuoteBoard({
       {showIntro && interactive && (
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
           <p className="text-sm text-foreground/70 leading-relaxed max-w-[54ch]">
-            Drag a card to move it. Tap one to quote it — or ping the person on it for follow-up.
+            Drag a card to move it. Tap one to send it to Quoted.
           </p>
           <button
             type="button"
@@ -216,12 +206,6 @@ export default function QuoteBoard({
         </div>
       )}
 
-      {pingNote ? (
-        <p className="mb-3 text-sm font-display font-semibold text-accent product-lesson" role="status">
-          {pingNote}
-        </p>
-      ) : null}
-
       {selected && isSitting(selected.column) && (
         <div
           className={`mb-4 border-2 border-accent bg-accent/[0.07] flex flex-col gap-3 ${
@@ -229,14 +213,7 @@ export default function QuoteBoard({
           }`}
         >
           <p className="text-sm text-foreground font-medium">
-            {selected.buyer} is still sitting
-            {selected.ownerName ? (
-              <>
-                {" "}
-                · on <span className="text-accent">{selected.ownerName}</span>
-              </>
-            ) : null}
-            .
+            {selected.buyer} is still sitting.
           </p>
           <div className="flex flex-wrap gap-2">
             <button
@@ -246,15 +223,6 @@ export default function QuoteBoard({
             >
               Move to Quoted
             </button>
-            {selected.ownerName && onPing ? (
-              <button
-                type="button"
-                onClick={() => onPing(selected)}
-                className="inline-flex items-center justify-center border-2 border-accent text-accent px-5 py-2.5 text-sm font-semibold tracking-wide hover:bg-accent hover:text-accent-foreground transition-colors"
-              >
-                Ping {selected.ownerName} for follow-up
-              </button>
-            ) : null}
             {destColumns
               .filter((col) => col.id !== "quoted")
               .map((col) => (
@@ -278,12 +246,6 @@ export default function QuoteBoard({
         <div className="mb-4 border-2 border-foreground/15 bg-background p-3 flex flex-col gap-3">
           <p className="text-sm text-foreground/70">
             Move <span className="font-semibold text-foreground">{selected.buyer}</span>
-            {selected.ownerName ? (
-              <>
-                {" "}
-                · owned by <span className="font-semibold text-foreground">{selected.ownerName}</span>
-              </>
-            ) : null}
           </p>
           <div className="flex flex-wrap gap-1.5">
             {destColumns.map((col) => (
@@ -299,15 +261,6 @@ export default function QuoteBoard({
                 {col.label}
               </button>
             ))}
-            {selected.ownerName && onPing ? (
-              <button
-                type="button"
-                onClick={() => onPing(selected)}
-                className="text-[0.7rem] font-semibold uppercase tracking-wide px-2.5 py-1.5 border-2 border-foreground/25 text-foreground/70 hover:border-accent hover:text-accent transition-colors"
-              >
-                Ping {selected.ownerName}
-              </button>
-            ) : null}
           </div>
         </div>
       )}
@@ -488,27 +441,9 @@ export default function QuoteBoard({
                                   <p className="text-[0.7rem] text-foreground/65 mt-1 leading-snug">
                                     {card.part}
                                   </p>
-                                  <div
-                                    className={`mt-1.5 flex items-center justify-between gap-2 ${
-                                      compact ? "" : ""
-                                    }`}
-                                  >
-                                    <p className="text-[0.65rem] text-muted-foreground tabular-nums">
-                                      Qty {card.qty} · Due {card.due}
-                                    </p>
-                                    {interactive && !polished && card.owner ? (
-                                      <span
-                                        className="inline-flex h-5 min-w-5 items-center justify-center rounded-sm bg-foreground/[0.08] px-1 text-[0.58rem] font-semibold tracking-wide text-foreground/70"
-                                        title={
-                                          card.ownerName
-                                            ? `Owned by ${card.ownerName}`
-                                            : undefined
-                                        }
-                                      >
-                                        {card.owner}
-                                      </span>
-                                    ) : null}
-                                  </div>
+                                  <p className="text-[0.65rem] text-muted-foreground mt-1.5 tabular-nums">
+                                    Qty {card.qty} · Due {card.due}
+                                  </p>
                                   {compact &&
                                     card.id === TUESDAY_RFQ_ID &&
                                     sitting &&

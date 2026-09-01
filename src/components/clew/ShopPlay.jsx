@@ -34,9 +34,7 @@ export default function ShopPlay() {
   const [highlightSitting, setHighlightSitting] = useState(false);
   const [emailOpened, setEmailOpened] = useState(false);
   const [lesson, setLesson] = useState("");
-  const [pingNote, setPingNote] = useState("");
   const stageRef = useRef(null);
-  const pingTimerRef = useRef(null);
 
   const sittingCards = useMemo(
     () => cards.filter((card) => isSitting(card.column)),
@@ -44,12 +42,6 @@ export default function ShopPlay() {
   );
 
   const sittingOnBoard = sittingCards.length;
-
-  useEffect(() => {
-    return () => {
-      if (pingTimerRef.current) window.clearTimeout(pingTimerRef.current);
-    };
-  }, []);
 
   useEffect(() => {
     const el = stageRef.current;
@@ -182,13 +174,6 @@ export default function ShopPlay() {
     setLesson("Quoted. On a real weekday, the morning email would go quiet.");
   };
 
-  const onPing = (card) => {
-    const name = card.ownerName || "the shop";
-    setPingNote(`Pinged ${name} · follow-up on ${card.buyer}`);
-    if (pingTimerRef.current) window.clearTimeout(pingTimerRef.current);
-    pingTimerRef.current = window.setTimeout(() => setPingNote(""), 3200);
-  };
-
   return (
     <>
       <Hero />
@@ -244,7 +229,7 @@ export default function ShopPlay() {
                 aria-label="Note"
               >
                 <p className="hero-sticky-text">
-                  A custom board for alerts and follow-up.
+                  A custom board to keep every quote moving.
                 </p>
               </aside>
 
@@ -255,7 +240,7 @@ export default function ShopPlay() {
                       The board
                     </p>
                     <p className="max-w-[40ch] text-sm text-foreground/70 leading-relaxed">
-                      Drag to move. Tap to act or ping the owner.
+                      Drag to move. Tap a card to act on it.
                       {sittingOnBoard > 0 ? (
                         <>
                           {" "}
@@ -296,8 +281,6 @@ export default function ShopPlay() {
                   warnId={warnId}
                   onQuotedFromSitting={onQuotedFromSitting}
                   onTryBoard={tryBoard}
-                  onPing={onPing}
-                  pingNote={pingNote}
                   showIntro={false}
                   dense
                   idPrefix="product-"
