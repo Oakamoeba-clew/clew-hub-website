@@ -100,7 +100,23 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
             className="relative min-w-0"
           >
-            <div className="relative">
+            <div className="relative xl:pt-12">
+              <AnimatePresence>
+                {showCallout && (
+                  <motion.div
+                    key="stalled-callout"
+                    className="hero-callout hero-callout--stalled hero-callout--visible"
+                    aria-hidden="true"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <p className="hero-callout-line">48 hrs. Untouched.</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <div className="hero-board-panel hero-board-panel--pro relative z-0 select-none pointer-events-none">
                 <QuoteBoard
                   cards={HERO_CARDS}
@@ -117,22 +133,6 @@ export default function Hero() {
                   idPrefix="hero-"
                 />
               </div>
-
-              <AnimatePresence>
-                {showCallout && (
-                  <motion.div
-                    key="stalled-callout"
-                    className="hero-callout hero-callout--stalled hero-callout--visible"
-                    aria-hidden="true"
-                    initial={{ opacity: 0, x: -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <p className="hero-callout-line">48 hrs. Untouched.</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
 
             <motion.aside
