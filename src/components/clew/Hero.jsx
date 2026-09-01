@@ -69,7 +69,7 @@ export default function Hero({
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-              className="font-display font-semibold tracking-tightest text-foreground text-balance max-w-[16ch] text-[2.05rem] leading-[1.05] sm:text-[2.45rem] sm:leading-[1.04] xl:text-[2.55rem] xl:leading-[1.06] 2xl:text-[2.85rem]"
+              className="font-display font-semibold tracking-tightest text-foreground text-balance max-w-[15ch] text-[2.45rem] leading-[1.02] sm:text-[3rem] sm:leading-[1.02] xl:text-[3.35rem] xl:leading-[1.03] 2xl:text-[3.75rem]"
             >
               American manufacturing is not short on capability. It&apos;s short on{" "}
               <span className="text-accent">clarity</span>.
@@ -113,7 +113,7 @@ export default function Hero({
               </div>
             )}
             <div className="hero-callout hero-callout--drag" aria-hidden="true">
-              <p className="hero-callout-line">Drag it here.</p>
+              <p className="hero-callout-line">Move it here.</p>
               <DragPointer />
             </div>
             <div className="hero-board-panel border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)]">

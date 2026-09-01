@@ -81,7 +81,7 @@ export default function QuoteBoard({
   idPrefix = "",
 }) {
   const [announcement, setAnnouncement] = useState(
-    "Last Tuesday’s RFQ is sitting. Drag it, or tap it and send it to Quoted."
+    "Last Tuesday’s RFQ is sitting. Move it, or tap it and send it to Quoted."
   );
   const skipClickRef = useRef(false);
 
@@ -180,7 +180,7 @@ export default function QuoteBoard({
       {showIntro && (
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
           <p className="text-sm text-foreground/70 leading-relaxed max-w-[54ch]">
-            Last Tuesday’s RFQ is still sitting. Drag it to Quoted — or tap it.
+            Last Tuesday’s RFQ is still sitting. Move it to Quoted — or tap it.
           </p>
           <button
             type="button"
