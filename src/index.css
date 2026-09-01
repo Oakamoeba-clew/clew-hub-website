@@ -359,3 +359,52 @@
     animation: none;
   }
 }
+
+/* Offer / pricing — light product highlight (matches product stage) */
+.offer-stage {
+  background: hsl(40 28% 96%);
+}
+
+.offer-stage-atmosphere {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 65% 50% at 22% 30%, hsl(36 22% 90% / 0.9), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 70%, hsl(220 8% 90% / 0.45), transparent 55%),
+    linear-gradient(180deg, hsl(40 24% 95%) 0%, hsl(40 30% 96.5%) 100%);
+}
+
+.offer-panel {
+  position: relative;
+  padding: 1.5rem 1.35rem 1.65rem;
+  background:
+    linear-gradient(180deg, hsl(40 36% 98.5%) 0%, hsl(40 30% 97%) 100%);
+  border: 1px solid hsl(var(--foreground) / 0.1);
+  box-shadow:
+    inset 0 1px 0 hsl(0 0% 100% / 0.75),
+    0 28px 60px -28px rgba(0, 0, 0, 0.32),
+    0 0 0 1px hsl(var(--foreground) / 0.03);
+}
+
+.offer-panel::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 3px;
+  background: hsl(var(--accent));
+}
+
+@media (min-width: 768px) {
+  .offer-panel {
+    padding: 1.85rem 1.85rem 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .offer-panel {
+    padding: 2.15rem 2.15rem 2.25rem;
+  }
+}
