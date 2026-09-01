@@ -190,62 +190,33 @@
   top: auto;
   bottom: 100%;
   padding-bottom: 0.2rem;
-}
-
-.hero-callout--drag {
-  right: 0;
-  top: auto;
-  bottom: 100%;
-  padding-bottom: 0.2rem;
-  width: 34%;
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
 }
 
 @media (min-width: 1280px) {
-  .hero-callout--stalled,
-  .hero-callout--drag {
+  .hero-callout--stalled.hero-callout--visible {
     display: flex;
     flex-direction: column;
   }
-
-  .hero-callout--stalled {
-    align-items: flex-start;
-    animation: hero-callout-in-left 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
-  }
-
-  .hero-callout--drag {
-    animation: hero-callout-in-right 0.55s cubic-bezier(0.16, 1, 0.3, 1) 1.4s both;
-  }
 }
 
-@keyframes hero-callout-in-left {
+.hero-card-warn {
+  animation: hero-warn-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes hero-warn-in {
   from {
     opacity: 0;
-    transform: translate3d(-28vw, 0, 0);
+    transform: scale(0.7);
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes hero-callout-in-right {
-  from {
-    opacity: 0;
-    transform: translate3d(32vw, 0, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: scale(1);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-callout--stalled,
-  .hero-callout--drag {
+  .hero-card-warn {
     animation: none;
   }
 }

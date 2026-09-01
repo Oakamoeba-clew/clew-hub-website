@@ -73,6 +73,8 @@ export default function QuoteBoard({
   selectedId,
   onSelect,
   nudgeId,
+  warnId = null,
+  focusId = null,
   onQuotedFromSitting,
   onTryBoard,
   columns = BOARD_COLUMNS,
@@ -308,7 +310,9 @@ export default function QuoteBoard({
                       <div className={`flex flex-col flex-1 ${compact ? "gap-3" : "gap-2"}`}>
                         {columnCards.map((card, index) => {
                           const sitting = isSitting(card.column);
-                          const highlighted = highlightSitting && sitting;
+                          const focused = focusId === card.id;
+                          const highlighted = focused || (highlightSitting && sitting);
+                          const warned = warnId === card.id;
                           const lifted = Boolean(card.lifted) || nudgeId === card.id;
                           const dragId = `${idPrefix}${card.id}`;
                           return (
@@ -347,7 +351,7 @@ export default function QuoteBoard({
                                         }
                                       : undefined
                                   }
-                                  className={`text-left border-2 bg-card transition-shadow ${
+                                  className={`text-left border-2 bg-card transition-[box-shadow,border-color,transform] duration-500 ${
                                     compact ? "px-2.5 py-2.5 sm:px-3 sm:py-3" : "px-2.5 py-2.5"
                                   } ${
                                     interactive && selectedId === card.id
@@ -367,13 +371,37 @@ export default function QuoteBoard({
                                       : ""
                                   } ${interactive ? "cursor-pointer" : "cursor-default"}`}
                                 >
-                                  <p
-                                    className={`font-display font-semibold text-foreground leading-snug ${
-                                      compact ? "text-[0.78rem] sm:text-[0.82rem]" : "text-[0.8rem]"
-                                    }`}
-                                  >
-                                    {card.buyer}
-                                  </p>
+                                  <div className="flex items-start justify-between gap-2">
+                                    <p
+                                      className={`font-display font-semibold text-foreground leading-snug ${
+                                        compact ? "text-[0.78rem] sm:text-[0.82rem]" : "text-[0.8rem]"
+                                      }`}
+                                    >
+                                      {card.buyer}
+                                    </p>
+                                    {warned && (
+                                      <span
+                                        className="hero-card-warn flex-shrink-0 text-accent"
+                                        aria-hidden="true"
+                                        title="Sitting too long"
+                                      >
+                                        <svg
+                                          width="14"
+                                          height="14"
+                                          viewBox="0 0 24 24"
+                                          fill="none"
+                                          stroke="currentColor"
+                                          strokeWidth="2.25"
+                                          strokeLinecap="round"
+                                          strokeLinejoin="round"
+                                        >
+                                          <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+                                          <line x1="12" x2="12" y1="9" y2="13" />
+                                          <line x1="12" x2="12.01" y1="17" y2="17" />
+                                        </svg>
+                                      </span>
+                                    )}
+                                  </div>
                                   <p className="text-[0.7rem] text-foreground/70 mt-1 leading-snug">
                                     {card.part}
                                   </p>
@@ -382,7 +410,8 @@ export default function QuoteBoard({
                                   </p>
                                   {compact &&
                                     card.id === TUESDAY_RFQ_ID &&
-                                    sitting && (
+                                    sitting &&
+                                    (warned || focused) && (
                                       <p className="xl:hidden mt-2 text-[0.68rem] font-semibold text-accent leading-snug">
                                         48 hrs. Untouched.
                                       </p>
