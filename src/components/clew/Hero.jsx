@@ -58,7 +58,6 @@ export default function Hero() {
   const showCallout = beat >= BEATS.callout;
   const warnId = beat >= BEATS.warn ? TUESDAY_RFQ_ID : null;
   const focusId = beat >= BEATS.highlight ? TUESDAY_RFQ_ID : null;
-  const nudgeId = beat >= BEATS.highlight ? TUESDAY_RFQ_ID : null;
 
   return (
     <section id="top" className="relative w-full min-h-[100dvh] overflow-hidden bg-background">
@@ -142,7 +141,6 @@ export default function Hero() {
                 onSelect={() => {}}
                 warnId={warnId}
                 focusId={focusId}
-                nudgeId={nudgeId}
                 columns={HERO_COLUMNS}
                 compact
                 showIntro={false}
