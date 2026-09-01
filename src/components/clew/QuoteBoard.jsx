@@ -82,6 +82,7 @@ export default function QuoteBoard({
   showIntro = true,
   idPrefix = "",
   interactive = true,
+  polished = false,
 }) {
   const [announcement, setAnnouncement] = useState(
     "Last Tuesday’s RFQ is sitting. Move it, or tap it and send it to Quoted."
@@ -278,7 +279,11 @@ export default function QuoteBoard({
           }
         >
           <div
-            className={`grid border-2 border-foreground/15 bg-background shadow-[0_18px_50px_-28px_rgba(0,0,0,0.35)] ${
+            className={`grid bg-background ${
+              polished
+                ? "border border-foreground/10 overflow-hidden rounded-[2px] shadow-none"
+                : "border-2 border-foreground/15 shadow-[0_18px_50px_-28px_rgba(0,0,0,0.35)]"
+            } ${
               compact
                 ? "min-w-[28rem] sm:min-w-[32rem] xl:min-w-0 grid-cols-3"
                 : "min-w-[720px] md:min-w-0 grid-cols-5"
@@ -293,21 +298,37 @@ export default function QuoteBoard({
                       ref={provided.innerRef}
                       {...provided.droppableProps}
                       className={`flex flex-col ${
+                        polished ? "hero-col" : ""
+                      } ${
                         compact
-                          ? "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.5rem] p-2 sm:p-2.5"
+                          ? polished
+                            ? "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.75rem] p-2.5 sm:p-3"
+                            : "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.5rem] p-2 sm:p-2.5"
                           : "min-h-[220px] md:min-h-[260px] p-2.5 sm:p-3"
-                      } ${i < columns.length - 1 ? "border-r border-foreground/12" : ""} ${
+                      } ${
+                        i < columns.length - 1
+                          ? polished
+                            ? ""
+                            : "border-r border-foreground/12"
+                          : ""
+                      } ${
                         interactive && snapshot.isDraggingOver ? "bg-accent/[0.07]" : ""
                       } ${highlightSitting && isSitting(col.id) ? "bg-accent/[0.05]" : ""}`}
                     >
-                      <p className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground font-semibold mb-3 flex items-baseline justify-between gap-2">
+                      <p
+                        className={`uppercase text-muted-foreground font-semibold mb-3 flex items-baseline justify-between gap-2 ${
+                          polished
+                            ? "text-[0.62rem] tracking-[0.2em] pb-2 border-b border-foreground/[0.07]"
+                            : "text-[0.7rem] tracking-[0.16em]"
+                        }`}
+                      >
                         <span>{col.label}</span>
-                        <span className="text-[0.65rem] tabular-nums text-foreground/40 font-medium tracking-normal normal-case">
+                        <span className="text-[0.65rem] tabular-nums text-foreground/35 font-medium tracking-normal normal-case">
                           {columnCards.length}
                         </span>
                       </p>
 
-                      <div className={`flex flex-col flex-1 ${compact ? "gap-3" : "gap-2"}`}>
+                      <div className={`flex flex-col flex-1 ${compact ? (polished ? "gap-2.5" : "gap-3") : "gap-2"}`}>
                         {columnCards.map((card, index) => {
                           const sitting = isSitting(card.column);
                           const focused = focusId === card.id;
@@ -351,16 +372,22 @@ export default function QuoteBoard({
                                         }
                                       : undefined
                                   }
-                                  className={`text-left border-2 bg-card transition-[box-shadow,border-color,transform] duration-500 ${
-                                    compact ? "px-2.5 py-2.5 sm:px-3 sm:py-3" : "px-2.5 py-2.5"
-                                  } ${
-                                    interactive && selectedId === card.id
-                                      ? "border-accent ring-2 ring-accent/25"
-                                      : highlighted
-                                      ? "border-accent sitting-highlight"
-                                      : sitting
-                                      ? "border-foreground/25"
-                                      : "border-foreground/15"
+                                  className={`text-left bg-card transition-[box-shadow,border-color,transform,background-color] duration-500 ${
+                                    polished
+                                      ? `relative border px-2.5 py-2.5 sm:px-3 sm:py-2.5 bg-background shadow-[0_1px_0_hsl(var(--foreground)/0.03)] ${
+                                          highlighted
+                                            ? "border-accent/50 bg-accent/[0.05] sitting-highlight-soft pl-3 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
+                                            : "border-foreground/[0.12]"
+                                        }`
+                                      : `${compact ? "px-2.5 py-2.5 sm:px-3 sm:py-3" : "px-2.5 py-2.5"} border-2 ${
+                                          interactive && selectedId === card.id
+                                            ? "border-accent ring-2 ring-accent/25"
+                                            : highlighted
+                                            ? "border-accent sitting-highlight"
+                                            : sitting
+                                            ? "border-foreground/25"
+                                            : "border-foreground/15"
+                                        }`
                                   } ${
                                     interactive && dragSnapshot.isDragging
                                       ? "shadow-lg rotate-[1deg]"
@@ -374,7 +401,11 @@ export default function QuoteBoard({
                                   <div className="flex items-start justify-between gap-2">
                                     <p
                                       className={`font-display font-semibold text-foreground leading-snug ${
-                                        compact ? "text-[0.78rem] sm:text-[0.82rem]" : "text-[0.8rem]"
+                                        compact
+                                          ? polished
+                                            ? "text-[0.8rem] sm:text-[0.84rem]"
+                                            : "text-[0.78rem] sm:text-[0.82rem]"
+                                          : "text-[0.8rem]"
                                       }`}
                                     >
                                       {card.buyer}
@@ -386,8 +417,8 @@ export default function QuoteBoard({
                                         title="Sitting too long"
                                       >
                                         <svg
-                                          width="14"
-                                          height="14"
+                                          width={polished ? 12 : 14}
+                                          height={polished ? 12 : 14}
                                           viewBox="0 0 24 24"
                                           fill="none"
                                           stroke="currentColor"
@@ -402,7 +433,7 @@ export default function QuoteBoard({
                                       </span>
                                     )}
                                   </div>
-                                  <p className="text-[0.7rem] text-foreground/70 mt-1 leading-snug">
+                                  <p className="text-[0.7rem] text-foreground/65 mt-1 leading-snug">
                                     {card.part}
                                   </p>
                                   <p className="text-[0.65rem] text-muted-foreground mt-1.5 tabular-nums">
@@ -411,7 +442,8 @@ export default function QuoteBoard({
                                   {compact &&
                                     card.id === TUESDAY_RFQ_ID &&
                                     sitting &&
-                                    (warned || focused) && (
+                                    (warned || focused) &&
+                                    !polished && (
                                       <p className="xl:hidden mt-2 text-[0.68rem] font-semibold text-accent leading-snug">
                                         48 hrs. Untouched.
                                       </p>

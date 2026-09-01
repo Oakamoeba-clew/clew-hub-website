@@ -17,27 +17,6 @@ const BEATS = {
   highlight: 3,
 };
 
-function StalledPointer() {
-  return (
-    <svg
-      className="hero-callout-pointer"
-      width="40"
-      height="44"
-      viewBox="0 0 40 44"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M10 3 L28 32"
-        stroke="currentColor"
-        strokeWidth="1.75"
-        strokeLinecap="round"
-      />
-      <path d="M21.5 29.5 L29.5 33.5 L23.5 37.5 Z" fill="currentColor" />
-    </svg>
-  );
-}
-
 export default function Hero() {
   const [beat, setBeat] = useState(BEATS.idle);
 
@@ -122,7 +101,7 @@ export default function Hero() {
             className="relative min-w-0"
           >
             <div className="relative">
-              <div className="hero-board-panel relative z-0 border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)] select-none pointer-events-none">
+              <div className="hero-board-panel hero-board-panel--pro relative z-0 select-none pointer-events-none">
                 <QuoteBoard
                   cards={HERO_CARDS}
                   onCardsChange={() => {}}
@@ -132,6 +111,7 @@ export default function Hero() {
                   focusId={focusId}
                   columns={HERO_COLUMNS}
                   compact
+                  polished
                   showIntro={false}
                   interactive={false}
                   idPrefix="hero-"
@@ -144,13 +124,12 @@ export default function Hero() {
                     key="stalled-callout"
                     className="hero-callout hero-callout--stalled hero-callout--visible"
                     aria-hidden="true"
-                    initial={{ opacity: 0, x: -28 }}
+                    initial={{ opacity: 0, x: -40 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <p className="hero-callout-line">48 hrs. Untouched.</p>
-                    <StalledPointer />
                   </motion.div>
                 )}
               </AnimatePresence>
