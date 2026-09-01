@@ -45,11 +45,11 @@ export default function Pricing() {
                 </p>
                 <p className="font-display font-semibold text-background tracking-tightest leading-none text-[4.25rem] sm:text-[5rem] md:text-[5.5rem]">
                   $299
-                  <span className="ml-1.5 text-xl sm:text-2xl md:text-3xl text-background/60 font-medium tracking-tight">
+                  <span className="ml-1.5 text-xl sm:text-2xl md:text-3xl text-background/80 font-medium tracking-tight">
                     /mo
                   </span>
                 </p>
-                <p className="mt-5 text-base text-background/75 leading-relaxed max-w-[28ch]">
+                <p className="mt-5 text-base text-background/90 leading-relaxed max-w-[28ch]">
                   Month-to-month. No setup invoice. Hosting and upkeep included.
                 </p>
                 <div className="mt-8">
@@ -63,15 +63,15 @@ export default function Pricing() {
                 </div>
               </div>
 
-              <div className="lg:border-l lg:border-foreground/12 lg:pl-12">
-                <p className="text-[0.7rem] uppercase tracking-[0.22em] text-foreground/45 font-semibold mb-5">
+              <div className="lg:border-l lg:border-background/20 lg:pl-12">
+                <p className="text-[0.7rem] uppercase tracking-[0.22em] text-background/65 font-semibold mb-5">
                   Included
                 </p>
                 <ul className="flex flex-col gap-4">
                   {INCLUDES.map((item) => (
                     <li
                       key={item}
-                      className="flex gap-3 text-sm md:text-base text-foreground/75 leading-relaxed"
+                      className="flex gap-3 text-sm md:text-base text-background leading-relaxed"
                     >
                       <span
                         className="mt-2 h-1.5 w-1.5 rounded-full bg-accent flex-shrink-0"
