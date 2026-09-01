@@ -10,7 +10,6 @@ export default function ShopPlay() {
   const [highlightSitting, setHighlightSitting] = useState(false);
   const [emailOpened, setEmailOpened] = useState(false);
   const [lesson, setLesson] = useState("");
-  const [played, setPlayed] = useState(false);
 
   const sittingCards = useMemo(
     () => cards.filter((card) => isSitting(card.column)),
@@ -22,7 +21,9 @@ export default function ShopPlay() {
     setHighlightSitting(true);
     const sitting = cards.find((c) => isSitting(c.column));
     if (sitting) setSelectedId(sitting.id);
-    const el = document.getElementById("quote-board") || document.getElementById("hero-quote-board");
+    const el =
+      document.getElementById("product-quote-board") ||
+      document.getElementById("hero-quote-board");
     el?.scrollIntoView({ behavior: "smooth", block: "center" });
     window.setTimeout(() => setHighlightSitting(false), 2600);
   };
@@ -35,7 +36,6 @@ export default function ShopPlay() {
 
   const onQuotedFromSitting = () => {
     setLesson("Quoted. The morning email goes quiet.");
-    setPlayed(true);
   };
 
   return (
@@ -51,71 +51,52 @@ export default function ShopPlay() {
         onTryBoard={tryBoard}
       />
 
-      <section id="framework" className="relative w-full bg-background">
-        <div className="px-[8vw] pt-[12vh] md:pt-[14vh] pb-16 md:pb-24 max-w-[1500px] mx-auto">
+      <section id="framework" className="relative w-full bg-background border-t border-border">
+        <div className="px-[8vw] py-[12vh] md:py-[14vh] max-w-[1500px] mx-auto">
           {lesson && (
             <p className="mb-8 md:mb-10 text-base md:text-lg font-display font-semibold text-accent">
               {lesson}
             </p>
           )}
 
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] gap-10 lg:gap-14 items-start">
-            <SittingEmail
-              sittingCards={sittingCards}
-              onOpenBoard={openBoardFromEmail}
-              opened={emailOpened}
-            />
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.15fr)] gap-10 lg:gap-12 xl:gap-14 items-start">
+            <div>
+              <SittingEmail
+                sittingCards={sittingCards}
+                onOpenBoard={openBoardFromEmail}
+                opened={emailOpened}
+              />
+              <div className="mt-6 lg:mt-8">
+                <p className="text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-3">
+                  The only ping
+                </p>
+                <p className="text-base md:text-lg text-foreground/80 leading-relaxed max-w-[40ch]">
+                  {sittingCards.length} still sitting. Move one to Quoted and watch this number
+                  drop. Won and Lost live on the board — same cards as the first screen.
+                </p>
+              </div>
+            </div>
 
-            <div className="lg:pt-2">
+            <div>
               <p className="text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-3">
-                The only ping
+                The board
               </p>
-              <p className="text-base md:text-lg text-foreground/80 leading-relaxed max-w-[40ch]">
-                {sittingCards.length} still sitting. Move one to Quoted and watch this number drop.
+              <p className="mb-6 max-w-[42ch] text-base text-foreground/70 leading-relaxed">
+                Received through Lost. Keep moving them until every quote is closed.
               </p>
+              <QuoteBoard
+                cards={cards}
+                onCardsChange={setCards}
+                highlightSitting={highlightSitting}
+                selectedId={selectedId}
+                onSelect={setSelectedId}
+                nudgeId={nudgeId}
+                onQuotedFromSitting={onQuotedFromSitting}
+                onTryBoard={tryBoard}
+                idPrefix="product-"
+              />
             </div>
           </div>
-
-          {played && (
-            <div className="mt-12 md:mt-14 pt-8 border-t border-border flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
-              <p className="font-display font-semibold text-foreground text-lg">$299/mo</p>
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new Event("clew:open-demo"))}
-                className="inline-flex items-center justify-center bg-accent text-accent-foreground px-7 py-3 text-sm font-semibold tracking-wide hover:bg-foreground transition-colors duration-300"
-              >
-                Book a demo
-              </button>
-              <a
-                href="tel:+14842059663"
-                className="text-sm md:text-base font-medium text-foreground/80 hover:text-accent transition-colors tabular-nums"
-              >
-                (484) 205-9663
-              </a>
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section id="full-board" className="relative w-full bg-background border-t border-border">
-        <div className="px-[8vw] py-[12vh] md:py-[14vh] max-w-[1500px] mx-auto">
-          <p className="text-[0.7rem] uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-3">
-            The board
-          </p>
-          <p className="mb-8 md:mb-10 max-w-[46ch] text-base md:text-lg text-foreground/70 leading-relaxed">
-            Won and Lost live here. Same cards as the first screen — keep moving them.
-          </p>
-          <QuoteBoard
-            cards={cards}
-            onCardsChange={setCards}
-            highlightSitting={highlightSitting}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-            nudgeId={nudgeId}
-            onQuotedFromSitting={onQuotedFromSitting}
-            onTryBoard={tryBoard}
-            idPrefix="full-"
-          />
         </div>
       </section>
     </>

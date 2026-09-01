@@ -1,5 +1,6 @@
 import Nav from "@/components/clew/Nav";
 import ShopPlay from "@/components/clew/ShopPlay";
+import Pricing from "@/components/clew/Pricing";
 import WhoFor from "@/components/clew/WhoFor";
 import HowItStarts from "@/components/clew/HowItStarts";
 import DemoModal from "@/components/clew/DemoModal";
@@ -21,6 +22,7 @@ export default function Home() {
       <Nav />
       <main>
         <ShopPlay />
+        <Pricing />
         <WhoFor />
         <HowItStarts />
         <Contact />
