@@ -79,6 +79,7 @@ export default function QuoteBoard({
   compact = false,
   showIntro = true,
   idPrefix = "",
+  interactive = true,
 }) {
   const [announcement, setAnnouncement] = useState(
     "Last Tuesday’s RFQ is sitting. Move it, or tap it and send it to Quoted."
@@ -94,6 +95,7 @@ export default function QuoteBoard({
 
   const moveCard = useCallback(
     (cardId, destColumn, destIndex) => {
+      if (!interactive) return;
       onCardsChange((prev) => {
         const card = prev.find((c) => c.id === cardId);
         if (!card || !destColumn) return prev;
@@ -125,10 +127,11 @@ export default function QuoteBoard({
         );
       });
     },
-    [onCardsChange, onQuotedFromSitting]
+    [interactive, onCardsChange, onQuotedFromSitting]
   );
 
   const onDragEnd = (result) => {
+    if (!interactive) return;
     window.setTimeout(() => {
       skipClickRef.current = false;
     }, 40);
@@ -163,8 +166,8 @@ export default function QuoteBoard({
   };
 
   const selected = useMemo(
-    () => cards.find((c) => c.id === selectedId) || null,
-    [cards, selectedId]
+    () => (interactive ? cards.find((c) => c.id === selectedId) || null : null),
+    [cards, interactive, selectedId]
   );
 
   const sendToQuoted = () => {
@@ -177,7 +180,7 @@ export default function QuoteBoard({
 
   return (
     <div id={idPrefix ? `${idPrefix}quote-board` : "quote-board"} className="w-full">
-      {showIntro && (
+      {showIntro && interactive && (
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
           <p className="text-sm text-foreground/70 leading-relaxed max-w-[54ch]">
             Last Tuesday’s RFQ is still sitting. Move it to Quoted — or tap it.
@@ -260,6 +263,7 @@ export default function QuoteBoard({
 
       <DragDropContext
         onDragStart={() => {
+          if (!interactive) return;
           skipClickRef.current = true;
         }}
         onDragEnd={onDragEnd}
@@ -281,7 +285,7 @@ export default function QuoteBoard({
             {columns.map((col, i) => {
               const columnCards = cardsByColumn(cards, col.id);
               return (
-                <Droppable droppableId={dropId(col.id)} key={col.id}>
+                <Droppable droppableId={dropId(col.id)} key={col.id} isDropDisabled={!interactive}>
                   {(provided, snapshot) => (
                     <div
                       ref={provided.innerRef}
@@ -291,7 +295,7 @@ export default function QuoteBoard({
                           ? "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.5rem] p-2 sm:p-2.5"
                           : "min-h-[220px] md:min-h-[260px] p-2.5 sm:p-3"
                       } ${i < columns.length - 1 ? "border-r border-foreground/12" : ""} ${
-                        snapshot.isDraggingOver ? "bg-accent/[0.07]" : ""
+                        interactive && snapshot.isDraggingOver ? "bg-accent/[0.07]" : ""
                       } ${highlightSitting && isSitting(col.id) ? "bg-accent/[0.05]" : ""}`}
                     >
                       <p className="text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground font-semibold mb-3 flex items-baseline justify-between gap-2">
@@ -308,34 +312,60 @@ export default function QuoteBoard({
                           const lifted = Boolean(card.lifted) || nudgeId === card.id;
                           const dragId = `${idPrefix}${card.id}`;
                           return (
-                            <Draggable draggableId={dragId} index={index} key={dragId}>
+                            <Draggable
+                              draggableId={dragId}
+                              index={index}
+                              key={dragId}
+                              isDragDisabled={!interactive}
+                            >
                               {(dragProvided, dragSnapshot) => (
-                                <button
-                                  type="button"
+                                <div
                                   id={`card-${idPrefix}${card.id}`}
                                   ref={dragProvided.innerRef}
                                   {...dragProvided.draggableProps}
-                                  {...dragProvided.dragHandleProps}
-                                  onClick={() => {
-                                    if (skipClickRef.current) {
-                                      skipClickRef.current = false;
-                                      return;
-                                    }
-                                    onSelect(selectedId === card.id ? null : card.id);
-                                  }}
+                                  {...(interactive ? dragProvided.dragHandleProps : {})}
+                                  role={interactive ? "button" : undefined}
+                                  tabIndex={interactive ? 0 : undefined}
+                                  onClick={
+                                    interactive
+                                      ? () => {
+                                          if (skipClickRef.current) {
+                                            skipClickRef.current = false;
+                                            return;
+                                          }
+                                          onSelect(selectedId === card.id ? null : card.id);
+                                        }
+                                      : undefined
+                                  }
+                                  onKeyDown={
+                                    interactive
+                                      ? (e) => {
+                                          if (e.key === "Enter" || e.key === " ") {
+                                            e.preventDefault();
+                                            onSelect(selectedId === card.id ? null : card.id);
+                                          }
+                                        }
+                                      : undefined
+                                  }
                                   className={`text-left border-2 bg-card transition-shadow ${
                                     compact ? "px-2.5 py-2.5 sm:px-3 sm:py-3" : "px-2.5 py-2.5"
                                   } ${
-                                    selectedId === card.id
+                                    interactive && selectedId === card.id
                                       ? "border-accent ring-2 ring-accent/25"
                                       : highlighted
                                       ? "border-accent sitting-highlight"
                                       : sitting
                                       ? "border-foreground/25"
                                       : "border-foreground/15"
-                                  } ${dragSnapshot.isDragging ? "shadow-lg rotate-[1deg]" : ""} ${
-                                    lifted && !dragSnapshot.isDragging ? "card-lifted" : ""
-                                  }`}
+                                  } ${
+                                    interactive && dragSnapshot.isDragging
+                                      ? "shadow-lg rotate-[1deg]"
+                                      : ""
+                                  } ${
+                                    lifted && !(interactive && dragSnapshot.isDragging)
+                                      ? "card-lifted"
+                                      : ""
+                                  } ${interactive ? "cursor-pointer" : "cursor-default"}`}
                                 >
                                   <p
                                     className={`font-display font-semibold text-foreground leading-snug ${
@@ -357,7 +387,7 @@ export default function QuoteBoard({
                                         48 hrs. Untouched.
                                       </p>
                                     )}
-                                </button>
+                                </div>
                               )}
                             </Draggable>
                           );

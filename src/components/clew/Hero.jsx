@@ -19,32 +19,7 @@ function StalledPointer() {
   );
 }
 
-function DragPointer() {
-  return (
-    <svg
-      className="hero-callout-pointer"
-      width="22"
-      height="38"
-      viewBox="0 0 22 38"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path d="M11 2 L11 30" stroke="currentColor" strokeWidth="1.75" />
-      <path d="M5 26 L11 34 L17 26 Z" fill="currentColor" />
-    </svg>
-  );
-}
-
-export default function Hero({
-  cards,
-  onCardsChange,
-  highlightSitting,
-  selectedId,
-  onSelect,
-  nudgeId,
-  onQuotedFromSitting,
-  onTryBoard,
-}) {
+export default function Hero({ cards, highlightSitting, nudgeId }) {
   const eastonSitting = cards.some(
     (card) => card.id === TUESDAY_RFQ_ID && card.column === "received"
   );
@@ -84,16 +59,6 @@ export default function Hero({
               You run the shop. We keep the RFQs moving.
             </motion.p>
 
-            <motion.aside
-              initial={{ opacity: 0, y: -48, rotate: -10, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, rotate: -3.5, scale: 1 }}
-              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.85 }}
-              className="hero-sticky mt-7 sm:mt-8 max-w-[15.5rem]"
-              aria-label="Note"
-            >
-              <p className="hero-sticky-text">Manage all your RFQ&apos;s from one board</p>
-            </motion.aside>
-
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
@@ -122,26 +87,31 @@ export default function Hero({
                 <StalledPointer />
               </div>
             )}
-            <div className="hero-callout hero-callout--drag" aria-hidden="true">
-              <p className="hero-callout-line">Move it here.</p>
-              <DragPointer />
-            </div>
-            <div className="hero-board-panel border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)]">
+            <div className="hero-board-panel border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)] select-none pointer-events-none">
               <QuoteBoard
                 cards={cards}
-                onCardsChange={onCardsChange}
+                onCardsChange={() => {}}
                 highlightSitting={highlightSitting}
-                selectedId={selectedId}
-                onSelect={onSelect}
+                selectedId={null}
+                onSelect={() => {}}
                 nudgeId={nudgeId}
-                onQuotedFromSitting={onQuotedFromSitting}
-                onTryBoard={onTryBoard}
                 columns={HERO_COLUMNS}
                 compact
                 showIntro={false}
+                interactive={false}
                 idPrefix="hero-"
               />
             </div>
+
+            <motion.aside
+              initial={{ opacity: 0, y: -40, rotate: -10, scale: 0.96 }}
+              animate={{ opacity: 1, y: 0, rotate: -3.5, scale: 1 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.95 }}
+              className="hero-sticky relative z-20 mx-auto mt-5 w-[min(15.5rem,70%)]"
+              aria-label="Note"
+            >
+              <p className="hero-sticky-text">Manage all your RFQ&apos;s from one board</p>
+            </motion.aside>
           </motion.div>
         </div>
       </div>

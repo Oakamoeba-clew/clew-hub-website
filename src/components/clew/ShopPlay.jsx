@@ -42,13 +42,8 @@ export default function ShopPlay() {
     <>
       <Hero
         cards={cards}
-        onCardsChange={setCards}
         highlightSitting={highlightSitting}
-        selectedId={selectedId}
-        onSelect={setSelectedId}
         nudgeId={nudgeId}
-        onQuotedFromSitting={onQuotedFromSitting}
-        onTryBoard={tryBoard}
       />
 
       <section id="framework" className="relative w-full bg-background border-t border-border">
