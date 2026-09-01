@@ -9,7 +9,7 @@ const INCLUDES = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="relative w-full bg-foreground/[0.045] border-t border-border">
+    <section id="pricing" className="relative w-full bg-foreground/[0.07] border-t border-border">
       <div className="px-[8vw] py-[12vh] md:py-[14vh] max-w-[1500px] mx-auto">
         <Reveal
           as="p"
@@ -35,51 +35,59 @@ export default function Pricing() {
         </Reveal>
 
         <Reveal delay={160}>
-          <div className="mt-12 md:mt-14 border-2 border-foreground/20 bg-background p-7 md:p-10 shadow-[0_22px_55px_-28px_rgba(0,0,0,0.35)] max-w-[720px]">
-            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 border-b border-border pb-6">
+          <div className="relative mt-12 md:mt-14 border-2 border-foreground/80 bg-foreground text-background p-7 md:p-10 lg:p-12 shadow-[0_24px_60px_-24px_rgba(0,0,0,0.5)]">
+            <span className="absolute inset-x-0 top-0 h-[3px] bg-accent" aria-hidden="true" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] gap-10 lg:gap-14 items-start">
               <div>
-                <p className="text-[0.7rem] uppercase tracking-[0.22em] text-accent font-semibold mb-2">
+                <p className="text-[0.7rem] uppercase tracking-[0.22em] text-accent font-semibold mb-4">
                   Framework
                 </p>
-                <p className="font-display font-semibold text-foreground text-3xl md:text-4xl tracking-tight">
+                <p className="font-display font-semibold text-background tracking-tightest leading-none text-[4.25rem] sm:text-[5rem] md:text-[5.5rem]">
                   $299
-                  <span className="text-lg md:text-xl text-foreground/55 font-medium">/mo</span>
+                  <span className="ml-1.5 text-xl sm:text-2xl md:text-3xl text-background/55 font-medium tracking-tight">
+                    /mo
+                  </span>
                 </p>
+                <p className="mt-5 text-base text-background/70 leading-relaxed max-w-[28ch]">
+                  Month-to-month. No setup invoice. Hosting and upkeep included.
+                </p>
+                <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-4">
+                  <button
+                    type="button"
+                    onClick={() => window.dispatchEvent(new Event("clew:open-demo"))}
+                    className="inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-3.5 text-sm md:text-base font-semibold tracking-wide hover:bg-background hover:text-foreground transition-colors duration-300"
+                  >
+                    Request a demo
+                  </button>
+                  <a
+                    href="tel:+14842059663"
+                    className="text-sm md:text-base font-medium text-background/70 hover:text-accent transition-colors tabular-nums"
+                  >
+                    (484) 205-9663
+                  </a>
+                </div>
               </div>
-              <p className="text-sm text-foreground/60 max-w-[28ch] leading-relaxed">
-                Hosting and upkeep included.
-              </p>
-            </div>
 
-            <ul className="mt-7 flex flex-col gap-3.5">
-              {INCLUDES.map((item) => (
-                <li
-                  key={item}
-                  className="flex gap-3 text-sm md:text-base text-foreground/80 leading-relaxed"
-                >
-                  <span
-                    className="mt-2 h-1.5 w-1.5 rounded-full bg-accent flex-shrink-0"
-                    aria-hidden="true"
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-9 flex flex-col sm:flex-row sm:items-center gap-4">
-              <button
-                type="button"
-                onClick={() => window.dispatchEvent(new Event("clew:open-demo"))}
-                className="inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-3.5 text-sm md:text-base font-semibold tracking-wide hover:bg-foreground transition-colors duration-300"
-              >
-                Request a demo
-              </button>
-              <a
-                href="tel:+14842059663"
-                className="text-sm md:text-base font-medium text-foreground/75 hover:text-accent transition-colors tabular-nums"
-              >
-                (484) 205-9663
-              </a>
+              <div className="lg:border-l lg:border-background/15 lg:pl-12">
+                <p className="text-[0.7rem] uppercase tracking-[0.22em] text-background/50 font-semibold mb-5">
+                  Included
+                </p>
+                <ul className="flex flex-col gap-4">
+                  {INCLUDES.map((item) => (
+                    <li
+                      key={item}
+                      className="flex gap-3 text-sm md:text-base text-background/80 leading-relaxed"
+                    >
+                      <span
+                        className="mt-2 h-1.5 w-1.5 rounded-full bg-accent flex-shrink-0"
+                        aria-hidden="true"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </Reveal>
