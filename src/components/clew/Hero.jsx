@@ -1,7 +1,10 @@
 import { motion } from "framer-motion";
-import QuoteBoard, { HERO_COLUMNS, TUESDAY_RFQ_ID } from "./QuoteBoard";
+import QuoteBoard, { HERO_COLUMNS, SAMPLE_RFQS, TUESDAY_RFQ_ID } from "./QuoteBoard";
 
 const HERO_IMG = "/hero.jpg";
+
+/** Fixed showcase board — never tied to the interactive product board. */
+const HERO_CARDS = SAMPLE_RFQS.map((card) => ({ ...card }));
 
 function StalledPointer() {
   return (
@@ -19,8 +22,8 @@ function StalledPointer() {
   );
 }
 
-export default function Hero({ cards, highlightSitting, nudgeId }) {
-  const eastonSitting = cards.some(
+export default function Hero() {
+  const eastonSitting = HERO_CARDS.some(
     (card) => card.id === TUESDAY_RFQ_ID && card.column === "received"
   );
 
@@ -89,12 +92,10 @@ export default function Hero({ cards, highlightSitting, nudgeId }) {
             )}
             <div className="hero-board-panel border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)] select-none pointer-events-none">
               <QuoteBoard
-                cards={cards}
+                cards={HERO_CARDS}
                 onCardsChange={() => {}}
-                highlightSitting={highlightSitting}
                 selectedId={null}
                 onSelect={() => {}}
-                nudgeId={nudgeId}
                 columns={HERO_COLUMNS}
                 compact
                 showIntro={false}
