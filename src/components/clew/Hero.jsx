@@ -49,18 +49,17 @@ export default function Hero({
 
   return (
     <section id="top" className="relative w-full min-h-[100dvh] overflow-hidden bg-background">
-      <div className="relative z-10 min-h-[100dvh] flex items-center">
-        <div className="w-full px-[6vw] xl:px-[7vw] pt-28 pb-16 sm:pt-32 sm:pb-20 xl:pt-28 xl:pb-16">
-          <div className="mx-auto max-w-[1480px] grid grid-cols-1 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] gap-12 sm:gap-14 xl:gap-16 2xl:gap-20 items-center">
-            <div className="min-w-0">
-              <motion.h1
+      <div className="relative z-10 box-border min-h-[100dvh] flex items-center px-[6vw] xl:px-[7vw] pt-20 pb-10">
+        <div className="w-full mx-auto max-w-[1480px] grid grid-cols-1 xl:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] gap-12 sm:gap-14 xl:gap-16 2xl:gap-20 items-center">
+          <div className="min-w-0">
+            <motion.h1
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 className="font-display font-semibold tracking-tightest text-foreground text-balance max-w-[16ch] text-[2.05rem] leading-[1.05] sm:text-[2.45rem] sm:leading-[1.04] xl:text-[2.55rem] xl:leading-[1.06] 2xl:text-[2.85rem]"
               >
                 American manufacturing is not short on capability. It&apos;s short on{" "}
-                <span className="clarity-word text-accent">clarity</span>.
+                <span className="text-accent">clarity</span>.
               </motion.h1>
 
               <motion.p
@@ -86,7 +85,7 @@ export default function Hero({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
-              className="relative min-w-0 xl:pt-16"
+              className="relative min-w-0"
             >
               {eastonSitting && (
                 <div className="hero-callout hero-callout--stalled" aria-hidden="true">
@@ -115,7 +114,6 @@ export default function Hero({
                 />
               </div>
             </motion.div>
-          </div>
         </div>
       </div>
     </section>

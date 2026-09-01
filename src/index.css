@@ -141,12 +141,16 @@
 
 .hero-callout--stalled {
   left: 0.15rem;
-  top: 0;
+  top: auto;
+  bottom: 100%;
+  padding-bottom: 0.2rem;
 }
 
 .hero-callout--drag {
   right: 0;
-  top: 0;
+  top: auto;
+  bottom: 100%;
+  padding-bottom: 0.2rem;
   width: 34%;
   display: none;
   flex-direction: column;
@@ -198,16 +202,6 @@
   .hero-callout--drag {
     animation: none;
   }
-}
-
-/* Hero clarity sharpen animation */
-@keyframes clarity-sharpen {
-  0% { filter: blur(6px); opacity: 0.4; }
-  100% { filter: blur(0); opacity: 1; }
-}
-.clarity-word {
-  display: inline-block;
-  animation: clarity-sharpen 2s cubic-bezier(0.16, 1, 0.3, 1) 0.8s both;
 }
 
 /* Scrollbar */
