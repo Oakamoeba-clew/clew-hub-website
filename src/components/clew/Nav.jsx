@@ -46,23 +46,17 @@ export default function Nav() {
 
           <div className="flex items-center gap-6">
             <a
-              href="/#contact"
+              href="/#framework"
               className="text-[0.95rem] text-foreground/80 hover:text-accent transition-colors duration-300 font-medium"
             >
-              Contact
-            </a>
-            <a
-              href="tel:+14842059663"
-              className="text-[0.95rem] text-foreground/80 hover:text-accent transition-colors duration-300 font-medium tabular-nums"
-            >
-              (484) 205-9663
+              Product
             </a>
             <button
               type="button"
               onClick={openDemo}
               className="inline-flex items-center justify-center bg-accent text-accent-foreground px-5 py-2.5 text-sm font-semibold tracking-wide hover:bg-foreground transition-colors duration-300"
             >
-              Book a demo
+              Request a demo
             </button>
           </div>
         </div>
@@ -99,25 +93,18 @@ export default function Nav() {
           >
             <div className="px-[8vw] py-5 flex flex-col">
               <a
-                href="/#contact"
+                href="/#framework"
                 onClick={() => setOpen(false)}
                 className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50"
               >
-                Contact
-              </a>
-              <a
-                href="tel:+14842059663"
-                onClick={() => setOpen(false)}
-                className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50 tabular-nums"
-              >
-                (484) 205-9663
+                Product
               </a>
               <button
                 type="button"
                 onClick={openDemo}
                 className="mt-5 w-full bg-accent text-accent-foreground py-4 text-base font-semibold tracking-wide"
               >
-                Book a demo
+                Request a demo
               </button>
             </div>
           </motion.div>

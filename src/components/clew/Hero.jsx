@@ -70,15 +70,6 @@ export default function Hero({
               >
                 You run the shop. We keep the RFQs moving.
               </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.5 }}
-                className="mt-5 sm:mt-6 text-sm sm:text-[0.95rem] text-foreground/65 leading-relaxed max-w-[34ch]"
-              >
-                Last Tuesday’s RFQ is still sitting.
-              </motion.p>
             </div>
 
             <motion.div
