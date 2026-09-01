@@ -169,6 +169,7 @@
   z-index: 30;
   pointer-events: none;
   color: hsl(var(--accent));
+  overflow: visible;
 }
 
 .hero-callout-line {
@@ -182,14 +183,14 @@
 
 .hero-callout-pointer {
   display: block;
-  margin-top: 0.15rem;
+  margin-top: 0.1rem;
+  overflow: visible;
 }
 
 .hero-callout--stalled {
   left: 0.15rem;
-  top: auto;
-  bottom: calc(100% + 0.65rem);
-  padding-bottom: 0;
+  top: 0;
+  bottom: auto;
   align-items: flex-start;
 }
 

@@ -21,14 +21,14 @@ function StalledPointer() {
   return (
     <svg
       className="hero-callout-pointer"
-      width="52"
-      height="68"
-      viewBox="0 0 52 68"
+      width="56"
+      height="72"
+      viewBox="0 0 56 72"
       fill="none"
       aria-hidden="true"
     >
-      <path d="M9 2 L38 58" stroke="currentColor" strokeWidth="1.75" />
-      <path d="M30 54.5 L39 59 L32 63 Z" fill="currentColor" />
+      <path d="M12 6 L40 54" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+      <path d="M32 51 L41 55.5 L34.5 60 Z" fill="currentColor" />
     </svg>
   );
 }
@@ -60,7 +60,7 @@ export default function Hero() {
   const focusId = beat >= BEATS.highlight ? TUESDAY_RFQ_ID : null;
 
   return (
-    <section id="top" className="relative w-full min-h-[100dvh] overflow-hidden bg-background">
+    <section id="top" className="relative w-full min-h-[100dvh] overflow-x-hidden bg-background">
       {/* Soft shop atmosphere — left-weighted, board stays on cream */}
       <div className="pointer-events-none absolute inset-y-0 left-0 w-full xl:w-[58%] z-0" aria-hidden="true">
         <img
@@ -116,37 +116,39 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
             className="relative min-w-0"
           >
-            <AnimatePresence>
-              {showCallout && (
-                <motion.div
-                  key="stalled-callout"
-                  className="hero-callout hero-callout--stalled hero-callout--visible"
-                  aria-hidden="true"
-                  initial={{ opacity: 0, x: -36 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <p className="hero-callout-line">48 hrs. Untouched.</p>
-                  <StalledPointer />
-                </motion.div>
-              )}
-            </AnimatePresence>
+            <div className="relative xl:pt-[4.75rem]">
+              <AnimatePresence>
+                {showCallout && (
+                  <motion.div
+                    key="stalled-callout"
+                    className="hero-callout hero-callout--stalled hero-callout--visible"
+                    aria-hidden="true"
+                    initial={{ opacity: 0, x: -36 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <p className="hero-callout-line">48 hrs. Untouched.</p>
+                    <StalledPointer />
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
-            <div className="hero-board-panel border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)] select-none pointer-events-none">
-              <QuoteBoard
-                cards={HERO_CARDS}
-                onCardsChange={() => {}}
-                selectedId={null}
-                onSelect={() => {}}
-                warnId={warnId}
-                focusId={focusId}
-                columns={HERO_COLUMNS}
-                compact
-                showIntro={false}
-                interactive={false}
-                idPrefix="hero-"
-              />
+              <div className="hero-board-panel relative z-0 border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)] select-none pointer-events-none">
+                <QuoteBoard
+                  cards={HERO_CARDS}
+                  onCardsChange={() => {}}
+                  selectedId={null}
+                  onSelect={() => {}}
+                  warnId={warnId}
+                  focusId={focusId}
+                  columns={HERO_COLUMNS}
+                  compact
+                  showIntro={false}
+                  interactive={false}
+                  idPrefix="hero-"
+                />
+              </div>
             </div>
 
             <motion.aside
