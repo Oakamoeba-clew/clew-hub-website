@@ -166,7 +166,7 @@
 .hero-callout {
   display: none;
   position: absolute;
-  z-index: 4;
+  z-index: 30;
   pointer-events: none;
   color: hsl(var(--accent));
 }
@@ -188,8 +188,8 @@
 .hero-callout--stalled {
   left: 0.15rem;
   top: auto;
-  bottom: 100%;
-  padding-bottom: 0.2rem;
+  bottom: calc(100% + 0.65rem);
+  padding-bottom: 0;
   align-items: flex-start;
 }
 
