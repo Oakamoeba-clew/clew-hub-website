@@ -33,7 +33,6 @@ export default function ShopPlay() {
   const [warnId, setWarnId] = useState(null);
   const [highlightSitting, setHighlightSitting] = useState(false);
   const [emailOpened, setEmailOpened] = useState(false);
-  const [lesson, setLesson] = useState("");
   const stageRef = useRef(null);
 
   const sittingCards = useMemo(
@@ -65,7 +64,6 @@ export default function ShopPlay() {
             if (cancelled) return;
             setCards((prev) => moveCardToQuoted(prev, TUESDAY_RFQ_ID));
             setEmailOpened(true);
-            setLesson("Quoted. On a real weekday, the morning email would go quiet.");
           }, 500)
         );
         return;
@@ -96,7 +94,6 @@ export default function ShopPlay() {
           setSelectedId(null);
           setCards((prev) => moveCardToQuoted(prev, TUESDAY_RFQ_ID));
           setEmailOpened(true);
-          setLesson("Quoted. On a real weekday, the morning email would go quiet.");
         }, 2100)
       );
     };
@@ -170,10 +167,6 @@ export default function ShopPlay() {
     window.setTimeout(() => setNudgeId(null), 900);
   };
 
-  const onQuotedFromSitting = () => {
-    setLesson("Quoted. On a real weekday, the morning email would go quiet.");
-  };
-
   return (
     <>
       <Hero />
@@ -196,12 +189,6 @@ export default function ShopPlay() {
             If something is still sitting, Clew sends a picture. Open the board and keep every
             quote moving until it&apos;s closed.
           </p>
-
-          {lesson ? (
-            <p className="mt-6 text-base md:text-lg font-display font-semibold text-accent product-lesson">
-              {lesson}
-            </p>
-          ) : null}
 
           <div className="mt-9 md:mt-11 grid grid-cols-1 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.18fr)] gap-12 lg:gap-14 xl:gap-16 items-start">
             <div className="min-w-0">
@@ -279,7 +266,6 @@ export default function ShopPlay() {
                   onSelect={setSelectedId}
                   nudgeId={nudgeId}
                   warnId={warnId}
-                  onQuotedFromSitting={onQuotedFromSitting}
                   onTryBoard={tryBoard}
                   showIntro={false}
                   dense
