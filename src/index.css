@@ -166,7 +166,7 @@
 .hero-callout {
   display: none;
   position: absolute;
-  z-index: 30;
+  z-index: 40;
   pointer-events: none;
   color: hsl(var(--accent));
   overflow: visible;
@@ -183,14 +183,16 @@
 
 .hero-callout-pointer {
   display: block;
-  margin-top: 0.1rem;
+  margin-top: 0.15rem;
   overflow: visible;
 }
 
+/* Sit fully above the board — tip never crosses the border */
 .hero-callout--stalled {
-  left: 0.15rem;
-  top: 0;
-  bottom: auto;
+  left: 0.35rem;
+  top: auto;
+  bottom: 100%;
+  margin-bottom: 0.6rem;
   align-items: flex-start;
 }
 

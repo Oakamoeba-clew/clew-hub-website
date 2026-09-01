@@ -21,14 +21,19 @@ function StalledPointer() {
   return (
     <svg
       className="hero-callout-pointer"
-      width="56"
-      height="72"
-      viewBox="0 0 56 72"
+      width="40"
+      height="44"
+      viewBox="0 0 40 44"
       fill="none"
       aria-hidden="true"
     >
-      <path d="M12 6 L40 54" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-      <path d="M32 51 L41 55.5 L34.5 60 Z" fill="currentColor" />
+      <path
+        d="M10 3 L28 32"
+        stroke="currentColor"
+        strokeWidth="1.75"
+        strokeLinecap="round"
+      />
+      <path d="M21.5 29.5 L29.5 33.5 L23.5 37.5 Z" fill="currentColor" />
     </svg>
   );
 }
@@ -116,24 +121,7 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: 0.28 }}
             className="relative min-w-0"
           >
-            <div className="relative xl:pt-[4.75rem]">
-              <AnimatePresence>
-                {showCallout && (
-                  <motion.div
-                    key="stalled-callout"
-                    className="hero-callout hero-callout--stalled hero-callout--visible"
-                    aria-hidden="true"
-                    initial={{ opacity: 0, x: -36 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <p className="hero-callout-line">48 hrs. Untouched.</p>
-                    <StalledPointer />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
+            <div className="relative">
               <div className="hero-board-panel relative z-0 border-2 border-foreground/25 bg-background p-3 sm:p-4 xl:p-5 2xl:p-6 shadow-[0_24px_55px_-22px_rgba(0,0,0,0.42)] select-none pointer-events-none">
                 <QuoteBoard
                   cards={HERO_CARDS}
@@ -149,6 +137,23 @@ export default function Hero() {
                   idPrefix="hero-"
                 />
               </div>
+
+              <AnimatePresence>
+                {showCallout && (
+                  <motion.div
+                    key="stalled-callout"
+                    className="hero-callout hero-callout--stalled hero-callout--visible"
+                    aria-hidden="true"
+                    initial={{ opacity: 0, x: -28 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <p className="hero-callout-line">48 hrs. Untouched.</p>
+                    <StalledPointer />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
             <motion.aside
