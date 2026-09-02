@@ -88,39 +88,45 @@ export default function Contact() {
   };
 
   const inputCls =
-    "w-full bg-transparent border-0 border-b border-background/25 px-0 py-3 text-base text-background placeholder:text-background/40 focus:border-accent focus:outline-none transition-colors duration-300";
+    "w-full bg-transparent border-0 border-b border-foreground/20 px-0 py-3 text-base text-foreground placeholder:text-foreground/35 focus:border-accent focus:outline-none transition-colors duration-300";
   const labelCls =
-    "block text-[0.7rem] uppercase tracking-[0.25em] text-background/55 font-semibold mb-1";
+    "block text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-1";
   const toggleBtnCls = (active) =>
     `flex-1 px-4 py-3 text-sm font-semibold tracking-wide border-b-2 transition-colors duration-300 ${
       active
         ? "bg-accent text-accent-foreground border-accent"
-        : "bg-transparent text-background/65 border-transparent hover:border-accent/50 hover:text-background"
+        : "bg-transparent text-foreground/55 border-transparent hover:border-accent/40 hover:text-foreground"
     }`;
 
   return (
-    <section id="contact" className="relative w-full bg-foreground/[0.06] border-t border-border">
-      <div className="px-[8vw] py-[14vh] md:py-[16vh]">
+    <section
+      id="contact"
+      className="relative w-full border-t border-border overflow-hidden offer-stage"
+    >
+      <div className="offer-stage-atmosphere" aria-hidden="true" />
+
+      <div className="relative z-10 px-[8vw] py-[12vh] md:py-[14vh] max-w-[1500px] mx-auto">
         <Reveal
           as="p"
-          className="text-[0.75rem] uppercase tracking-[0.3em] text-muted-foreground font-semibold mb-8"
+          className="text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-6"
         >
           Contact
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-12 md:gap-20">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] gap-12 md:gap-16 lg:gap-20 items-start">
           {/* Left — context, not sales copy */}
           <Reveal>
-            <h2 className="font-display font-semibold tracking-tightest text-foreground text-[9vw] leading-[0.95] md:text-[3.2vw] md:leading-[1] text-balance max-w-[16ch]">
+            <h2 className="font-display font-semibold tracking-tightest text-foreground text-[1.85rem] sm:text-[2.25rem] md:text-[2.55rem] leading-[1.08] text-balance max-w-[16ch]">
               Put us in touch.
             </h2>
-            <p className="mt-6 text-base md:text-lg text-foreground/70 leading-[1.6] max-w-[42ch]">
+            <p className="mt-5 text-base md:text-lg text-foreground/75 leading-relaxed max-w-[42ch]">
               No queue or ticket number. Write us — we read it in the
               Lehigh Valley.
             </p>
 
             <p className="mt-4">
               <button
+                type="button"
                 onClick={() => window.dispatchEvent(new Event("clew:open-demo"))}
                 className="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:text-foreground transition-colors duration-300"
               >
@@ -158,34 +164,35 @@ export default function Contact() {
             </div>
           </Reveal>
 
-          {/* Right — dark form panel */}
+          {/* Right — light form panel, matches product/offer stages */}
           <Reveal delay={120}>
-            <div className="relative border-2 border-foreground/80 bg-foreground text-background p-7 md:p-10 shadow-[0_22px_55px_-24px_rgba(0,0,0,0.45)]">
+            <div className="relative contact-panel p-6 md:p-8 lg:p-9">
               <span className="absolute inset-x-0 top-0 h-[3px] bg-accent" aria-hidden="true" />
               {status === "success" ? (
-                <div className="flex flex-col items-start py-6 md:pt-0 pt-8">
-                  <div className="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center mb-5">
+                <div className="flex flex-col items-start py-6 md:pt-0 pt-4">
+                  <div className="w-12 h-12 rounded-full bg-accent/15 flex items-center justify-center mb-5">
                     <Check className="text-accent" size={24} />
                   </div>
-                  <p className="font-display font-semibold text-background text-xl md:text-2xl tracking-tight">
+                  <p className="font-display font-semibold text-foreground text-xl md:text-2xl tracking-tight">
                     Message sent.
                   </p>
-                  <p className="mt-2 text-background/70 text-base md:text-lg">
+                  <p className="mt-2 text-foreground/65 text-base md:text-lg">
                     We&apos;ll be in touch shortly.
                   </p>
                   <button
+                    type="button"
                     onClick={() => {
                       setStatus("idle");
                       setCustomerType("new");
                     }}
-                    className="mt-8 text-sm text-accent font-medium hover:text-background transition-colors"
+                    className="mt-8 text-sm text-accent font-medium hover:text-foreground transition-colors"
                   >
                     Send another message
                   </button>
                 </div>
               ) : (
                 <>
-                  <div className="flex gap-2 mb-7 border-b border-background/20">
+                  <div className="flex gap-2 mb-7 border-b border-foreground/12">
                     <button
                       type="button"
                       className={toggleBtnCls(customerType === "new")}
@@ -248,13 +255,13 @@ export default function Contact() {
                           required
                           value={form.product}
                           onChange={update("product")}
-                          className={`${inputCls} [color-scheme:dark]`}
+                          className={inputCls}
                         >
-                          <option value="" disabled className="bg-background text-foreground">
+                          <option value="" disabled>
                             Select a product
                           </option>
                           {PRODUCT_OPTIONS.map((p) => (
-                            <option key={p} value={p} className="bg-background text-foreground">
+                            <option key={p} value={p}>
                               {p}
                             </option>
                           ))}
@@ -270,7 +277,11 @@ export default function Contact() {
                             <button
                               key={r.value}
                               type="button"
-                              className={toggleBtnCls(form.reason === r.value)}
+                              className={`px-3 py-2 text-sm font-semibold tracking-wide border-2 transition-colors duration-300 ${
+                                form.reason === r.value
+                                  ? "bg-accent text-accent-foreground border-accent"
+                                  : "bg-transparent text-foreground/60 border-foreground/15 hover:border-accent hover:text-accent"
+                              }`}
                               onClick={() => setForm((f) => ({ ...f, reason: r.value }))}
                             >
                               {r.value}
@@ -291,7 +302,7 @@ export default function Contact() {
                       />
                     </div>
 
-                    {error && <p className="text-sm text-red-300">{error}</p>}
+                    {error && <p className="text-sm text-destructive">{error}</p>}
 
                     <button
                       type="submit"
@@ -299,7 +310,7 @@ export default function Contact() {
                         status === "submitting" ||
                         (customerType === "existing" && !form.reason)
                       }
-                      className="w-full md:w-auto inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-4 text-base font-semibold tracking-wide hover:bg-background hover:text-foreground transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed"
+                      className="w-full md:w-auto inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-3.5 text-base font-semibold tracking-wide hover:bg-foreground transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_10px_24px_-12px_hsl(var(--accent)/0.85)]"
                     >
                       {status === "submitting" ? "Sending…" : "Send message"}
                     </button>
