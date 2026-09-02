@@ -18,10 +18,9 @@ const ROUTES = {
 };
 const DEFAULT_ROUTE = ROUTES.Sales;
 
-const PRODUCT_OPTIONS = ["Framework", "Other"];
 const REASON_OPTIONS = [
-  { value: "Sales", label: "Sales — product questions" },
-  { value: "Accounting", label: "Accounting — billing or payment" },
+  { value: "Sales", label: "Sales" },
+  { value: "Accounting", label: "Accounting" },
   { value: "Other", label: "Other" },
 ];
 
@@ -29,13 +28,11 @@ const EMPTY = {
   contact_name: "",
   company_name: "",
   email: "",
-  product: "",
   reason: "",
   message: "",
 };
 
 export default function Contact() {
-  const [customerType, setCustomerType] = useState("new"); // "new" | "existing"
   const [form, setForm] = useState(EMPTY);
   const [status, setStatus] = useState("idle"); // idle | submitting | success | error
   const [error, setError] = useState("");
@@ -45,16 +42,14 @@ export default function Contact() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (status === "submitting") return;
+    if (!form.reason) {
+      setError("Choose Sales, Accounting, or Other.");
+      return;
+    }
     setError("");
     setStatus("submitting");
 
-    const tag =
-      customerType === "new"
-        ? `New — ${form.product || "General"}`
-        : `Existing — ${form.reason || "General"}`;
-
-    const route =
-      customerType === "existing" ? ROUTES[form.reason] || DEFAULT_ROUTE : DEFAULT_ROUTE;
+    const route = ROUTES[form.reason] || DEFAULT_ROUTE;
 
     try {
       const res = await fetch("https://api.web3forms.com/submit", {
@@ -62,15 +57,13 @@ export default function Contact() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: route.key,
-          subject: `[${tag}] CLEW contact — ${form.company_name.trim() || "General"}`,
+          subject: `[${form.reason}] CLEW contact — ${form.company_name.trim() || "General"}`,
           from_name: "CLEW Industries website",
           routed_to: route.inbox,
-          customer_type: customerType,
           contact_name: form.contact_name.trim(),
           company_name: form.company_name.trim(),
           email: form.email.trim(),
-          product: customerType === "new" ? form.product : "",
-          reason: customerType === "existing" ? form.reason : "",
+          reason: form.reason,
           message: form.message.trim(),
           botcheck: "",
         }),
@@ -91,12 +84,6 @@ export default function Contact() {
     "w-full bg-transparent border-0 border-b border-foreground/20 px-0 py-3 text-base text-foreground placeholder:text-foreground/35 focus:border-accent focus:outline-none transition-colors duration-300";
   const labelCls =
     "block text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-1";
-  const toggleBtnCls = (active) =>
-    `flex-1 px-4 py-3 text-sm font-semibold tracking-wide border-b-2 transition-colors duration-300 ${
-      active
-        ? "bg-accent text-accent-foreground border-accent"
-        : "bg-transparent text-foreground/55 border-transparent hover:border-accent/40 hover:text-foreground"
-    }`;
 
   return (
     <section
@@ -114,7 +101,6 @@ export default function Contact() {
         </Reveal>
 
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.15fr] gap-12 md:gap-16 lg:gap-20 items-start">
-          {/* Left — context, not sales copy */}
           <Reveal>
             <h2 className="font-display font-semibold tracking-tightest text-foreground text-[1.85rem] sm:text-[2.25rem] md:text-[2.55rem] leading-[1.08] text-balance max-w-[16ch]">
               Put us in touch.
@@ -164,7 +150,6 @@ export default function Contact() {
             </div>
           </Reveal>
 
-          {/* Right — light form panel, matches product/offer stages */}
           <Reveal delay={120}>
             <div className="relative contact-panel p-6 md:p-8 lg:p-9">
               <span className="absolute inset-x-0 top-0 h-[3px] bg-accent" aria-hidden="true" />
@@ -181,141 +166,103 @@ export default function Contact() {
                   </p>
                   <button
                     type="button"
-                    onClick={() => {
-                      setStatus("idle");
-                      setCustomerType("new");
-                    }}
+                    onClick={() => setStatus("idle")}
                     className="mt-8 text-sm text-accent font-medium hover:text-foreground transition-colors"
                   >
                     Send another message
                   </button>
                 </div>
               ) : (
-                <>
-                  <div className="flex gap-2 mb-7 border-b border-foreground/12">
-                    <button
-                      type="button"
-                      className={toggleBtnCls(customerType === "new")}
-                      onClick={() => setCustomerType("new")}
-                    >
-                      New Customer
-                    </button>
-                    <button
-                      type="button"
-                      className={toggleBtnCls(customerType === "existing")}
-                      onClick={() => setCustomerType("existing")}
-                    >
-                      Existing Customer
-                    </button>
-                  </div>
-
-                  <form onSubmit={onSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label className={labelCls} htmlFor="c_name">Name</label>
-                        <input
-                          id="c_name"
-                          type="text"
-                          required
-                          value={form.contact_name}
-                          onChange={update("contact_name")}
-                          className={inputCls}
-                        />
-                      </div>
-                      <div>
-                        <label className={labelCls} htmlFor="c_company">Company</label>
-                        <input
-                          id="c_company"
-                          type="text"
-                          required
-                          value={form.company_name}
-                          onChange={update("company_name")}
-                          className={inputCls}
-                        />
-                      </div>
-                    </div>
-
+                <form onSubmit={onSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className={labelCls} htmlFor="c_email">Email</label>
+                      <label className={labelCls} htmlFor="c_name">
+                        Name
+                      </label>
                       <input
-                        id="c_email"
-                        type="email"
+                        id="c_name"
+                        type="text"
                         required
-                        value={form.email}
-                        onChange={update("email")}
+                        value={form.contact_name}
+                        onChange={update("contact_name")}
                         className={inputCls}
                       />
                     </div>
-
-                    {customerType === "new" && (
-                      <div>
-                        <label className={labelCls} htmlFor="c_product">Product</label>
-                        <select
-                          id="c_product"
-                          required
-                          value={form.product}
-                          onChange={update("product")}
-                          className={inputCls}
-                        >
-                          <option value="" disabled>
-                            Select a product
-                          </option>
-                          {PRODUCT_OPTIONS.map((p) => (
-                            <option key={p} value={p}>
-                              {p}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    )}
-
-                    {customerType === "existing" && (
-                      <div>
-                        <p className={labelCls}>Reason</p>
-                        <div className="flex flex-wrap gap-2">
-                          {REASON_OPTIONS.map((r) => (
-                            <button
-                              key={r.value}
-                              type="button"
-                              className={`px-3 py-2 text-sm font-semibold tracking-wide border-2 transition-colors duration-300 ${
-                                form.reason === r.value
-                                  ? "bg-accent text-accent-foreground border-accent"
-                                  : "bg-transparent text-foreground/60 border-foreground/15 hover:border-accent hover:text-accent"
-                              }`}
-                              onClick={() => setForm((f) => ({ ...f, reason: r.value }))}
-                            >
-                              {r.value}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
                     <div>
-                      <label className={labelCls} htmlFor="c_message">Message</label>
-                      <textarea
-                        id="c_message"
-                        value={form.message}
-                        onChange={update("message")}
-                        rows={4}
-                        className={`${inputCls} resize-none`}
+                      <label className={labelCls} htmlFor="c_company">
+                        Company
+                      </label>
+                      <input
+                        id="c_company"
+                        type="text"
+                        required
+                        value={form.company_name}
+                        onChange={update("company_name")}
+                        className={inputCls}
                       />
                     </div>
+                  </div>
 
-                    {error && <p className="text-sm text-destructive">{error}</p>}
+                  <div>
+                    <label className={labelCls} htmlFor="c_email">
+                      Email
+                    </label>
+                    <input
+                      id="c_email"
+                      type="email"
+                      required
+                      value={form.email}
+                      onChange={update("email")}
+                      className={inputCls}
+                    />
+                  </div>
 
-                    <button
-                      type="submit"
-                      disabled={
-                        status === "submitting" ||
-                        (customerType === "existing" && !form.reason)
-                      }
-                      className="w-full md:w-auto inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-3.5 text-base font-semibold tracking-wide hover:bg-foreground transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_10px_24px_-12px_hsl(var(--accent)/0.85)]"
-                    >
-                      {status === "submitting" ? "Sending…" : "Send message"}
-                    </button>
-                  </form>
-                </>
+                  <div>
+                    <p className={labelCls}>Reason</p>
+                    <div className="flex flex-wrap gap-2">
+                      {REASON_OPTIONS.map((r) => (
+                        <button
+                          key={r.value}
+                          type="button"
+                          className={`px-3.5 py-2 text-sm font-semibold tracking-wide border-2 transition-colors duration-300 ${
+                            form.reason === r.value
+                              ? "bg-accent text-accent-foreground border-accent"
+                              : "bg-transparent text-foreground/60 border-foreground/15 hover:border-accent hover:text-accent"
+                          }`}
+                          onClick={() => {
+                            setError("");
+                            setForm((f) => ({ ...f, reason: r.value }));
+                          }}
+                        >
+                          {r.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className={labelCls} htmlFor="c_message">
+                      Message
+                    </label>
+                    <textarea
+                      id="c_message"
+                      value={form.message}
+                      onChange={update("message")}
+                      rows={4}
+                      className={`${inputCls} resize-none`}
+                    />
+                  </div>
+
+                  {error && <p className="text-sm text-destructive">{error}</p>}
+
+                  <button
+                    type="submit"
+                    disabled={status === "submitting" || !form.reason}
+                    className="w-full md:w-auto inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-3.5 text-base font-semibold tracking-wide hover:bg-foreground transition-colors duration-300 disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_10px_24px_-12px_hsl(var(--accent)/0.85)]"
+                  >
+                    {status === "submitting" ? "Sending…" : "Send message"}
+                  </button>
+                </form>
               )}
             </div>
           </Reveal>
