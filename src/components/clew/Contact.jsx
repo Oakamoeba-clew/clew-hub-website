@@ -106,8 +106,7 @@ export default function Contact() {
               Put us in touch.
             </h2>
             <p className="mt-5 text-base md:text-lg text-foreground/75 leading-relaxed max-w-[42ch]">
-              No queue or ticket number. Write us — we read it in the
-              Lehigh Valley.
+              No queue or ticket number.
             </p>
 
             <p className="mt-4">
