@@ -9,7 +9,14 @@ export const BOARD_COLUMNS = [
   { id: "lost", label: "Lost" },
 ];
 
-export const HERO_COLUMNS = BOARD_COLUMNS.slice(0, 3);
+/** Hero-only labels — do not change the product board. */
+export const HERO_COLUMNS = [
+  { id: "received", label: "Received" },
+  { id: "review", label: "Engineering Review" },
+  { id: "quoted", label: "Quoted" },
+  { id: "won", label: "Won" },
+  { id: "lost", label: "Lost" },
+];
 
 export const TUESDAY_RFQ_ID = "rfq-1043";
 
@@ -275,18 +282,28 @@ export default function QuoteBoard({
         <div
           className={
             compact
-              ? "overflow-x-auto pb-2 -mx-1 px-1"
+              ? polished
+                ? "hero-board-scroll overflow-x-auto pb-0"
+                : "overflow-x-auto pb-2 -mx-1 px-1"
               : "overflow-x-auto -mx-[8vw] px-[8vw] md:mx-0 md:px-0 pb-3"
           }
         >
           <div
             className={`grid bg-background ${
               polished
-                ? "border border-foreground/10 overflow-hidden rounded-[2px] shadow-none"
+                ? "hero-board-grid border border-foreground/10 overflow-hidden rounded-[2px] shadow-none"
                 : "border-2 border-foreground/15 shadow-[0_18px_50px_-28px_rgba(0,0,0,0.35)]"
             } ${
               compact
-                ? "min-w-[28rem] sm:min-w-[32rem] xl:min-w-0 grid-cols-3"
+                ? polished
+                  ? "min-w-0"
+                  : `min-w-[40rem] sm:min-w-[48rem] xl:min-w-0 ${
+                      columns.length >= 5
+                        ? "grid-cols-5"
+                        : columns.length >= 4
+                          ? "grid-cols-4"
+                          : "grid-cols-3"
+                    }`
                 : "min-w-[720px] md:min-w-0 grid-cols-5"
             }`}
           >
@@ -298,12 +315,12 @@ export default function QuoteBoard({
                     <div
                       ref={provided.innerRef}
                       {...provided.droppableProps}
-                      className={`flex flex-col ${
-                        polished ? "hero-col" : ""
+                      className={`${
+                        polished ? "hero-col" : "flex flex-col"
                       } ${
                         compact
                           ? polished
-                            ? "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.75rem] p-2.5 sm:p-3"
+                            ? "min-h-[9.5rem] sm:min-h-[10.5rem] xl:min-h-[11.25rem] p-1.5 sm:p-2"
                             : "min-h-[10.25rem] max-h-[12.25rem] overflow-y-auto sm:max-h-none sm:min-h-[12.5rem] xl:min-h-[14.5rem] p-2 sm:p-2.5"
                           : dense
                             ? "min-h-[11.5rem] md:min-h-[12.75rem] p-2 sm:p-2.5"
@@ -319,15 +336,27 @@ export default function QuoteBoard({
                       } ${highlightSitting && isSitting(col.id) ? "bg-accent/[0.05]" : ""}`}
                     >
                       <p
-                        className={`uppercase text-muted-foreground font-semibold mb-3 flex items-baseline justify-between gap-2 ${
+                        className={`uppercase text-muted-foreground font-semibold mb-3 flex items-baseline justify-between gap-1 ${
                           polished
-                            ? "text-[0.62rem] tracking-[0.2em] pb-2 border-b border-foreground/[0.07]"
+                            ? `tracking-[0.12em] pb-2 border-b border-foreground/[0.07] ${
+                                col.id === "review"
+                                  ? "text-[0.52rem] sm:text-[0.58rem] leading-snug"
+                                  : "text-[0.6rem] sm:text-[0.66rem] tracking-[0.14em]"
+                              }`
                             : dense
                               ? "text-[0.62rem] tracking-[0.14em] mb-2"
                               : "text-[0.7rem] tracking-[0.16em]"
                         }`}
                       >
-                        <span>{col.label}</span>
+                        <span
+                          className={
+                            polished && col.id === "review"
+                              ? "leading-[1.15]"
+                              : undefined
+                          }
+                        >
+                          {col.label}
+                        </span>
                         <span className="text-[0.65rem] tabular-nums text-foreground/35 font-medium tracking-normal normal-case">
                           {columnCards.length}
                         </span>
@@ -379,10 +408,10 @@ export default function QuoteBoard({
                                   }
                                   className={`text-left bg-card transition-[box-shadow,border-color,transform,background-color] duration-500 ${
                                     polished
-                                      ? `relative border px-2.5 py-2.5 sm:px-3 sm:py-2.5 bg-background shadow-[0_1px_0_hsl(var(--foreground)/0.03)] ${
-                                          highlighted
-                                            ? "border-accent/50 bg-accent/[0.05] sitting-highlight-soft pl-3 before:absolute before:left-0 before:top-0 before:bottom-0 before:w-[2px] before:bg-accent"
-                                            : "border-foreground/[0.12]"
+                                      ? `hero-rfq-card relative border px-2.5 py-2 sm:px-2.5 sm:py-2 bg-background${
+                                          warned ? " hero-rfq-card--warned" : ""
+                                        }${
+                                          focused ? " hero-rfq-card--lit sitting-highlight" : ""
                                         }`
                                       : `${compact ? "px-2.5 py-2.5 sm:px-3 sm:py-3" : "relative px-2.5 py-2.5"} border-2 ${
                                           interactive && selectedId === card.id
@@ -422,8 +451,8 @@ export default function QuoteBoard({
                                         title="Sitting too long"
                                       >
                                         <svg
-                                          width={polished ? 12 : 14}
-                                          height={polished ? 12 : 14}
+                                          width={polished ? 15 : 14}
+                                          height={polished ? 15 : 14}
                                           viewBox="0 0 24 24"
                                           fill="none"
                                           stroke="currentColor"
@@ -450,7 +479,7 @@ export default function QuoteBoard({
                                     (warned || focused) &&
                                     !polished && (
                                       <p className="xl:hidden mt-2 text-[0.68rem] font-semibold text-accent leading-snug">
-                                        48 hrs. Untouched.
+                                        Still sitting.
                                       </p>
                                     )}
                                 </div>
