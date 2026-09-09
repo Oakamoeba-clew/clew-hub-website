@@ -1,7 +1,7 @@
 {
   "name": "CLEW Industries",
   "short_name": "CLEW",
-  "description": "From showcasing your shop to catching every lead — we run the front end, so you can run the shop.",
+  "description": "CLEW Framework keeps shop RFQs moving — one board, a weekday sitting picture, until each quote is won or lost.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
