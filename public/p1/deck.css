@@ -218,50 +218,20 @@ html.p1-deck-root body {
   --progress-bar-color: var(--orange);
 }
 
-.p1-dims {
-  position: absolute;
-  inset: 0.7rem 0.85rem;
+.p1-hot {
+  display: inline-block;
   margin: 0;
-  padding: 0;
-  list-style: none;
-  pointer-events: none;
+  border: 1px solid var(--rule-soft);
+  background: var(--paper);
+  color: var(--orange);
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--orange);
-}
-
-.p1-dim {
-  position: absolute;
-}
-
-.p1-dim--od {
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.p1-dim--thk {
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-}
-
-.p1-dim--bcd {
-  bottom: 1.6rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.p1-dim--m3 {
-  top: 18%;
-  left: 0;
-}
-
-.p1-dim--bore {
-  bottom: 18%;
-  left: 0;
+  line-height: 1;
+  padding: 0.28rem 0.38rem;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
 .p1-sheet-copy {
@@ -345,6 +315,16 @@ html.p1-deck-root body {
   font-size: 0.92rem;
 }
 
+.p1-sheet-quiet {
+  margin: 0.85rem 0 0;
+  max-width: 48ch;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  color: var(--quiet);
+}
+
 .p1-sheet-note {
   margin: 1rem 0 0;
   max-width: 46ch;
@@ -353,30 +333,45 @@ html.p1-deck-root body {
   line-height: 1.45;
 }
 
+.p1-cost .p1-sheet-files,
 .p1-sheet-files {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 0;
   margin-top: 1.35rem;
-  border-top: 1px solid var(--rule-soft);
+  border: 1px solid var(--rule-soft);
 }
 
 .p1-sheet-file {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.75rem;
+  align-items: center;
   margin: 0;
-  padding: 0.72rem 0;
+  padding: 0.95rem 1rem;
   border-bottom: 1px solid var(--rule-soft);
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--quiet);
+  color: var(--ink);
   text-decoration: none;
+}
+
+.p1-sheet-file:last-child {
+  border-bottom: 0;
+}
+
+.p1-sheet-file:hover {
+  color: var(--orange);
 }
 
 .p1-sheet-file span {
   color: var(--orange);
+}
+
+.p1-cost .p1-sheet-note {
+  margin-top: 0.8rem;
 }
 
 .p1-sheet-cta {

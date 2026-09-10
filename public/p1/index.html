@@ -57,21 +57,26 @@
   camera-controls
   touch-action="none"
   interaction-prompt="none"
-  shadow-intensity="0.55"
-  exposure="0.62"
+  auto-rotate
+  auto-rotate-delay="600"
+  rotation-per-second="12deg"
+  shadow-intensity="0.85"
+  shadow-softness="0.5"
+  exposure="0.82"
+  tone-mapping="commerce"
   environment-image="neutral"
-  camera-orbit="48deg 66deg 0.32m"
-  field-of-view="28deg"
-  min-camera-orbit="auto 12deg 0.22m"
-  max-camera-orbit="auto 168deg 0.55m"
-></model-viewer>
-<ul class="p1-dims" aria-label="Rev A dimensions">
-<li class="p1-dim p1-dim--od">Ø80</li>
-<li class="p1-dim p1-dim--thk">8.00 thick</li>
-<li class="p1-dim p1-dim--bcd">BCD48</li>
-<li class="p1-dim p1-dim--m3">6×M3</li>
-<li class="p1-dim p1-dim--bore">Ø12</li>
-</ul>
+  camera-target="0m 0m 0.004m"
+  camera-orbit="18deg 72deg 0.26m"
+  field-of-view="26deg"
+  min-camera-orbit="auto 28deg 0.2m"
+  max-camera-orbit="auto 120deg 0.5m"
+>
+<button class="p1-hot" slot="hotspot-od" data-position="0m 0.042m 0.004m" data-normal="0 1 0">Ø80</button>
+<button class="p1-hot" slot="hotspot-thk" data-position="0.041m 0m 0.004m" data-normal="1 0 0">8.00 thick</button>
+<button class="p1-hot" slot="hotspot-bcd" data-position="0m 0.024m 0.009m" data-normal="0 0 1">BCD48</button>
+<button class="p1-hot" slot="hotspot-m3" data-position="0.0208m 0.012m 0.009m" data-normal="0 0 1">6×M3</button>
+<button class="p1-hot" slot="hotspot-bore" data-position="0.007m 0m 0.009m" data-normal="0 0 1">Ø12</button>
+</model-viewer>
 </div>
 <div class="p1-sheet-copy">
 <p class="p1-sheet-kicker">Product</p>
@@ -93,18 +98,19 @@
 <div class="p1-sheet-fit-row"><dt>Envelope</dt><dd>Ø80.00 × 8.00 mm</dd></div>
 <div class="p1-sheet-fit-row"><dt>Bore</dt><dd>Ø12.00 thru — not a pilot</dd></div>
 </dl>
+<p class="p1-sheet-quiet">6061-T6 · Type III black · etched CLEW P1 REV A · Lehigh Valley</p>
 </div>
 </section>
 
 <section id="cost" class="p1-flip" data-flip="cost">
-<div class="p1-flip-body">
+<div class="p1-flip-body p1-cost">
 <p class="p1-sheet-kicker">Cost</p>
 <h2>Qty 2. No MOQ.</h2>
-<p class="p1-sheet-note">Two-pack from a U.S. shop, design to drawing.</p>
 <div class="p1-sheet-files">
 <a class="p1-sheet-file" href="/p1/CLEW-P1-RevA.pdf" download>Drawing (PDF)<span>Download</span></a>
 <a class="p1-sheet-file" href="/p1/CLEW-P1-RevA.step" download>Model (STEP)<span>Download</span></a>
 </div>
+<p class="p1-sheet-note">Two-pack from a U.S. shop, design to drawing.</p>
 <p class="p1-sheet-note">Lead time quoted on reply — not promised on this page.</p>
 </div>
 </section>
@@ -112,9 +118,8 @@
 <section id="contact" class="p1-flip" data-flip="contact">
 <div class="p1-flip-body">
 <p class="p1-sheet-kicker">Contact</p>
-<h2>Request two-pack</h2>
-<a class="p1-sheet-cta" href="mailto:sales@clewindustries.com?subject=CLEW%20P1%20two-pack">Request two-pack</a>
-<p class="p1-mail"><a href="mailto:sales@clewindustries.com">sales@clewindustries.com</a></p>
+<h2>Two-pack</h2>
+<a class="p1-sheet-cta" href="mailto:sales@clewindustries.com?subject=CLEW%20P1%20two-pack">Write us</a>
 </div>
 </section>
 </div>
