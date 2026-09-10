@@ -290,7 +290,7 @@ html.p1-deck-root body {
 
 .p1-sheet-copy h1 {
   max-width: 12ch;
-  font-size: clamp(2rem, 4.4vw, 3.4rem);
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
 }
 
 .p1-sheet-use {

@@ -85,12 +85,14 @@ stage?.addEventListener(
 );
 
 const viewer = document.querySelector("model-viewer");
-viewer?.addEventListener("load", () => {
-  const material = viewer.model?.materials?.[0];
+function paintPlate() {
+  const material = viewer?.model?.materials?.[0];
   if (!material) return;
-  material.pbrMetallicRoughness.setBaseColorFactor([0.78, 0.75, 0.7, 1]);
-  material.pbrMetallicRoughness.setMetallicFactor(0.35);
-  material.pbrMetallicRoughness.setRoughnessFactor(0.48);
-});
+  material.pbrMetallicRoughness.setBaseColorFactor([0.13, 0.12, 0.11, 1]);
+  material.pbrMetallicRoughness.setMetallicFactor(0.22);
+  material.pbrMetallicRoughness.setRoughnessFactor(0.55);
+}
+if (viewer?.loaded) paintPlate();
+viewer?.addEventListener("load", paintPlate);
 
 setFlip(idFromHash(), { hash: true });
