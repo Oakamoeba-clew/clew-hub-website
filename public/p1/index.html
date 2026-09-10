@@ -23,6 +23,10 @@
 <div class="p1-sheet">
 <div class="p1-sheet-frame">
 <header class="p1-sheet-nav">
+<span id="product" class="p1-hash"></span>
+<span id="specs" class="p1-hash"></span>
+<span id="cost" class="p1-hash"></span>
+<span id="contact" class="p1-hash"></span>
 <a class="p1-sheet-mark" href="#product">CLEW</a>
 <nav aria-label="Page">
 <a data-flip-tab="product" href="#product">Product</a>
@@ -47,7 +51,7 @@
 <button type="button" class="p1-flip-btn p1-flip-btn--prev" data-flip-prev aria-label="Previous" hidden>‹</button>
 <button type="button" class="p1-flip-btn p1-flip-btn--next" data-flip-next aria-label="Next">›</button>
 
-<section id="product" class="p1-flip is-on" data-flip="product">
+<section class="p1-flip is-on" data-flip="product">
 <div class="p1-product">
 <div class="p1-orbit-wrap">
 <model-viewer
@@ -60,9 +64,9 @@
   auto-rotate
   auto-rotate-delay="600"
   rotation-per-second="12deg"
-  shadow-intensity="0.85"
-  shadow-softness="0.5"
-  exposure="0.82"
+  shadow-intensity="0.78"
+  shadow-softness="0.32"
+  exposure="1.08"
   tone-mapping="commerce"
   environment-image="neutral"
   camera-target="0m 0m 0.004m"
@@ -71,23 +75,24 @@
   min-camera-orbit="auto 28deg 0.2m"
   max-camera-orbit="auto 120deg 0.5m"
 >
-<button class="p1-hot" slot="hotspot-od" data-position="0m 0.042m 0.004m" data-normal="0 1 0">Ø80</button>
-<button class="p1-hot" slot="hotspot-thk" data-position="0.041m 0m 0.004m" data-normal="1 0 0">8.00 thick</button>
-<button class="p1-hot" slot="hotspot-bcd" data-position="0m 0.024m 0.009m" data-normal="0 0 1">BCD48</button>
-<button class="p1-hot" slot="hotspot-m3" data-position="0.0208m 0.012m 0.009m" data-normal="0 0 1">6×M3</button>
-<button class="p1-hot" slot="hotspot-bore" data-position="0.007m 0m 0.009m" data-normal="0 0 1">Ø12</button>
+<button class="p1-hot" slot="hotspot-od" data-position="0m 0.046m 0.004m" data-normal="0 1 0">Ø80</button>
+<button class="p1-hot p1-hot--thk" slot="hotspot-thk" data-position="0m -0.048m 0.004m" data-normal="0 -1 0">8.00 thick</button>
+<button class="p1-hot" slot="hotspot-bcd" data-position="0m 0.026m 0.012m" data-normal="0 0 1">BCD48</button>
+<button class="p1-hot" slot="hotspot-m3" data-position="0.022m 0.013m 0.012m" data-normal="0 0 1">6×M3</button>
+<button class="p1-hot" slot="hotspot-bore" data-position="0.009m 0m 0.012m" data-normal="0 0 1">Ø12</button>
 </model-viewer>
 </div>
 <div class="p1-sheet-copy">
 <p class="p1-sheet-kicker">Product</p>
 <h1>P1 Payload Interface Plate</h1>
 <p class="p1-sheet-use">Host on one face. Payload on the other.</p>
+<p class="p1-sheet-trust">CLEW owns the ICD. Cut by U.S. shop partners.</p>
 <p class="p1-sheet-hint">Drag to turn.</p>
 </div>
 </div>
 </section>
 
-<section id="specs" class="p1-flip" data-flip="specs">
+<section class="p1-flip" data-flip="specs">
 <div class="p1-flip-body">
 <p class="p1-sheet-kicker">Specs</p>
 <h2>Rev A. Frozen.</h2>
@@ -102,7 +107,7 @@
 </div>
 </section>
 
-<section id="cost" class="p1-flip" data-flip="cost">
+<section class="p1-flip" data-flip="cost">
 <div class="p1-flip-body p1-cost">
 <p class="p1-sheet-kicker">Cost</p>
 <h2>Qty 2. No MOQ.</h2>
@@ -110,15 +115,16 @@
 <a class="p1-sheet-file" href="/p1/CLEW-P1-RevA.pdf" download>Drawing (PDF)<span>Download</span></a>
 <a class="p1-sheet-file" href="/p1/CLEW-P1-RevA.step" download>Model (STEP)<span>Download</span></a>
 </div>
-<p class="p1-sheet-note">Two-pack from a U.S. shop, design to drawing.</p>
+<p class="p1-sheet-note">Machined in the U.S. · two-pack from a U.S. shop · design to drawing.</p>
 <p class="p1-sheet-note">Lead time quoted on reply — not promised on this page.</p>
 </div>
 </section>
 
-<section id="contact" class="p1-flip" data-flip="contact">
+<section class="p1-flip" data-flip="contact">
 <div class="p1-flip-body">
 <p class="p1-sheet-kicker">Contact</p>
 <h2>Two-pack</h2>
+<p class="p1-sheet-note">Ask for a Qty-2 two-pack. Fit check welcome.</p>
 <a class="p1-sheet-cta" href="mailto:sales@clewindustries.com?subject=CLEW%20P1%20two-pack">Write us</a>
 </div>
 </section>

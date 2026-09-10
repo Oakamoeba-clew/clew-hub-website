@@ -1,5 +1,6 @@
 const FLIPS = ["product", "specs", "cost", "contact"];
 const ALIASES = { spec: "specs", files: "cost", top: "product" };
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 const stage = document.querySelector("[data-p1-stage]");
 const cards = [...document.querySelectorAll("[data-flip]")];
@@ -11,6 +12,15 @@ function idFromHash() {
   const raw = (location.hash || "#product").slice(1).toLowerCase();
   const mapped = ALIASES[raw] || raw;
   return FLIPS.includes(mapped) ? mapped : "product";
+}
+
+function lockViewport() {
+  window.scrollTo(0, 0);
+  document.documentElement.scrollTop = 0;
+  document.body.scrollTop = 0;
+  document.querySelector(".p1-sheet")?.scrollTo(0, 0);
+  document.querySelector(".p1-sheet-frame")?.scrollTo(0, 0);
+  document.querySelector(".p1-stage")?.scrollTo(0, 0);
 }
 
 function setFlip(id, { hash = true } = {}) {
@@ -35,6 +45,7 @@ function setFlip(id, { hash = true } = {}) {
   if (hash && location.hash !== `#${next}`) {
     history.replaceState(null, "", `#${next}`);
   }
+  lockViewport();
 }
 
 function step(delta) {
@@ -44,9 +55,23 @@ function step(delta) {
   setFlip(FLIPS[nextIndex]);
 }
 
+document.addEventListener("click", (event) => {
+  const link = event.target.closest?.("a[href^='#']");
+  if (!link) return;
+  const raw = link.getAttribute("href").slice(1).toLowerCase();
+  const next = ALIASES[raw] || raw;
+  if (!FLIPS.includes(next)) return;
+  event.preventDefault();
+  setFlip(next);
+});
+
 prevBtn?.addEventListener("click", () => step(-1));
 nextBtn?.addEventListener("click", () => step(1));
-window.addEventListener("hashchange", () => setFlip(idFromHash(), { hash: false }));
+window.addEventListener("hashchange", () => {
+  setFlip(idFromHash(), { hash: false });
+  lockViewport();
+});
+window.addEventListener("scroll", lockViewport, { passive: true });
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") step(-1);
@@ -86,11 +111,13 @@ stage?.addEventListener(
 
 const viewer = document.querySelector("model-viewer");
 function paintPlate() {
-  const material = viewer?.model?.materials?.[0];
-  if (!material) return false;
-  material.pbrMetallicRoughness.setBaseColorFactor([0.13, 0.12, 0.11, 1]);
-  material.pbrMetallicRoughness.setMetallicFactor(0.22);
-  material.pbrMetallicRoughness.setRoughnessFactor(0.55);
+  const materials = viewer?.model?.materials;
+  if (!materials?.length) return false;
+  for (const material of materials) {
+    material.pbrMetallicRoughness.setBaseColorFactor([0.33, 0.31, 0.29, 1]);
+    material.pbrMetallicRoughness.setMetallicFactor(0.38);
+    material.pbrMetallicRoughness.setRoughnessFactor(0.4);
+  }
   return true;
 }
 viewer?.addEventListener("load", paintPlate);
@@ -110,3 +137,5 @@ viewer?.addEventListener("camera-change", (event) => {
 window.setTimeout(stopSpin, 32000);
 
 setFlip(idFromHash(), { hash: true });
+lockViewport();
+window.addEventListener("load", lockViewport);
