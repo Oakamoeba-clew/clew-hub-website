@@ -27,6 +27,11 @@ function setFlip(id, { hash = true } = {}) {
     if (on) tab.setAttribute("aria-current", "page");
     else tab.removeAttribute("aria-current");
   });
+  if (prevBtn) {
+    const onFirst = next === FLIPS[0];
+    prevBtn.hidden = onFirst;
+    prevBtn.setAttribute("aria-hidden", onFirst ? "true" : "false");
+  }
   if (hash && location.hash !== `#${next}`) {
     history.replaceState(null, "", `#${next}`);
   }
@@ -34,8 +39,9 @@ function setFlip(id, { hash = true } = {}) {
 
 function step(delta) {
   const i = FLIPS.indexOf(idFromHash());
-  const next = FLIPS[(i + delta + FLIPS.length) % FLIPS.length];
-  setFlip(next);
+  const nextIndex = i + delta;
+  if (nextIndex < 0 || nextIndex >= FLIPS.length) return;
+  setFlip(FLIPS[nextIndex]);
 }
 
 prevBtn?.addEventListener("click", () => step(-1));

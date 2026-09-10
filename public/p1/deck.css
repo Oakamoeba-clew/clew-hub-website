@@ -160,6 +160,10 @@ html.p1-deck-root body {
   left: 0;
 }
 
+.p1-flip-btn[hidden] {
+  display: none;
+}
+
 .p1-flip-btn--next {
   right: 0;
 }
