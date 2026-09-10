@@ -74,6 +74,7 @@ window.addEventListener("hashchange", () => {
 window.addEventListener("scroll", lockViewport, { passive: true });
 
 document.addEventListener("keydown", (event) => {
+  if (event.target.closest?.("input, textarea, select")) return;
   if (event.key === "ArrowLeft") step(-1);
   if (event.key === "ArrowRight") step(1);
 });
@@ -81,15 +82,19 @@ document.addEventListener("keydown", (event) => {
 let startX = 0;
 let tracking = false;
 
-function fromModel(target) {
-  return Boolean(target && target.closest && target.closest("model-viewer"));
+function fromChrome(target) {
+  return Boolean(
+    target &&
+      target.closest &&
+      target.closest("model-viewer, form, input, textarea, select, button, a, label"),
+  );
 }
 
 stage?.addEventListener(
   "pointerdown",
   (event) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
-    if (fromModel(event.target)) return;
+    if (fromChrome(event.target)) return;
     tracking = true;
     startX = event.clientX;
   },
@@ -101,7 +106,7 @@ stage?.addEventListener(
   (event) => {
     if (!tracking) return;
     tracking = false;
-    if (fromModel(event.target)) return;
+    if (fromChrome(event.target)) return;
     const dx = event.clientX - startX;
     if (Math.abs(dx) < 56) return;
     step(dx < 0 ? 1 : -1);
@@ -135,6 +140,56 @@ viewer?.addEventListener("camera-change", (event) => {
   if (event.detail?.source === "user-interaction") stopSpin();
 });
 window.setTimeout(stopSpin, 32000);
+
+const quoteForm = document.querySelector("[data-p1-quote]");
+const quoteStatus = document.querySelector("[data-p1-quote-status]");
+const WEB3FORMS_KEY = "62e561d9-0f87-4fca-80a0-e27ac9071dc5";
+
+quoteForm?.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (quoteForm.dataset.busy === "1") return;
+  const name = quoteForm.name.value.trim();
+  const email = quoteForm.email.value.trim();
+  const org = quoteForm.org.value.trim();
+  const host = quoteForm.host.value.trim();
+  const qty = quoteForm.qty.value.trim();
+  if (!name || !email || !org || !host || !qty) return;
+  quoteForm.dataset.busy = "1";
+  if (quoteStatus) {
+    quoteStatus.hidden = false;
+    quoteStatus.textContent = "Sending…";
+  }
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        subject: `P1 Rev A two-pack — ${host}`,
+        from_name: "CLEW P1 Cost",
+        routed_to: "sales@clewindustries.com",
+        name,
+        email,
+        org,
+        host_type: host,
+        qty,
+        botcheck: "",
+      }),
+    });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || data.success !== true) {
+      throw new Error(data.message || "The quote request did not send.");
+    }
+    quoteForm.reset();
+    if (quoteStatus) quoteStatus.textContent = "Sent to sales@. We will reply with the shop number.";
+  } catch (err) {
+    if (quoteStatus) {
+      quoteStatus.textContent = err instanceof Error ? err.message : "The quote request did not send.";
+    }
+  } finally {
+    quoteForm.dataset.busy = "0";
+  }
+});
 
 setFlip(idFromHash(), { hash: true });
 lockViewport();

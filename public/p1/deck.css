@@ -119,6 +119,24 @@ html.p1-deck-root body {
   right: 0;
 }
 
+.p1-sheet-pdf-nav {
+  display: flex;
+  align-items: center;
+  padding: 0 0.85rem;
+  border-right: 1px solid var(--rule-soft);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--quiet);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.p1-sheet-pdf-nav:hover {
+  color: var(--orange);
+}
+
 .p1-sheet-cta-nav {
   display: flex;
   align-items: center;
@@ -130,6 +148,7 @@ html.p1-deck-root body {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .p1-stage {
@@ -296,8 +315,23 @@ html.p1-deck-root body {
 }
 
 .p1-sheet-copy h1 {
-  max-width: 12ch;
+  max-width: 14ch;
   font-size: clamp(1.55rem, 3vw, 2.25rem);
+}
+
+.p1-sku {
+  margin: 1rem 0 0;
+  padding: 0;
+  max-width: 32ch;
+  list-style: none;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.p1-sku li {
+  border-bottom: 1px solid var(--rule-soft);
+  padding: 0.32rem 0;
+  font-size: 0.82rem;
+  line-height: 1.3;
 }
 
 .p1-sheet-use {
@@ -434,6 +468,65 @@ html.p1-deck-root body {
   margin-top: 0.8rem;
 }
 
+.p1-quote {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1.25rem;
+  max-width: 22rem;
+}
+
+.p1-quote label {
+  display: grid;
+  gap: 0.2rem;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+.p1-quote input,
+.p1-quote select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 0;
+  border-bottom: 1px solid var(--rule-soft);
+  background: transparent;
+  padding: 0.45rem 0 0.4rem;
+  font: inherit;
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  border-radius: 0;
+}
+
+.p1-quote input:focus,
+.p1-quote select:focus {
+  outline: none;
+  border-bottom-color: var(--orange);
+}
+
+.p1-quote button {
+  justify-self: start;
+  margin-top: 0.35rem;
+  border: 0;
+  background: var(--orange);
+  color: var(--paper);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 0.85rem 1.1rem;
+  cursor: pointer;
+}
+
+.p1-quote-status {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: var(--quiet);
+}
+
 .p1-sheet-cta {
   display: inline-flex;
   margin-top: 1.25rem;
@@ -509,6 +602,8 @@ html.p1-deck-root body {
   .p1-sheet-nav-end {
     grid-column: 2;
     grid-row: 1;
+    min-height: 48px;
+    flex-wrap: nowrap;
   }
 
   .p1-sheet-nav nav {
@@ -517,12 +612,25 @@ html.p1-deck-root body {
     overflow-x: auto;
   }
 
+  .p1-sheet-pdf-nav {
+    padding: 0 0.55rem;
+    font-size: 0.56rem;
+    letter-spacing: 0.06em;
+  }
+
   .p1-sheet-cta-nav {
     justify-content: center;
+    min-height: 48px;
+    min-width: 7.4rem;
+    padding: 0 0.8rem;
   }
 
   .p1-flip {
     padding: 0 2.4rem;
+  }
+
+  .p1-flip[data-flip="product"] {
+    overflow: auto;
   }
 
   .p1-flip-btn {

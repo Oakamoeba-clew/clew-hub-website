@@ -43,7 +43,8 @@
 <a href="/p1/industries/lab-gse/">Lab / GSE</a>
 </div>
 </details>
-<a class="p1-sheet-cta-nav" href="#contact">Request two-pack</a>
+<a class="p1-sheet-pdf-nav" href="/p1/CLEW-P1-RevA.pdf" download>Download Rev A PDF</a>
+<a class="p1-sheet-cta-nav" href="mailto:sales@clewindustries.com?subject=P1%20Rev%20A%20two-pack">Request two-pack</a>
 </div>
 </header>
 
@@ -76,15 +77,22 @@
   max-camera-orbit="auto 120deg 0.5m"
 >
 <button class="p1-hot" slot="hotspot-od" data-position="0m 0.046m 0.004m" data-normal="0 1 0">Ø80</button>
-<button class="p1-hot p1-hot--thk" slot="hotspot-thk" data-position="0m -0.048m 0.004m" data-normal="0 -1 0">8.00 thick</button>
-<button class="p1-hot" slot="hotspot-bcd" data-position="0m 0.026m 0.012m" data-normal="0 0 1">BCD48</button>
-<button class="p1-hot" slot="hotspot-m3" data-position="0.022m 0.013m 0.012m" data-normal="0 0 1">6×M3</button>
+<button class="p1-hot p1-hot--thk" slot="hotspot-thk" data-position="0m -0.048m 0.004m" data-normal="0 -1 0">8.00 THICK</button>
+<button class="p1-hot" slot="hotspot-bcd" data-position="-0.028m 0m 0.012m" data-normal="0 0 1">48.00 BCD</button>
+<button class="p1-hot" slot="hotspot-m3" data-position="0.026m 0.012m 0.012m" data-normal="0 0 1">6× Ø3.40 CLR</button>
+<button class="p1-hot" slot="hotspot-idx" data-position="0m 0.034m 0.012m" data-normal="0 0 1">INDEX 12:00</button>
 <button class="p1-hot" slot="hotspot-bore" data-position="0.009m 0m 0.012m" data-normal="0 0 1">Ø12</button>
 </model-viewer>
 </div>
 <div class="p1-sheet-copy">
 <p class="p1-sheet-kicker">Product</p>
-<h1>P1 Payload Interface Plate</h1>
+<h1>P1 Payload Interface Plate Rev A</h1>
+<ul class="p1-sku" aria-label="SKU">
+<li>48.00 BCD</li>
+<li>6× M3 CLR Ø3.40 after Type III</li>
+<li>Ø80.00 × 8.00 · Ø12 thru</li>
+<li>Index 12:00 · qty 2 first article</li>
+</ul>
 <p class="p1-sheet-use">Host on one face. Payload on the other.</p>
 <p class="p1-sheet-trust">CLEW owns the ICD. Cut by U.S. shop partners.</p>
 <p class="p1-sheet-hint">Drag to turn.</p>
@@ -98,26 +106,49 @@
 <h2>Rev A. Frozen.</h2>
 <dl class="p1-sheet-fit" aria-label="Interface — will it fit">
 <div class="p1-sheet-fit-row"><dt>BCD</dt><dd>48.00 mm frozen</dd></div>
-<div class="p1-sheet-fit-row"><dt>Holes</dt><dd>6× M3 CLR · index 12:00</dd></div>
-<div class="p1-sheet-fit-row"><dt>Thru</dt><dd>Ø3.40 after Type III hardcoat</dd></div>
+<div class="p1-sheet-fit-row"><dt>Holes</dt><dd>6× M3 CLR · Ø3.40 thru after Type III · ISO 273 normal</dd></div>
+<div class="p1-sheet-fit-row"><dt>Index</dt><dd>12:00 — one of the six holes + rim tick</dd></div>
 <div class="p1-sheet-fit-row"><dt>Envelope</dt><dd>Ø80.00 × 8.00 mm</dd></div>
-<div class="p1-sheet-fit-row"><dt>Bore</dt><dd>Ø12.00 thru — not a pilot</dd></div>
+<div class="p1-sheet-fit-row"><dt>Bore</dt><dd>Ø12.00 thru — not a pilot / not a locating feature</dd></div>
 </dl>
-<p class="p1-sheet-quiet">6061-T6 · Type III black · etched CLEW P1 REV A · Lehigh Valley</p>
+<p class="p1-sheet-quiet">Ø3.00 on any old blueprint is superseded.</p>
+<p class="p1-sheet-quiet">6061-T6 · Type III hardcoat black · etched CLEW P1 REV A · Lehigh Valley PA</p>
 </div>
 </section>
 
 <section class="p1-flip" data-flip="cost">
 <div class="p1-flip-body p1-cost">
 <p class="p1-sheet-kicker">Cost</p>
-<h2>Qty 2. No MOQ.</h2>
+<h2>Qty 2 first article</h2>
+<dl class="p1-sheet-fit" aria-label="How we sell">
+<div class="p1-sheet-fit-row"><dt>Unit</dt><dd>Qty 2 first article</dd></div>
+<div class="p1-sheet-fit-row"><dt>Price</dt><dd>Quoted from shop number after request</dd></div>
+<div class="p1-sheet-fit-row"><dt>Lead</dt><dd>On order — not promised on this page</dd></div>
+</dl>
 <div class="p1-sheet-files">
 <a class="p1-sheet-file" href="/p1/CLEW-P1-RevA.pdf" download>Drawing (PDF)<span>Download</span></a>
 <a class="p1-sheet-file" href="/p1/CLEW-P1-RevA.step" download>Model (STEP)<span>Download</span></a>
 </div>
+<form class="p1-quote" data-p1-quote>
+<label>Name<input name="name" type="text" autocomplete="name" required></label>
+<label>Email<input name="email" type="email" autocomplete="email" required></label>
+<label>Org<input name="org" type="text" autocomplete="organization" required></label>
+<label>Host type
+<select name="host" required>
+<option value="">UAV / ROV / USV / lab / other</option>
+<option value="UAV">UAV</option>
+<option value="ROV">ROV</option>
+<option value="USV">USV</option>
+<option value="lab">Lab</option>
+<option value="other">Other</option>
+</select>
+</label>
+<label>Qty<input name="qty" type="text" inputmode="numeric" value="2" required></label>
+<button type="submit">Request quote</button>
+<p class="p1-quote-status" data-p1-quote-status hidden></p>
+</form>
+<p class="p1-sheet-note">Typical first-article two-pack is a shop quote, not a catalog price.</p>
 <p class="p1-sheet-note">Machined in the U.S. · two-pack from a U.S. shop · design to drawing.</p>
-<p class="p1-sheet-note">Lead time quoted on reply — not promised on this page.</p>
-<p class="p1-sheet-note">No catalog price — quote on reply.</p>
 </div>
 </section>
 
@@ -126,9 +157,9 @@
 <p class="p1-sheet-kicker">Contact</p>
 <h2>Two-pack</h2>
 <p class="p1-sheet-note">Ask for a Qty-2 two-pack. Fit check welcome.</p>
-<a class="p1-sheet-cta" href="mailto:sales@clewindustries.com?subject=CLEW%20P1%20two-pack">Write us</a>
-<p class="p1-mail"><a href="mailto:sales@clewindustries.com?subject=CLEW%20P1%20two-pack">sales@clewindustries.com</a></p>
-<p class="p1-sheet-quiet">Lehigh Valley · usually same-day reply.</p>
+<a class="p1-sheet-cta" href="mailto:sales@clewindustries.com?subject=P1%20Rev%20A%20two-pack">Write us</a>
+<p class="p1-mail"><a href="mailto:sales@clewindustries.com?subject=P1%20Rev%20A%20two-pack">sales@clewindustries.com</a></p>
+<p class="p1-sheet-quiet">Lehigh Valley PA · replies 1 business day.</p>
 <p class="p1-sheet-tinyfiles">
 <a href="/p1/CLEW-P1-RevA.pdf" download>Drawing (PDF)</a>
 <span aria-hidden="true"> · </span>
