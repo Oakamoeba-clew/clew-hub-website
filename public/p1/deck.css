@@ -2,8 +2,12 @@
 html.p1-deck-root,
 html.p1-deck-root body {
   height: 100%;
+  max-height: 100%;
   overflow: hidden;
+  overscroll-behavior: none;
   margin: 0;
+  scroll-behavior: auto;
+  scroll-padding: 0;
   background: var(--paper, #f7f4ee);
 }
 
@@ -37,12 +41,24 @@ html.p1-deck-root body {
   overflow: hidden;
 }
 
+.p1-hash {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .p1-sheet-nav {
   flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  isolation: isolate;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: stretch;
   border-bottom: 1px solid var(--rule-soft);
+  background: var(--paper);
 }
 
 .p1-sheet-mark {
@@ -120,6 +136,7 @@ html.p1-deck-root body {
   position: relative;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
   perspective: 1400px;
 }
 
@@ -186,10 +203,16 @@ html.p1-deck-root body {
   right: 0;
 }
 
+.p1-flip[data-flip="product"] {
+  overflow: hidden;
+}
+
 .p1-product {
   display: grid;
-  min-height: 100%;
+  height: 100%;
+  min-height: 0;
   align-items: stretch;
+  overflow: hidden;
 }
 
 @media (min-width: 900px) {
@@ -200,7 +223,9 @@ html.p1-deck-root body {
 
 .p1-orbit-wrap {
   position: relative;
-  min-height: 18rem;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 @media (min-width: 900px) {
@@ -213,25 +238,37 @@ html.p1-deck-root body {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 18rem;
+  min-height: 0;
   background: var(--paper);
   --progress-bar-color: var(--orange);
+  --min-hotspot-opacity: 1;
+  --max-hotspot-opacity: 1;
+  overflow: visible;
 }
 
 .p1-hot {
   display: inline-block;
   margin: 0;
-  border: 1px solid var(--rule-soft);
+  border: 1px solid var(--rule);
   background: var(--paper);
-  color: var(--orange);
+  color: var(--rule);
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   line-height: 1;
-  padding: 0.28rem 0.38rem;
+  padding: 0.32rem 0.42rem;
   pointer-events: none;
   white-space: nowrap;
+  box-shadow: 0 0 0 3px var(--paper);
+  text-shadow: 0 0 0 transparent;
+}
+
+.p1-hot--thk {
+  border-color: var(--orange);
+  color: var(--orange);
+  background: var(--paper);
 }
 
 .p1-sheet-copy {
@@ -278,6 +315,16 @@ html.p1-deck-root body {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--orange);
+}
+
+.p1-sheet-trust {
+  margin: 0.7rem 0 0;
+  max-width: 28ch;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  line-height: 1.45;
+  color: var(--quiet);
 }
 
 .p1-flip-body {
@@ -449,8 +496,8 @@ html.p1-deck-root body {
 
   .p1-orbit-wrap,
   .p1-orbit {
-    min-height: 16.5rem;
-    height: min(46vh, 22rem);
+    min-height: 14rem;
+    height: min(42vh, 20rem);
   }
 }
 
