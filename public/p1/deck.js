@@ -87,12 +87,26 @@ stage?.addEventListener(
 const viewer = document.querySelector("model-viewer");
 function paintPlate() {
   const material = viewer?.model?.materials?.[0];
-  if (!material) return;
+  if (!material) return false;
   material.pbrMetallicRoughness.setBaseColorFactor([0.13, 0.12, 0.11, 1]);
   material.pbrMetallicRoughness.setMetallicFactor(0.22);
   material.pbrMetallicRoughness.setRoughnessFactor(0.55);
+  return true;
 }
-if (viewer?.loaded) paintPlate();
 viewer?.addEventListener("load", paintPlate);
+if (!paintPlate()) {
+  const wait = window.setInterval(() => {
+    if (paintPlate()) window.clearInterval(wait);
+  }, 100);
+  window.setTimeout(() => window.clearInterval(wait), 5000);
+}
+
+function stopSpin() {
+  viewer?.removeAttribute("auto-rotate");
+}
+viewer?.addEventListener("camera-change", (event) => {
+  if (event.detail?.source === "user-interaction") stopSpin();
+});
+window.setTimeout(stopSpin, 32000);
 
 setFlip(idFromHash(), { hash: true });
