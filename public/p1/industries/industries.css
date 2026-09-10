@@ -1,0 +1,110 @@
+/* Industries nav + thin industry pages only. Does not restyle Spec / Files / Contact / hero. */
+.p1-industries-nav {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.p1-industries-nav > summary {
+  display: flex;
+  align-items: center;
+  padding: 0 1.15rem;
+  border-right: 1px solid var(--rule-soft);
+  background: none;
+  list-style: none;
+  cursor: pointer;
+  color: var(--quiet);
+}
+
+.p1-industries-nav > summary::-webkit-details-marker {
+  display: none;
+}
+
+.p1-industries-nav > summary::marker {
+  content: "";
+}
+
+.p1-industries-nav.is-active > summary,
+.p1-industries-nav > summary:hover {
+  color: var(--orange);
+}
+
+.p1-industries-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 30;
+  min-width: 11.5rem;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-top: 0;
+}
+
+.p1-industries-nav[open] .p1-industries-menu {
+  display: flex;
+}
+
+@media (hover: hover) and (min-width: 721px) {
+  .p1-industries-nav:hover .p1-industries-menu {
+    display: flex;
+  }
+}
+
+.p1-industries-menu a {
+  display: block;
+  padding: 0.7rem 1.05rem;
+  border-right: 0;
+  border-bottom: 1px solid var(--rule-soft);
+  color: var(--quiet);
+}
+
+.p1-industries-menu a:last-child {
+  border-bottom: 0;
+}
+
+.p1-industries-menu a[aria-current="page"],
+.p1-industries-menu a:hover {
+  color: var(--orange);
+}
+
+.p1-industry {
+  padding: 1.35rem 0 2.75rem;
+}
+
+.p1-industry .p1-sheet-kicker,
+.p1-industry .p1-sheet-note,
+.p1-industry-cta {
+  padding-left: 1.35rem;
+  padding-right: 1.35rem;
+}
+
+.p1-industry-board {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 0.85rem;
+}
+
+.p1-industry-cta {
+  margin: 1.35rem 0 0;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--quiet);
+}
+
+.p1-industry-cta a {
+  color: var(--orange);
+  text-decoration: none;
+}
+
+.p1-industry-cta a:hover {
+  text-decoration: underline;
+}
+
+.p1-industry-cta span {
+  margin: 0 0.55rem;
+}
