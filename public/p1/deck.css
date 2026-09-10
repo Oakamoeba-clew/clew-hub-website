@@ -85,6 +85,24 @@ html.p1-deck-root body {
   color: var(--orange);
 }
 
+.p1-sheet-nav-end {
+  display: flex;
+  align-items: stretch;
+  justify-self: end;
+}
+
+.p1-sheet-nav-end .p1-industries-nav {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.p1-sheet-nav-end .p1-industries-menu {
+  left: auto;
+  right: 0;
+}
+
 .p1-sheet-cta-nav {
   display: flex;
   align-items: center;
@@ -409,6 +427,11 @@ html.p1-deck-root body {
 @media (max-width: 720px) {
   .p1-sheet-nav {
     grid-template-columns: auto 1fr;
+  }
+
+  .p1-sheet-nav-end {
+    grid-column: 2;
+    grid-row: 1;
   }
 
   .p1-sheet-nav nav {
