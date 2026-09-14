@@ -1,4 +1,5 @@
 import Reveal from "./Reveal";
+import { fwHash } from "@/lib/frameworkBase";
 
 const FOR = [
   "Owner or estimator at a small or mid-size job shop.",
@@ -66,6 +67,17 @@ export default function WhoFor() {
             </ul>
           </div>
         </div>
+
+        <Reveal delay={180}>
+          <p className="mt-8 max-w-[46ch] text-sm md:text-base text-foreground/60 leading-relaxed">
+            If that&apos;s the shop,{" "}
+            <a
+              href={fwHash("#pricing")}
+              className="font-semibold text-accent hover:text-foreground transition-colors duration-300"
+            >
+              the offer is one board and one price</a>.
+          </p>
+        </Reveal>
       </div>
     </section>
   );

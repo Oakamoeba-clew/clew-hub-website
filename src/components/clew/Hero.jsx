@@ -1,8 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import QuoteBoard, { HERO_COLUMNS, TUESDAY_RFQ_ID } from "./QuoteBoard";
+import { fwHash } from "@/lib/frameworkBase";
 
-const HERO_IMG = "/hero.jpg";
+const HERO_IMG = `${import.meta.env.BASE_URL}hero.jpg`;
 
 /** Fixed showcase board — never tied to the interactive product board. */
 const HERO_CARDS = [
@@ -182,7 +183,7 @@ export default function Hero() {
                 Request a demo
               </button>
               <a
-                href="/#framework"
+                href={fwHash("#framework")}
                 className="text-sm sm:text-base font-semibold text-foreground/70 hover:text-accent transition-colors duration-300"
               >
                 See how it works

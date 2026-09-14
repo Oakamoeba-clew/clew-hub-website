@@ -5,11 +5,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import ScrollToTop from './components/ScrollToTop';
 import Home from '@/pages/Home';
+import { FRAMEWORK_BASE } from '@/lib/frameworkBase';
 
 function App() {
   return (
     <QueryClientProvider client={queryClientInstance}>
-      <Router>
+      <Router basename={FRAMEWORK_BASE}>
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />

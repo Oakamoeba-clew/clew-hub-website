@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
+import { fwHash } from "@/lib/frameworkBase";
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,7 +36,7 @@ export default function Nav() {
     >
       <nav className="px-[8vw] py-4 md:py-5">
         <div className="hidden lg:flex items-center justify-between">
-          <a href="/#top" className="flex flex-col leading-none shrink-0">
+          <a href={fwHash("#top")} className="flex flex-col leading-none shrink-0">
             <span className="font-display font-bold tracking-tightest text-foreground text-[1.75rem] leading-none">
               CLEW
             </span>
@@ -46,10 +47,28 @@ export default function Nav() {
 
           <div className="flex items-center gap-6">
             <a
-              href="/#framework"
+              href="/"
+              className="text-[0.95rem] text-foreground/80 hover:text-accent transition-colors duration-300 font-medium"
+            >
+              P1 kit
+            </a>
+            <a
+              href={fwHash("#framework")}
               className="text-[0.95rem] text-foreground/80 hover:text-accent transition-colors duration-300 font-medium"
             >
               Product
+            </a>
+            <a
+              href={fwHash("#pricing")}
+              className="text-[0.95rem] text-foreground/80 hover:text-accent transition-colors duration-300 font-medium"
+            >
+              Pricing
+            </a>
+            <a
+              href={fwHash("#contact")}
+              className="text-[0.95rem] text-foreground/80 hover:text-accent transition-colors duration-300 font-medium"
+            >
+              Contact
             </a>
             <button
               type="button"
@@ -62,7 +81,7 @@ export default function Nav() {
         </div>
 
         <div className="lg:hidden flex items-center justify-between">
-          <a href="/#top" className="flex flex-col leading-none shrink-0" onClick={() => setOpen(false)}>
+          <a href={fwHash("#top")} className="flex flex-col leading-none shrink-0" onClick={() => setOpen(false)}>
             <span className="font-display font-bold tracking-tightest text-foreground text-2xl leading-none">
               CLEW
             </span>
@@ -93,11 +112,32 @@ export default function Nav() {
           >
             <div className="px-[8vw] py-5 flex flex-col">
               <a
-                href="/#framework"
+                href="/"
+                onClick={() => setOpen(false)}
+                className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50"
+              >
+                P1 kit
+              </a>
+              <a
+                href={fwHash("#framework")}
                 onClick={() => setOpen(false)}
                 className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50"
               >
                 Product
+              </a>
+              <a
+                href={fwHash("#pricing")}
+                onClick={() => setOpen(false)}
+                className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50"
+              >
+                Pricing
+              </a>
+              <a
+                href={fwHash("#contact")}
+                onClick={() => setOpen(false)}
+                className="py-3.5 text-lg font-medium text-foreground/85 hover:text-accent transition-colors duration-300 border-b border-border/50"
+              >
+                Contact
               </a>
               <button
                 type="button"
