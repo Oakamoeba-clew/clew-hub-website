@@ -1,9 +1,11 @@
+import { fwHash } from "@/lib/frameworkBase";
+
 export default function Footer() {
   return (
     <footer className="relative w-full bg-background border-t border-foreground">
       <div className="px-[8vw] py-14 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 items-start">
-          <a href="/#top" className="flex flex-col leading-none shrink-0 w-fit">
+          <a href={fwHash("#top")} className="flex flex-col leading-none shrink-0 w-fit">
             <span className="font-display font-bold tracking-tightest text-foreground text-[1.75rem] leading-none">
               CLEW
             </span>
@@ -42,10 +44,19 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 pt-8 border-t border-border flex flex-wrap gap-x-8 gap-y-3">
-          <a href="/#top" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
+          <a href={fwHash("#top")} className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Home
           </a>
-          <a href="/#contact" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
+          <a href="/" className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
+            P1 kit
+          </a>
+          <a href={fwHash("#framework")} className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
+            Product
+          </a>
+          <a href={fwHash("#pricing")} className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
+            Pricing
+          </a>
+          <a href={fwHash("#contact")} className="text-sm text-foreground/70 hover:text-accent transition-colors duration-300 font-medium">
             Contact
           </a>
         </div>

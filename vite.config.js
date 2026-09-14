@@ -5,12 +5,20 @@ import { defineConfig } from 'vite'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-// https://vite.dev/config/
 export default defineConfig({
+  base: '/framework/',
+  publicDir: false,
   plugins: [react()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+  },
+  server: {
+    open: '/framework/',
+  },
+  build: {
+    outDir: 'dist/framework',
+    emptyOutDir: true,
   },
 })

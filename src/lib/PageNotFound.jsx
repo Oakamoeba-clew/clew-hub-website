@@ -1,40 +1,33 @@
-import { useLocation } from 'react-router-dom';
+import { fwHash } from "@/lib/frameworkBase";
 
 export default function PageNotFound() {
-    const location = useLocation();
-    const pageName = location.pathname.substring(1);
-
-    return (
-        <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50">
-            <div className="max-w-md w-full">
-                <div className="text-center space-y-6">
-                    <div className="space-y-2">
-                        <h1 className="text-7xl font-light text-slate-300">404</h1>
-                        <div className="h-0.5 w-16 bg-slate-200 mx-auto"></div>
-                    </div>
-
-                    <div className="space-y-3">
-                        <h2 className="text-2xl font-medium text-slate-800">
-                            Page Not Found
-                        </h2>
-                        <p className="text-slate-600 leading-relaxed">
-                            The page <span className="font-medium text-slate-700">"{pageName}"</span> could not be found in this application.
-                        </p>
-                    </div>
-
-                    <div className="pt-6">
-                        <button
-                            onClick={() => window.location.href = '/'}
-                            className="inline-flex items-center px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 hover:border-slate-300 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
-                        >
-                            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                            </svg>
-                            Go Home
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
+  return (
+    <div className="min-h-[100dvh] flex items-center justify-center px-[8vw] bg-background">
+      <div className="max-w-[36rem]">
+        <a href={fwHash("#top")} className="flex flex-col leading-none w-fit mb-12">
+          <span className="font-display font-bold tracking-tightest text-foreground text-[1.75rem] leading-none">
+            CLEW
+          </span>
+          <span className="font-display text-[0.6rem] uppercase tracking-[0.35em] text-accent font-semibold mt-1.5">
+            Industries
+          </span>
+        </a>
+        <p className="text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground font-semibold mb-3">
+          404
+        </p>
+        <h1 className="font-display font-semibold tracking-tightest text-foreground text-[1.85rem] sm:text-[2.25rem] leading-[1.08]">
+          That page isn’t here.
+        </h1>
+        <p className="mt-4 text-base md:text-lg text-foreground/70 leading-relaxed max-w-[38ch]">
+          Framework is at /framework. The P1 kit is the home page.
+        </p>
+        <a
+          href="/"
+          className="mt-8 inline-flex items-center justify-center bg-accent text-accent-foreground px-8 py-3.5 text-sm font-semibold tracking-wide hover:bg-foreground transition-colors duration-300"
+        >
+          Back to CLEW
+        </a>
+      </div>
+    </div>
+  );
 }
