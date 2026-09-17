@@ -2,6 +2,9 @@
 /framework/ / 301
 /framework/* / 301
 
+/review / 301
+/review/ / 301
+
 /p1 / 301
 /p1/ / 301
 /p1/privacy /privacy/ 301
