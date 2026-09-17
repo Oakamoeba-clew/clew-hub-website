@@ -1,4 +1,6 @@
-/framework /framework/ 308
+/framework / 301
+/framework/ / 301
+/framework/* / 301
 
 /p1 / 301
 /p1/ / 301
