@@ -5,8 +5,6 @@
 /review / 301
 /review/ / 301
 
-/p1 / 301
-/p1/ / 301
 /p1/privacy /privacy/ 301
 /p1/privacy/ /privacy/ 301
 /p1/review / 301
@@ -20,5 +18,3 @@
 /p1/industries/maritime/ / 301
 /p1/industries/lab-gse / 301
 /p1/industries/lab-gse/ / 301
-
-/p1/* /:splat 301
