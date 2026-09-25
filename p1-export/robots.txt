@@ -1,5 +1,7 @@
 User-Agent: *
 Allow: /
 Disallow: /framework/
+Disallow: /preview/
+Disallow: /demo/
 
 Sitemap: https://clewindustries.com/sitemap.xml
